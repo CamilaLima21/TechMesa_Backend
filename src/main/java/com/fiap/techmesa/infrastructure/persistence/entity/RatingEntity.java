@@ -37,7 +37,7 @@ public class RatingEntity {
 	
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
-	private Client client;
+	private ClientEntity client;
 	
 	@Column
 	private String title;

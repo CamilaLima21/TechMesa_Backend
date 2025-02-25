@@ -48,19 +48,19 @@ public class RestaurantEntity {
 	
 	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-	private Address address;
+	private AddressEntity address;
 	
 	@Column(name = "email", nullable = false)
 	private String email;
 	
 	@OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)  
-	List<OpeningHours> openingHours;
+	List<OpeningHoursEntity> openingHours;
 	
 	@OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)  
-	List<Reserve> reserve;
+	List<ReserveEntity> reserve;
 	
 	@OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)  
-	List<TableRestaurant> tableRestaurant;
+	List<TableRestaurantEntity> tableRestaurant;
 	
 	@Column
 	private TypeKitchenEnum typeKitchen;

@@ -42,11 +42,11 @@ public class TableRestaurantEntity {
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-	private Restaurant restaurant;
+	private RestaurantEntity restaurant;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "reserve_id", referencedColumnName = "id")
-	private Reserve reserve;
+	private ReserveEntity reserve;
 	
 	@Column(name = "number_seats", nullable = false)
 	private int numberSeats;

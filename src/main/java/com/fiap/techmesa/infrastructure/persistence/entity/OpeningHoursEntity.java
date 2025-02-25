@@ -36,7 +36,7 @@ public class OpeningHoursEntity {
 	
 	@ManyToOne
     @JoinColumn(name = "restaurant_id")
-	private Restaurant restaurant;
+	private RestaurantEntity restaurant;
 	
 	@Column(name = "nome", nullable = false)
 	private String name;

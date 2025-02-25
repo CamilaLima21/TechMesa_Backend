@@ -4,9 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fiap.techmesa.application.domain.Address;
-import com.fiap.techmesa.application.domain.Reserve;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,10 +38,10 @@ public class ClientEntity {
 	
 	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "endereco_id", referencedColumnName = "id")
-	private Address address;
+	private AddressEntity address;
 	
-	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
-	List<Reserve> reserve;
+	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+	private List<ReserveEntity> reserve;
 	
 	@Column
 	private String name;

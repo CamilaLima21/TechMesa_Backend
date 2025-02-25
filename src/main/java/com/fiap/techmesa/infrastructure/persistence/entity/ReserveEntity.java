@@ -43,14 +43,14 @@ public class ReserveEntity {
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
-	private Client client;
+	private ClientEntity client;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-	private Restaurant restaurant;
+	private RestaurantEntity restaurant;
 	
 	@OneToMany(mappedBy = "reserve", fetch = FetchType.LAZY)
-	private List<TableRestaurant> tableRestaurant;
+	private List<TableRestaurantEntity> tableRestaurant;
 	
 	@Column
 	private int numberPeople;
