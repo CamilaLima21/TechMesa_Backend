@@ -27,7 +27,7 @@ public class AddressEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true)
-	private long id;
+	private int id;
 	
 	@Column(nullable = false)
 	private String street;

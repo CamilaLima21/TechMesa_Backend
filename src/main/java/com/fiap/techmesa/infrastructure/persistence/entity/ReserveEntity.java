@@ -28,8 +28,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "reserve")
-@Getter
-@Setter
+@Getter@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -39,7 +38,7 @@ public class ReserveEntity {
 	@Id
 	@Column(unique = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private int id;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", referencedColumnName = "id")

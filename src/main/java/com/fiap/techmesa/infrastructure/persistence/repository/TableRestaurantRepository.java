@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.TableRestaurantEntity;
 
-public interface TableRestaurantRepository extends JpaRepository<TableRestaurantEntity, Long>{
+public interface TableRestaurantRepository extends JpaRepository<TableRestaurantEntity, Integer>{
 
 	TableRestaurantEntity findByTableIdentification(String tableIdentification);
 	

@@ -33,7 +33,7 @@ public class RatingEntity {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)
-	private long id;
+	private int id;
 	
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", referencedColumnName = "id")

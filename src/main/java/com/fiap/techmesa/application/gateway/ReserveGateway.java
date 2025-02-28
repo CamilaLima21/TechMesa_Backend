@@ -17,9 +17,9 @@ public interface ReserveGateway {
 	
 	Optional<Reserve> findById(final int id);
 	
-	Optional<Reserve> findByRestaurantIdAndDate(final Restaurant restaurantId, final LocalDate dateReserve);
+	Optional<Reserve> findByRestaurantIdAndDate(final Restaurant restaurant, final LocalDate dateReserve);
 	
-	Optional<Reserve> findByRestaurantIdAndClientIdAndData(final Restaurant restaurantId, final Client clientId, final LocalDate dateReserve);
+	Optional<Reserve> findByRestaurantIdAndClientIdAndData(final Restaurant restaurant, final Client client, final LocalDate dateReserve);
 	
 	void delete(final int id);
 

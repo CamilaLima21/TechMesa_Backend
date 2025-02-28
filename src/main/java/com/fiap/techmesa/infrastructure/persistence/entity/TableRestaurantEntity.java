@@ -1,8 +1,6 @@
 package com.fiap.techmesa.infrastructure.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fiap.techmesa.application.domain.Reserve;
-import com.fiap.techmesa.application.domain.Restaurant;
 import com.fiap.techmesa.application.enums.StatusTableOccupationEnum;
 import com.fiap.techmesa.application.enums.TablePositionEnum;
 
@@ -35,7 +33,7 @@ public class TableRestaurantEntity {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)
-	private long id;
+	private int id;
 	
 	@Column
 	private String tableIdentification;

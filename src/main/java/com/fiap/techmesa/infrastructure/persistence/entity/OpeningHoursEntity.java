@@ -2,6 +2,7 @@ package com.fiap.techmesa.infrastructure.persistence.entity;
 
 import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fiap.techmesa.application.domain.OpeningHours;
 import com.fiap.techmesa.application.domain.Restaurant;
 import com.fiap.techmesa.application.enums.DayWeekEnum;
 import com.fiap.techmesa.application.enums.TurnEnum;
@@ -32,7 +33,7 @@ public class OpeningHoursEntity {
 	
 	@Id
     @Column(unique = true)
-	private long id;
+	private int id;
 	
 	@ManyToOne
     @JoinColumn(name = "restaurant_id")

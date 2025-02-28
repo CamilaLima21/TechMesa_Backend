@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fiap.techmesa.application.enums.StatusReserveEnum;
+import com.fiap.techmesa.infrastructure.persistence.entity.ClientEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.TableRestaurantEntity;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
@@ -32,7 +35,7 @@ public class Reserve {
     private List<TableRestaurant> tableRestaurants;
     
     @NotNull(message = "Number people cannot be null")
-    private int numberPeople;
+    private Integer numberPeople;
     
     @NotNull(message = "Date reserve cannot be null")
     private LocalDate dateReserve;
@@ -44,7 +47,7 @@ public class Reserve {
     @NotNull(message = "Start reserve cannot be null")
     private LocalDate startReserve;
     
-    private int toleranceMinutes;
+    private Integer toleranceMinutes;
     
     private LocalDate timeLimit;
     
@@ -54,17 +57,17 @@ public class Reserve {
     		final Client client,
     		final Restaurant restaurant,
     		final List<TableRestaurant> tableRestaurants,
-    		final int numberPeople,
+    		final Integer numberPeople,
     		final LocalDate dateReserve,
     		final LocalDate dateCreated,
     		final LocalDate startReserve,
-    		final int toleranceMinutes,
+    		final Integer toleranceMinutes,
     		final LocalDate timeLimit,
     		StatusReserveEnum statusReserve) {
     	
     	return new Reserve(null, client, restaurant, tableRestaurants, numberPeople, dateReserve, dateCreated, startReserve, toleranceMinutes, timeLimit, statusReserve);
     	
     }
-    
+
     
 }

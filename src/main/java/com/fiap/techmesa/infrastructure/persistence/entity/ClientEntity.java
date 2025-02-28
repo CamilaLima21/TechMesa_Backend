@@ -34,7 +34,7 @@ public class ClientEntity {
 	@Id
 	@Column(unique = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private int id;
 	
 	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "endereco_id", referencedColumnName = "id")
@@ -51,4 +51,6 @@ public class ClientEntity {
 	
 	@Column(nullable = false, columnDefinition = "DATE")
 	private LocalDate registrationDate;
+	
+	
 }

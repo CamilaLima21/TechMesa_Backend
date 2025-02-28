@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.fiap.techmesa.application.enums.TypeKitchenEnum;
 import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
 
-public interface RestaurantRepository extends JpaRepository<RestaurantEntity, Long>{
+public interface RestaurantRepository extends JpaRepository<RestaurantEntity, Integer>{
 
 	RestaurantEntity findByEmail(String email);
 	
