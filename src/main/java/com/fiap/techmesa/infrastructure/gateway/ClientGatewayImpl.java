@@ -66,7 +66,7 @@ public class ClientGatewayImpl implements ClientGateway {
                 .email(client.getEmail())
                 .address(AddressEntity.builder().id(client.getAddressId()).build())
                 .registrationDate(client.getRegistrationDate())
-                .reserve(client.getReserves().stream()
+                .reserves(client.getReserves().stream()
                         .map(this::mapToEntity)
                         .collect(Collectors.toList()))
                 .build();
@@ -89,7 +89,7 @@ public class ClientGatewayImpl implements ClientGateway {
                 .email(client.getEmail())
                 .address(AddressEntity.builder().id(client.getAddressId()).build())
                 .registrationDate(client.getRegistrationDate())
-                .reserve(client.getReserves().stream()
+                .reserves(client.getReserves().stream()
                         .map(this::mapToEntity)
                         .collect(Collectors.toList()))
                 .build();
@@ -102,7 +102,7 @@ public class ClientGatewayImpl implements ClientGateway {
                 .email(entity.getEmail())
                 .addressId(entity.getAddress().getId())
                 .registrationDate(entity.getRegistrationDate())
-                .reserves(entity.getReserve().stream()
+                .reserves(entity.getReserves().stream()
                         .map(this::mapToDomain)
                         .collect(Collectors.toList()))
                 .build();

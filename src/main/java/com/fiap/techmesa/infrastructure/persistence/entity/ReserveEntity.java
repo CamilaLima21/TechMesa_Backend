@@ -4,22 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fiap.techmesa.application.domain.Client;
-import com.fiap.techmesa.application.domain.Restaurant;
-import com.fiap.techmesa.application.domain.TableRestaurant;
 import com.fiap.techmesa.application.enums.StatusReserveEnum;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,47 +15,47 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "reserve")
-@Getter@Setter
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class ReserveEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true)
+    private int id;
 
-	@Id
-	@Column(unique = true)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
-	private ClientEntity client;
-	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private ClientEntity client;
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-	private RestaurantEntity restaurant;
-	
-	@OneToMany(mappedBy = "reserve", fetch = FetchType.LAZY)
-	private List<TableRestaurantEntity> tableRestaurant;
-	
-	@Column
-	private int numberPeople;
-	
-	@Column(nullable = false, columnDefinition = "DATE")
-	private LocalDate dateReserve;
-	
-	@Column(nullable = false, columnDefinition = "DATE")
-	private LocalDate dateCreated;
-	
-	@Column(nullable = false, columnDefinition = "DATE")
-	private LocalDate startReserve;
-	
-	@Column
-	private int toleranceMinutes;
-	
-	@Column(nullable = false, columnDefinition = "DATE")
-	private LocalDate timeLimit;
-	
-	@Column
-	private StatusReserveEnum statusReserve;
+    private RestaurantEntity restaurant;
+
+    @OneToMany(mappedBy = "reserve", fetch = FetchType.LAZY)
+    private List<TableRestaurantEntity> tableRestaurant;
+
+    @Column(name = "number_people", nullable = false)
+    private int numberPeople;
+
+    @Column(name = "date_reserve", nullable = false, columnDefinition = "DATE")
+    private LocalDate dateReserve;
+
+    @Column(name = "date_created", nullable = false, columnDefinition = "DATE")
+    private LocalDate dateCreated;
+
+    @Column(name = "start_reserve", nullable = false, columnDefinition = "DATE")
+    private LocalDate startReserve;
+
+    @Column(name = "tolerance_minutes")
+    private int toleranceMinutes;
+
+    @Column(name = "time_limit", nullable = false, columnDefinition = "DATE")
+    private LocalDate timeLimit;
+
+    @Column(name = "status_reserve")
+    private StatusReserveEnum statusReserve;
 }

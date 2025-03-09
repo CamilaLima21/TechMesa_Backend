@@ -4,24 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fiap.techmesa.application.domain.Address;
-import com.fiap.techmesa.application.domain.OpeningHours;
-import com.fiap.techmesa.application.domain.Reserve;
-import com.fiap.techmesa.application.domain.TableRestaurant;
 import com.fiap.techmesa.application.enums.StatusRestaurantEnum;
 import com.fiap.techmesa.application.enums.TypeKitchenEnum;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,40 +23,39 @@ import lombok.Setter;
 @Builder
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class RestaurantEntity {
-
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)
-	private int id;
-	
-	@Column(name = "name", nullable = false)
-	private String name;
-	
-	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private int id;
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-	private AddressEntity address;
-	
-	@Column(name = "email", nullable = false)
-	private String email;
-	
-	@OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)  
-	List<OpeningHoursEntity> openingHours;
-	
-	@OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)  
-	List<ReserveEntity> reserve;
-	
-	@OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)  
-	List<TableRestaurantEntity> tableRestaurant;
-	
-	@Column
-	private TypeKitchenEnum typeKitchen;
-	
-	@Column
-	private int capacity;
-	
-	@Column
-	private StatusRestaurantEnum statusRestaurant;
-	
-	 @Column(nullable = false, columnDefinition = "DATE")
-	private LocalDate registrationDate;
+    private AddressEntity address;
+
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
+    private List<OpeningHoursEntity> openingHours;
+
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
+    private List<ReserveEntity> reserve;
+
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
+    private List<TableRestaurantEntity> tableRestaurant;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "type_kitchen")
+    private TypeKitchenEnum typeKitchen;
+
+    @Column(name = "capacity")
+    private int capacity;
+
+    @Column(name = "status_restaurant")
+    private StatusRestaurantEnum statusRestaurant;
+
+    @Column(name = "registration_date", nullable = false, columnDefinition = "DATE")
+    private LocalDate registrationDate;
 }
