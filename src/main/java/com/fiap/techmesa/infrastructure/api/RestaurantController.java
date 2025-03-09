@@ -1,67 +1,100 @@
 package com.fiap.techmesa.infrastructure.api;
 
-import java.net.URI;
+import java.util.List;
+import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import com.fiap.techmesa.application.domain.Restaurant;
-import com.fiap.techmesa.application.dto.UpdateRestaurantRequest;
-import com.fiap.techmesa.application.usecase.CreateRestaurant;
-import com.fiap.techmesa.application.usecase.DeleteRestaurant;
-import com.fiap.techmesa.application.usecase.GetRestaurant;
-import com.fiap.techmesa.application.usecase.UpdateRestaurant;
+import com.fiap.techmesa.application.domain.pagination.Page;
+import com.fiap.techmesa.application.domain.pagination.Pagination;
+import com.fiap.techmesa.application.enums.TypeKitchenEnum;
+import com.fiap.techmesa.application.gateway.RestaurantGateway;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @RestController
-@RequestMapping("techMesa/restaurants")
+@RequestMapping("/restaurants")
+@RequiredArgsConstructor
 public class RestaurantController {
 
-	private final CreateRestaurant createRestaurant;
-	private final GetRestaurant getRestaurant;
-	private final DeleteRestaurant deleteRestaurant;
-	private final UpdateRestaurant updateRestaurant;
-	
-	@PostMapping
-	public ResponseEntity<Restaurant> create(
-			@RequestBody @Valid Restaurant restaurant) {
-		final var createdRestaurant = createRestaurant.execute(restaurant);
-		
-		URI location =
-			ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}")
-				.buildAndExpand(createdRestaurant.getId())
-				.toUri();
-		
-		return ResponseEntity.created(location).body(createdRestaurant);
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<Restaurant> findById(final @PathVariable int id) {
-		return ResponseEntity.ok(getRestaurant.execute(id));
-	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<Restaurant> update(
-			final @PathVariable int id,
-			final @RequestBody @Valid UpdateRestaurantRequest updateRestaurantRequest) {
-		return ResponseEntity.ok(updateRestaurant.execute(id, updateRestaurantRequest));
-	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(final @PathVariable int id) {
-		deleteRestaurant.execute(id);
-		return ResponseEntity.noContent().build();
-	}
+    private final RestaurantGateway restaurantGateway;
+
+    @PostMapping
+    public ResponseEntity<Restaurant> createRestaurant(@Validated @RequestBody Restaurant restaurant) {
+        Restaurant savedRestaurant = restaurantGateway.save(restaurant);
+        return new ResponseEntity<>(savedRestaurant, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Restaurant> getRestaurantById(@PathVariable int id) {
+        Optional<Restaurant> restaurant = restaurantGateway.findById(id);
+        return restaurant.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Restaurant> updateRestaurant(@PathVariable int id, @Validated @RequestBody Restaurant restaurant) {
+        restaurant.setId(id);
+        Restaurant updatedRestaurant = restaurantGateway.update(restaurant);
+        return new ResponseEntity<>(updatedRestaurant, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRestaurant(@PathVariable int id) {
+        restaurantGateway.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping
+    public ResponseEntity<Pagination<Restaurant>> getAllRestaurants(@RequestParam int page, @RequestParam int size) {
+        Page pageRequest = new Page(page, size);
+        Pagination<Restaurant> restaurants = restaurantGateway.findAll(pageRequest);
+        return new ResponseEntity<>(restaurants, HttpStatus.OK);
+    }
+
+    @GetMapping("/by-type-kitchen")
+    public ResponseEntity<Restaurant> getRestaurantByTypeKitchen(@RequestParam String typeKitchen) {
+        Optional<Restaurant> restaurant = restaurantGateway.findByTypeKitchen(TypeKitchenEnum.valueOf(typeKitchen));
+        return restaurant.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/by-part-name")
+    public ResponseEntity<Restaurant> getRestaurantByPartName(@RequestParam String partName) {
+        Optional<Restaurant> restaurant = restaurantGateway.findByPartName(partName);
+        return restaurant.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/by-name")
+    public ResponseEntity<Restaurant> getRestaurantByName(@RequestParam String name) {
+        Optional<Restaurant> restaurant = restaurantGateway.findByName(name);
+        return restaurant.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/by-email")
+    public ResponseEntity<Restaurant> getRestaurantByEmail(@RequestParam String email) {
+        Optional<Restaurant> restaurant = restaurantGateway.findByEmail(email);
+        return restaurant.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+//    @GetMapping("/by-city")
+//    public ResponseEntity<Restaurant> getRestaurantByCity(@RequestParam String city) {
+//        Optional<Restaurant> restaurant = restaurantGateway.findByCity(city);
+//        return restaurant.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+//            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+//    }
+//
+//    @GetMapping("/by-city-and-neighborhood")
+//    public ResponseEntity<Restaurant> getRestaurantByCityAndNeighborhood(@RequestParam String city, @RequestParam String neighborhood) {
+//        Optional<Restaurant> restaurant = restaurantGateway.findByCityAndNeighborhood(city, neighborhood);
+//        return restaurant.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+//            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+//    }
 }

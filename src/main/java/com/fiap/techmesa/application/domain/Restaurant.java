@@ -34,7 +34,7 @@ public class Restaurant {
 	
 	@NotBlank(message = "Address is required")
 	@Size(max = 255, message = "Address length must be less than 255 characters")
-    private Address address;
+    private Integer addressId;
    
 	@NotBlank(message = "Email is required")
 	@Size(max = 255, message = "Email length must be less than 255 characters")
@@ -60,7 +60,7 @@ public class Restaurant {
     
     public static Restaurant createRestaurant(
     		final String name,
-    		final Address address,
+    		final Integer addressId,
     		final String email,
     		final List<OpeningHours> openingHours,
     		final List<Reserve> reserves,
@@ -70,7 +70,7 @@ public class Restaurant {
     		final StatusRestaurantEnum statusRestaurant,
     		final LocalDate registrationDate) {
     	
-    	return new Restaurant(null, name, address, email, openingHours, reserves, tableRestaurants, typeKitchen, capacity, statusRestaurant, registrationDate);
+    	return new Restaurant(null, name, addressId, email, openingHours, reserves, tableRestaurants, typeKitchen, capacity, statusRestaurant, registrationDate);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.fiap.techmesa.infrastructure.gateway;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -13,7 +14,6 @@ import com.fiap.techmesa.application.domain.pagination.Page;
 import com.fiap.techmesa.application.domain.pagination.Pagination;
 import com.fiap.techmesa.application.enums.StatusTableOccupationEnum;
 import com.fiap.techmesa.application.gateway.TableRestaurantGateway;
-import com.fiap.techmesa.application.usecase.exception.TableRestaurantNotFoundException;
 import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.TableRestaurantEntity;
@@ -75,7 +75,7 @@ public class TableRestaurantGatewayImpl implements TableRestaurantGateway {
     public void delete(final String tableIdentification) {
         TableRestaurantEntity tableRestaurantEntity = tableRestaurantRepository.findByTableIdentification(tableIdentification);
         if (tableRestaurantEntity == null) {
-            throw new TableRestaurantNotFoundException(tableIdentification);
+            throw new IllegalArgumentException(String.format("Table with identification [%s] not found", tableIdentification));
         }
         tableRestaurantRepository.delete(tableRestaurantEntity);
     }
@@ -86,7 +86,7 @@ public class TableRestaurantGatewayImpl implements TableRestaurantGateway {
                 tableRestaurantRepository.findByTableIdentification(tableRestaurant.getTableIdentification());
 
         if (tableRestaurantFound == null) {
-            throw new TableRestaurantNotFoundException(tableRestaurant.getTableIdentification());
+            throw new IllegalArgumentException(String.format("Table with identification [%s] not found", tableRestaurant.getTableIdentification()));
         }
 
         final var tableRestaurantEntity =
@@ -94,7 +94,7 @@ public class TableRestaurantGatewayImpl implements TableRestaurantGateway {
                         .id(tableRestaurantFound.getId())
                         .tableIdentification(tableRestaurant.getTableIdentification())
                         .restaurant(RestaurantEntity.builder().id(tableRestaurant.getRestaurantId()).build())
-                        .reserve(ReserveEntity.builder().id(tableRestaurant.getReserveId()).build())
+                        .reserve(tableRestaurant.getReserveId() != null ? ReserveEntity.builder().id(tableRestaurant.getReserveId()).build() : null)
                         .numberSeats(tableRestaurant.getNumberSeats())
                         .statusTableOccupation(tableRestaurant.getStatusTableOccupation())
                         .tablePosition(tableRestaurant.getTablePosition())

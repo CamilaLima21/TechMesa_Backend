@@ -25,7 +25,7 @@ public class CreateRestaurant {
 		final var buildDomain =
 				Restaurant.createRestaurant(
 						request.getName(),
-						request.getAddress(),
+						request.getAddressId(),
 						request.getEmail(),
 						request.getOpeningHours(),
 						request.getReserves(),

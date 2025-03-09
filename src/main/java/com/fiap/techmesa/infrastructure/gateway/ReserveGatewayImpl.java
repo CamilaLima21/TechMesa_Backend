@@ -1,12 +1,11 @@
 package com.fiap.techmesa.infrastructure.gateway;
 
-import static java.lang.String.format;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +40,7 @@ public class ReserveGatewayImpl implements ReserveGateway {
         
         if (clientEntityFound.isEmpty()) {
             throw new IllegalArgumentException(
-                format("Client with id [%s] not found", reserve.getClientId()));
+                String.format("Client with id [%s] not found", reserve.getRestaurantId()));
         }
         
         final Optional<RestaurantEntity> restaurantEntityFound =
@@ -49,9 +48,9 @@ public class ReserveGatewayImpl implements ReserveGateway {
         
         if (restaurantEntityFound.isEmpty()) {
             throw new IllegalArgumentException(
-                format("Restaurant with id [%s] not found", reserve.getRestaurantId()));
+                String.format("Restaurant with id [%s] not found", reserve.getRestaurantId()));
         }
-
+        
         final var clientEntity = clientEntityFound.get();
         final var restaurantEntity = restaurantEntityFound.get();
         
@@ -73,12 +72,24 @@ public class ReserveGatewayImpl implements ReserveGateway {
         
         final var saved = reserveRepository.save(reserveEntity);
         
-        return this.toResponse(saved);
+        return mapToDomain(saved);
+    }
+
+    @Override
+    public Pagination<Reserve> findAll(Page page) {
+        var pageRequest = PageRequest.of(page.page(), page.size());
+        var reservePage = reserveRepository.findAll(pageRequest);
+        var reserves = reservePage.getContent().stream()
+                .map(this::mapToDomain)
+                .collect(Collectors.toList());
+
+        return new Pagination<>(reservePage.getNumber(), reservePage.getSize(), reservePage.getTotalPages(),
+                reservePage.getTotalElements(), reservePage.getNumberOfElements(), reserves);
     }
 
     @Override
     public Optional<Reserve> findById(final int id) {
-        return reserveRepository.findById(id).map(this::toResponse);
+        return reserveRepository.findById(id).map(this::mapToDomain);
     }
 
     @Override
@@ -93,7 +104,6 @@ public class ReserveGatewayImpl implements ReserveGateway {
         final var restaurantEntity = restaurantEntityFound.get();
 
         return reserveRepository.findByRestaurantAndDateReserve(restaurantEntity, dateReserve);
-                
     }
 
     @Override
@@ -123,8 +133,7 @@ public class ReserveGatewayImpl implements ReserveGateway {
     @Override
     public Reserve update(final Reserve reserve) {
         final var reserveFound =
-            reserveRepository
-                .findById(reserve.getId())
+            reserveRepository.findById(reserve.getId())
                 .orElseThrow(() -> new ReserveNotFoundException(reserve.getId()));
 
         final var reserveEntity =
@@ -146,70 +155,48 @@ public class ReserveGatewayImpl implements ReserveGateway {
         
         final var updated = reserveRepository.save(reserveEntity);
         
-        return this.toResponse(updated);
+        return mapToDomain(updated);
     }
 
     private TableRestaurantEntity mapToEntity(final TableRestaurant tableRestaurant) {
         return TableRestaurantEntity.builder()
             .id(tableRestaurant.getId())
             .tableIdentification(tableRestaurant.getTableIdentification())
-            .restaurant(restaurantRepository.findById(tableRestaurant.getRestaurantId()).orElseThrow())
-            .reserve(reserveRepository.findById(tableRestaurant.getReserveId()).orElseThrow())
+            .restaurant(RestaurantEntity.builder().id(tableRestaurant.getRestaurantId()).build())
+            .reserve(ReserveEntity.builder().id(tableRestaurant.getReserveId()).build())
             .numberSeats(tableRestaurant.getNumberSeats())
             .statusTableOccupation(tableRestaurant.getStatusTableOccupation())
             .tablePosition(tableRestaurant.getTablePosition())
             .build();
     }
 
-    private ReserveEntity mapToEntity(final Reserve reserve) {
-        return ReserveEntity.builder()
-            .id(reserve.getId())
-            .client(clientRepository.findById(reserve.getClientId()).orElseThrow())
-            .restaurant(restaurantRepository.findById(reserve.getRestaurantId()).orElseThrow())
-            .tableRestaurant(reserve.getTableRestaurants().stream()
-                    .map(this::mapToEntity)
-                    .collect(Collectors.toList()))
-            .numberPeople(reserve.getNumberPeople())
-            .dateReserve(reserve.getDateReserve())
-            .dateCreated(reserve.getDateCreated())
-            .startReserve(reserve.getStartReserve())
-            .toleranceMinutes(reserve.getToleranceMinutes())
-            .timeLimit(reserve.getTimeLimit())
-            .statusReserve(reserve.getStatusReserve())
+    private Reserve mapToDomain(final ReserveEntity entity) {
+        return Reserve.builder()
+            .id(entity.getId())
+            .clientId(entity.getClient().getId())
+            .restaurantId(entity.getRestaurant().getId())
+            .tableRestaurants(entity.getTableRestaurant().stream()
+                .map(this::mapToDomain)
+                .collect(Collectors.toList()))
+            .numberPeople(entity.getNumberPeople())
+            .dateReserve(entity.getDateReserve())
+            .dateCreated(entity.getDateCreated())
+            .startReserve(entity.getStartReserve())
+            .toleranceMinutes(entity.getToleranceMinutes())
+            .timeLimit(entity.getTimeLimit())
+            .statusReserve(entity.getStatusReserve())
             .build();
     }
 
-    private Reserve toResponse(final ReserveEntity entity) {
-        return new Reserve(
-            entity.getId(),
-            entity.getClient().getId(),
-            entity.getRestaurant().getId(),
-            entity.getTableRestaurant().stream()
-                .map(this::toResponse)
-                .collect(Collectors.toList()),
-            entity.getNumberPeople(),
-            entity.getDateReserve(),
-            entity.getDateCreated(),
-            entity.getStartReserve(),
-            entity.getToleranceMinutes(),
-            entity.getTimeLimit(),
-            entity.getStatusReserve());
+    private TableRestaurant mapToDomain(final TableRestaurantEntity entity) {
+        return TableRestaurant.builder()
+            .id(entity.getId())
+            .tableIdentification(entity.getTableIdentification())
+            .restaurantId(entity.getRestaurant().getId())
+            .reserveId(entity.getReserve().getId())
+            .numberSeats(entity.getNumberSeats())
+            .statusTableOccupation(entity.getStatusTableOccupation())
+            .tablePosition(entity.getTablePosition())
+            .build();
     }
-
-    private TableRestaurant toResponse(final TableRestaurantEntity entity) {
-        return new TableRestaurant(
-            entity.getId(),
-            entity.getTableIdentification(),
-            entity.getRestaurant().getId(),
-            entity.getReserve().getId(),
-            entity.getNumberSeats(),
-            entity.getStatusTableOccupation(),
-            entity.getTablePosition());
-    }
-
-	@Override
-	public Pagination<Reserve> findAll(Page page) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

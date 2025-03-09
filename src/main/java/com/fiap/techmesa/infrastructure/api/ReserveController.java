@@ -1,69 +1,68 @@
 package com.fiap.techmesa.infrastructure.api;
 
-import java.net.URI;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import com.fiap.techmesa.application.domain.Reserve;
-import com.fiap.techmesa.application.dto.UpdateReserveRequest;
-import com.fiap.techmesa.application.usecase.CreateReserve;
-import com.fiap.techmesa.application.usecase.DeleteReserve;
-import com.fiap.techmesa.application.usecase.GetReserve;
-import com.fiap.techmesa.application.usecase.UpdateReserve;
+import com.fiap.techmesa.application.domain.pagination.Page;
+import com.fiap.techmesa.application.domain.pagination.Pagination;
+import com.fiap.techmesa.application.gateway.ReserveGateway;
+import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @RestController
-@RequestMapping("techMesa/reserves")
+@RequestMapping("/reserves")
+@RequiredArgsConstructor
 public class ReserveController {
-	
-	private final CreateReserve createReserve;
-	private final DeleteReserve deleteReserve;
-	private final GetReserve getReserve;
-	private final UpdateReserve updateReserve;
-	
-	@PostMapping
-	public ResponseEntity<Reserve> create(
-			@RequestBody @Valid Reserve reserve, final @RequestParam int id)  {
-		final var createdReserve = createReserve.execute(reserve, id);
-		
-		URI location = 
-			ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}")
-				.buildAndExpand(createdReserve.getId())
-				.toUri();
-		
-		return ResponseEntity.created(location).body(createdReserve);
-	} 
-		
-	@GetMapping("/{id}")
-	public ResponseEntity<Reserve> findById(final @PathVariable int id) {
-		return ResponseEntity.ok(getReserve.execute(id));
-	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<Reserve> update(
-			final @PathVariable int id,
-			final @RequestBody @Valid UpdateReserveRequest updateReserveRequest) {
-		return ResponseEntity.ok(updateReserve.execute(id, updateReserveRequest));
-	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(final @PathVariable int id) {
-		deleteReserve.execute(id);
-		return ResponseEntity.noContent().build();
-	}
 
+    private final ReserveGateway reserveGateway;
+
+    @PostMapping
+    public ResponseEntity<Reserve> createReserve(@Validated @RequestBody Reserve reserve) {
+        Reserve savedReserve = reserveGateway.save(reserve);
+        return new ResponseEntity<>(savedReserve, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Reserve> getReserveById(@PathVariable int id) {
+        Optional<Reserve> reserve = reserveGateway.findById(id);
+        return reserve.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Reserve> updateReserve(@PathVariable int id, @Validated @RequestBody Reserve reserve) {
+        reserve.setId(id);
+        Reserve updatedReserve = reserveGateway.update(reserve);
+        return new ResponseEntity<>(updatedReserve, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteReserve(@PathVariable int id) {
+        reserveGateway.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping
+    public ResponseEntity<Pagination<Reserve>> getAllReserves(@RequestParam int page, @RequestParam int size) {
+        Page pageRequest = new Page(page, size);
+        Pagination<Reserve> reserves = reserveGateway.findAll(pageRequest);
+        return new ResponseEntity<>(reserves, HttpStatus.OK);
+    }
+
+    @GetMapping("/by-restaurant-date")
+    public ResponseEntity<List<ReserveEntity>> getReservesByRestaurantAndDate(@RequestParam Integer restaurantId,
+                                                                              @RequestParam LocalDate dateReserve) {
+        Optional<List<ReserveEntity>> reserves = reserveGateway.findByRestaurantIdAndDate(restaurantId, dateReserve);
+        return reserves.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                       .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 }
+    
