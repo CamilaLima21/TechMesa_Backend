@@ -14,7 +14,7 @@ import com.fiap.techmesa.application.gateway.RatingGateway;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/ratings")
+@RequestMapping("techMesa/ratings")
 @RequiredArgsConstructor
 public class RatingController {
 

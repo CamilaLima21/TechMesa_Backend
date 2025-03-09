@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/techmesa/reserves")
+@RequestMapping("techMesa/reserves")
 public class ReserveController {
 	
 	private final CreateReserve createReserve;

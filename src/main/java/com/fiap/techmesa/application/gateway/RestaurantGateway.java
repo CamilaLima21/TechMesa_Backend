@@ -23,10 +23,10 @@ public interface RestaurantGateway {
 	
 	Optional<Restaurant> findByEmail(final String email);
 	
-	Optional<Restaurant> findByCity(final String city);
-	
-	Optional<Restaurant> findByCityAndNeighborhood(final String city, final String neighborhood);
-	
+//	Optional<Restaurant> findByCity(final String city);
+//	
+//	Optional<Restaurant> findByCityAndNeighborhood(final String city, final String neighborhood);
+//	
 	void delete(final int id);
 
 	Restaurant update(final Restaurant restaurant);

@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/techmesa/restaurants")
+@RequestMapping("techMesa/restaurants")
 public class RestaurantController {
 
 	private final CreateRestaurant createRestaurant;

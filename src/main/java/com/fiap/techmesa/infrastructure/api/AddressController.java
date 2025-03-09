@@ -13,7 +13,7 @@ import com.fiap.techmesa.application.gateway.AddressGateway;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/addresses")
+@RequestMapping("techMesa/addresses")
 @RequiredArgsConstructor
 public class AddressController {
 

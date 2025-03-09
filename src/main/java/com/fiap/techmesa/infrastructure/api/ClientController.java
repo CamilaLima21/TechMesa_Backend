@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/techmesa/client")
+@RequestMapping("techMesa/clients")
 public class ClientController {
 
 	private final CreateClient createClient;

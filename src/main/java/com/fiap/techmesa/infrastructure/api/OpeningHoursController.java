@@ -14,7 +14,7 @@ import com.fiap.techmesa.application.gateway.OpeningHoursGateway;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/opening-hours")
+@RequestMapping("techMesa/opening-hours")
 @RequiredArgsConstructor
 public class OpeningHoursController {
 
