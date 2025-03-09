@@ -32,7 +32,7 @@ public class TableRestaurantGatewayImpl implements TableRestaurantGateway {
     }
 
     @Override
-    public Optional<TableRestaurant> findByRestaurantAndDate(String tableIdentification, Reserve reserve) {
+    public Optional<TableRestaurant> findByRestaurantAndDate(String tableIdentification, Integer reserve) {
         // Implement the retrieval of a table restaurant by restaurant and date
         return Optional.empty();
     }

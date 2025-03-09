@@ -17,13 +17,13 @@ public interface TableRestaurantGateway {
 	
 	Optional<TableRestaurant> findById(final String tableIdentification);
 	
-	Optional<TableRestaurant> findByRestaurantAndDate(final String tableIdentification, final Reserve reserve);
+	Optional<TableRestaurant> findByRestaurantAndDate(final String tableIdentification, final Integer reserveId);
 	
 	Optional<TableRestaurant> findByRestaurantNotReservedAndDate(final int id, final StatusTableOccupationEnum statusTableOccupation, final LocalDate dateReserve);
 	
 	void delete(final String tableIdentification);
 
 	TableRestaurant update(TableRestaurant tableRestaurant);
-	
+
 
 }

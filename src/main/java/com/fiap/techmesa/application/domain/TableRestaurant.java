@@ -17,13 +17,15 @@ import lombok.Setter;
 @Builder
 public class TableRestaurant {
 	
+	private Integer id;
+	
 	@NotNull(message = "Table identification is required")
 	private String tableIdentification;
 	
 	@NotNull(message = "Restaurant is required")
-    private Restaurant restaurant;
+    private Integer restaurantId;
 	
-    private Reserve reserve;
+    private Integer reserveId;
     
     private int numberSeats;
     
@@ -33,12 +35,14 @@ public class TableRestaurant {
     
     public static TableRestaurant createTableRestaurant(
     		final String tableIdentification,
-    		final Restaurant restaurant,
-    		final Reserve reserve,
+    		final Integer restaurantId,
+    		final Integer reserveId,
     		final int numberSeats,
     		final StatusTableOccupationEnum statusTableOccupation,
     		final TablePositionEnum tablePosition) {
     	
-    	return new TableRestaurant(tableIdentification, restaurant, reserve, numberSeats, statusTableOccupation, tablePosition);
+    	return new TableRestaurant(null, tableIdentification, restaurantId, reserveId, numberSeats, statusTableOccupation, tablePosition);
     }
-}
+
+
+	}

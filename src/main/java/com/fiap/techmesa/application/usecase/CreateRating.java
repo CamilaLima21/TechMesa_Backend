@@ -24,11 +24,11 @@ public class CreateRating {
 		
 		final var buildDomain =
 				Rating.createRating(
+						request.getClientId(),
 						request.getTitle(),
 						request.getText(),
 						request.getNote(),
-						request.getDateRegistration(),
-						request.getClient());				
+						request.getDateRegistration());			
 		
 		return gateway.save(buildDomain);
 	}

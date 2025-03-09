@@ -16,17 +16,17 @@ public class CreateTableRestaurant {
 	
 	public TableRestaurant execute(final TableRestaurant request) {
 		
-		final var tableRestaurant = gateway.findByRestaurantAndDate(request.getTableIdentification(), request.getReserve());
+		final var tableRestaurant = gateway.findByRestaurantAndDate(request.getTableIdentification(), request.getReserveId());
 		
 		if(tableRestaurant.isPresent()) {
-			throw new TableRestaurantAlreadyExistsEception(request.getTableIdentification(), request.getReserve());
+			throw new TableRestaurantAlreadyExistsEception(request.getTableIdentification(), request.getReserveId());
 		}
 		 
 		final var buildDomain =
 				TableRestaurant.createTableRestaurant(
 						request.getTableIdentification(),
-						request.getRestaurant(),
-						request.getReserve(),
+						request.getRestaurantId(),
+						request.getReserveId(),
 						request.getNumberSeats(),
 						request.getStatusTableOccupation(),
 						request.getTablePosition());

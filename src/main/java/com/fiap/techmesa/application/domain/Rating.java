@@ -21,6 +21,9 @@ import lombok.Setter;
 public class Rating {
 	
 	private Integer id;
+	
+	@NotNull(message = "Client id cannot be null")
+	private Integer clientId;
 
 	@NotBlank(message = "Title is required")
 	@Size(max = 100, message = "Title length must be less than 100 characters")
@@ -37,16 +40,16 @@ public class Rating {
 	@Future(message = "Date must be in the future")
 	@NotNull(message = "Date cannot be null")
     private LocalDate dateRegistration;
-	
-    private Client client;
+    
     
     public static Rating createRating(
+    		final Integer clientId,
     		final String title,
     		final String text,
     		final int note,
-    		final LocalDate dateRegistration,
-    		final Client client) {
+    		final LocalDate dateRegistration) {
     	
-    	return new Rating(null, title, text, note, dateRegistration, client);
+    	return new Rating(null, clientId, title, text, note, dateRegistration);
     }
+
 }

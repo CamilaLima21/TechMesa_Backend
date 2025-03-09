@@ -14,18 +14,18 @@ public class CreateReserve {
 	
 	private final ReserveGateway gateway;
 	
-	public Reserve execute(final Reserve request) {
+	public Reserve execute(final Reserve request, final Integer id) {
 		
-		final var reserve = gateway.findByRestaurantIdAndClientIdAndData(request.getRestaurant(), request.getClient(), request.getDateReserve());
+		final var reserve = gateway.findByRestaurantIdAndClientIdAndData(request.getRestaurantId(), request.getClientId(), request.getDateReserve());
 		
 		if(reserve.isPresent()) {
-			throw new ReserveAlreadyExistsException(request.getRestaurant(), request.getClient(), request.getDateReserve());
+			throw new ReserveAlreadyExistsException(request.getRestaurantId(), request.getClientId(), request.getDateReserve());
 		}
 		
 		final var buildDomain =
 				Reserve.createReserve(
-						request.getClient(),
-						request.getRestaurant(),
+						request.getClientId(),
+						request.getRestaurantId(),
 						request.getTableRestaurants(),
 						request.getNumberPeople(),
 						request.getDateReserve(),

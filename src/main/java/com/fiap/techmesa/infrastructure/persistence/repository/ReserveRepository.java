@@ -17,4 +17,5 @@ public interface ReserveRepository extends JpaRepository<ReserveEntity, Integer>
 	Optional<List<ReserveEntity>> findByClientAndDateReserve(ClientEntity clientEntity, LocalDate dateReserve);
 	
 	Optional<List<ReserveEntity>> findByRestaurantAndClientAndDateReserve(RestaurantEntity restaurantEntity, ClientEntity clientEntity, LocalDate dateReserve);
+
 }
