@@ -1,68 +1,68 @@
 package com.fiap.techmesa.infrastructure.api;
 
-import java.net.URI;
+import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import com.fiap.techmesa.application.domain.Client;
-import com.fiap.techmesa.application.dto.UpdateClientRequest;
-import com.fiap.techmesa.application.usecase.CreateClient;
-import com.fiap.techmesa.application.usecase.DeleteClient;
-import com.fiap.techmesa.application.usecase.GetClient;
-import com.fiap.techmesa.application.usecase.UpdateClient;
+import com.fiap.techmesa.application.gateway.ClientGateway;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @RestController
-@RequestMapping("techMesa/clients")
+@RequestMapping("/clients")
+@RequiredArgsConstructor
 public class ClientController {
 
-	private final CreateClient createClient;
-	private final DeleteClient deleteClient;
-	private final GetClient getClient;
-	private final UpdateClient updateClient;
-	
-	
-	@PostMapping
-	public ResponseEntity<Client> create(
-			@RequestBody @Valid Client client) {
-		final var createdClient = createClient.execute(client);
-		
-		URI location = 
-			ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}")
-				.buildAndExpand(createdClient.getId())
-				.toUri();
-		
-		return ResponseEntity.created(location).body(createdClient);
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<Client> findById(final @PathVariable int id) {
-		return ResponseEntity.ok(getClient.execute(id));
-	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<Client> update(
-			final @PathVariable int id,
-			final @RequestBody @Valid UpdateClientRequest updateClientRequest) {
-		return ResponseEntity.ok(updateClient.execute(id, updateClientRequest));
-	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(final int id) {
-		deleteClient.execute(id);
-		return ResponseEntity.noContent().build();
-	}
+    private final ClientGateway clientGateway;
+
+    @PostMapping
+    public ResponseEntity<Client> createClient(@Validated @RequestBody Client client) {
+        Client savedClient = clientGateway.save(client);
+        return new ResponseEntity<>(savedClient, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Client> getClientById(@PathVariable int id) {
+        Optional<Client> client = clientGateway.findById(id);
+        return client.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Client> updateClient(@PathVariable int id, @Validated @RequestBody Client client) {
+        client.setId(id);
+        Client updatedClient = clientGateway.update(client);
+        return new ResponseEntity<>(updatedClient, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteClient(@PathVariable int id) {
+        clientGateway.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/by-part-name")
+    public ResponseEntity<Client> getClientByPartName(@RequestParam String partName) {
+        Optional<Client> client = clientGateway.findByPartName(partName);
+        return client.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/by-name")
+    public ResponseEntity<Client> getClientByName(@RequestParam String name) {
+        Optional<Client> client = clientGateway.findByName(name);
+        return client.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/by-email")
+    public ResponseEntity<Client> getClientByEmail(@RequestParam String email) {
+        Optional<Client> client = clientGateway.findByEmail(email);
+        return client.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 }

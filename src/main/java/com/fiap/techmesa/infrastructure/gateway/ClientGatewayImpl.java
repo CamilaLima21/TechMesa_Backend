@@ -1,8 +1,5 @@
 package com.fiap.techmesa.infrastructure.gateway;
 
-import static java.lang.String.format;
-
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -14,10 +11,10 @@ import com.fiap.techmesa.application.domain.Client;
 import com.fiap.techmesa.application.domain.Reserve;
 import com.fiap.techmesa.application.domain.TableRestaurant;
 import com.fiap.techmesa.application.gateway.ClientGateway;
-import com.fiap.techmesa.application.usecase.exception.ClientNotFoundException;
 import com.fiap.techmesa.infrastructure.persistence.entity.AddressEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.ClientEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.TableRestaurantEntity;
 import com.fiap.techmesa.infrastructure.persistence.repository.ClientRepository;
 
@@ -36,11 +33,12 @@ public class ClientGatewayImpl implements ClientGateway {
         return mapToDomain(savedClientEntity);
     }
 
-//    @Override
-//    public Optional<Client> findByPartName(final String partName) {
-//        return clientRepository.findByNameContainsIgnoreCase(partName)
-//            .map(this::mapToDomain);
-//    }
+    @Override
+    public Optional<Client> findByPartName(final String partName) {
+        return clientRepository.findByNameContainsIgnoreCase(partName)
+                .flatMap(list -> list.stream().findFirst())
+                .map(this::mapToDomain);
+    }
 
     @Override
     public Optional<Client> findByName(final String name) {
@@ -59,23 +57,24 @@ public class ClientGatewayImpl implements ClientGateway {
 
     @Override
     public Client update(final Client client) {
-        final var clientFound =
-            clientRepository
-                .findById(client.getId())
-                .orElseThrow(() -> new ClientNotFoundException(client.getId()));
+        final var clientFound = clientRepository.findById(client.getId())
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("Client with id [%s] not found", client.getId())));
 
-        final var clientEntity =
-            ClientEntity.builder()
+        final var clientEntity = ClientEntity.builder()
                 .id(clientFound.getId())
                 .name(client.getName())
                 .email(client.getEmail())
+                .address(AddressEntity.builder().id(client.getAddress().getId()).build())
                 .registrationDate(client.getRegistrationDate())
-                .address(mapToEntity(client.getAddress()))
+                .reserve(client.getReserves().stream()
+                        .map(this::mapToEntity)
+                        .collect(Collectors.toList()))
                 .build();
-        
+
         final var updated = clientRepository.save(clientEntity);
-        
-        return this.toResponse(updated);
+
+        return mapToDomain(updated);
     }
 
     @Transactional
@@ -86,95 +85,87 @@ public class ClientGatewayImpl implements ClientGateway {
 
     private ClientEntity mapToEntity(final Client client) {
         return ClientEntity.builder()
-            .id(client.getId())
-            .name(client.getName())
-            .email(client.getEmail())
-            .registrationDate(client.getRegistrationDate())
-            .address(mapToEntity(client.getAddress()))
-            .build();
+                .id(client.getId())
+                .name(client.getName())
+                .email(client.getEmail())
+                .address(AddressEntity.builder().id(client.getAddress().getId()).build())
+                .registrationDate(client.getRegistrationDate())
+                .reserve(client.getReserves().stream()
+                        .map(this::mapToEntity)
+                        .collect(Collectors.toList()))
+                .build();
     }
 
     private Client mapToDomain(final ClientEntity entity) {
         return Client.builder()
-            .id(entity.getId())
-            .name(entity.getName())
-            .email(entity.getEmail())
-            .registrationDate(entity.getRegistrationDate())
-            .address(mapToDomain(entity.getAddress()))
-            .build();
+                .id(entity.getId())
+                .name(entity.getName())
+                .email(entity.getEmail())
+                .address(Address.builder().id(entity.getAddress().getId()).build())
+                .registrationDate(entity.getRegistrationDate())
+                .reserves(entity.getReserve().stream()
+                        .map(this::mapToDomain)
+                        .collect(Collectors.toList()))
+                .build();
     }
 
-    private AddressEntity mapToEntity(final Address address) {
-        return AddressEntity.builder()
-            .id(address.getId())
-            .street(address.getStreet())
-            .number(address.getNumber())
-            .neighborhood(address.getNeighborhood())
-            .city(address.getCity())
-            .state(address.getState())
-            .country(address.getCountry())
-            .cep(address.getCep())
-            .build();
-    }
-
-    private Address mapToDomain(final AddressEntity entity) {
-        return Address.builder()
-            .id(entity.getId())
-            .street(entity.getStreet())
-            .number(entity.getNumber())
-            .neighborhood(entity.getNeighborhood())
-            .city(entity.getCity())
-            .state(entity.getState())
-            .country(entity.getCountry())
-            .cep(entity.getCep())
-            .build();
-    }
-
-    private Client toResponse(final ClientEntity entity) {
-        return new Client(
-            entity.getId(),
-            entity.getName(),
-            entity.getEmail(),
-            entity.getRegistrationDate(),
-            mapToDomain(entity.getAddress()),
-            entity.getReserve().stream()
-                .map(this::mapToDomain)
-                .collect(Collectors.toList()));
+    private ReserveEntity mapToEntity(final Reserve reserve) {
+        return ReserveEntity.builder()
+                .id(reserve.getId())
+                .client(ClientEntity.builder().id(reserve.getClientId()).build())
+                .restaurant(RestaurantEntity.builder().id(reserve.getRestaurantId()).build())
+                .numberPeople(reserve.getNumberPeople())
+                .dateReserve(reserve.getDateReserve())
+                .dateCreated(reserve.getDateCreated())
+                .startReserve(reserve.getStartReserve())
+                .toleranceMinutes(reserve.getToleranceMinutes())
+                .timeLimit(reserve.getTimeLimit())
+                .statusReserve(reserve.getStatusReserve())
+                .tableRestaurant(reserve.getTableRestaurants().stream()
+                        .map(this::mapToEntity)
+                        .collect(Collectors.toList()))
+                .build();
     }
 
     private Reserve mapToDomain(final ReserveEntity entity) {
         return Reserve.builder()
-            .id(entity.getId())
-            .clientId(entity.getClient().getId())
-            .restaurantId(entity.getRestaurant().getId())
-            .numberPeople(entity.getNumberPeople())
-            .dateReserve(entity.getDateReserve())
-            .dateCreated(entity.getDateCreated())
-            .startReserve(entity.getStartReserve())
-            .toleranceMinutes(entity.getToleranceMinutes())
-            .timeLimit(entity.getTimeLimit())
-            .statusReserve(entity.getStatusReserve())
-            .tableRestaurants(entity.getTableRestaurant().stream()
-                .map(this::mapToDomain)
-                .collect(Collectors.toList()))
-            .build();
+                .id(entity.getId())
+                .clientId(entity.getClient().getId())
+                .restaurantId(entity.getRestaurant().getId())
+                .numberPeople(entity.getNumberPeople())
+                .dateReserve(entity.getDateReserve())
+                .dateCreated(entity.getDateCreated())
+                .startReserve(entity.getStartReserve())
+                .toleranceMinutes(entity.getToleranceMinutes())
+                .timeLimit(entity.getTimeLimit())
+                .statusReserve(entity.getStatusReserve())
+                .tableRestaurants(entity.getTableRestaurant().stream()
+                        .map(this::mapToDomain)
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
+    private TableRestaurantEntity mapToEntity(final TableRestaurant tableRestaurant) {
+        return TableRestaurantEntity.builder()
+                .id(tableRestaurant.getId())
+                .tableIdentification(tableRestaurant.getTableIdentification())
+                .restaurant(RestaurantEntity.builder().id(tableRestaurant.getRestaurantId()).build())
+                .reserve(tableRestaurant.getReserveId() != null ? ReserveEntity.builder().id(tableRestaurant.getReserveId()).build() : null)
+                .numberSeats(tableRestaurant.getNumberSeats())
+                .statusTableOccupation(tableRestaurant.getStatusTableOccupation())
+                .tablePosition(tableRestaurant.getTablePosition())
+                .build();
     }
 
     private TableRestaurant mapToDomain(final TableRestaurantEntity entity) {
         return TableRestaurant.builder()
-            .id(entity.getId())
-            .tableIdentification(entity.getTableIdentification())
-            .restaurantId(entity.getRestaurant().getId())
-            .reserveId(entity.getReserve().getId())
-            .numberSeats(entity.getNumberSeats())
-            .statusTableOccupation(entity.getStatusTableOccupation())
-            .tablePosition(entity.getTablePosition())
-            .build();
+                .id(entity.getId())
+                .tableIdentification(entity.getTableIdentification())
+                .restaurantId(entity.getRestaurant().getId())
+                .reserveId(entity.getReserve() != null ? entity.getReserve().getId() : null)
+                .numberSeats(entity.getNumberSeats())
+                .statusTableOccupation(entity.getStatusTableOccupation())
+                .tablePosition(entity.getTablePosition())
+                .build();
     }
-
-	@Override
-	public Optional<Client> findByPartName(String partName) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
 }

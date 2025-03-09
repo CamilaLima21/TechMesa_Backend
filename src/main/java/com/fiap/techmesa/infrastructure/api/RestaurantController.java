@@ -84,17 +84,17 @@ public class RestaurantController {
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-//    @GetMapping("/by-city")
-//    public ResponseEntity<Restaurant> getRestaurantByCity(@RequestParam String city) {
-//        Optional<Restaurant> restaurant = restaurantGateway.findByCity(city);
-//        return restaurant.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-//            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-//    }
-//
-//    @GetMapping("/by-city-and-neighborhood")
-//    public ResponseEntity<Restaurant> getRestaurantByCityAndNeighborhood(@RequestParam String city, @RequestParam String neighborhood) {
-//        Optional<Restaurant> restaurant = restaurantGateway.findByCityAndNeighborhood(city, neighborhood);
-//        return restaurant.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-//            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-//    }
+    @GetMapping("/by-city")
+    public ResponseEntity<Restaurant> getRestaurantByCity(@RequestParam String city) {
+        Optional<Restaurant> restaurant = restaurantGateway.findByCity(city);
+        return restaurant.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/by-city-and-neighborhood")
+    public ResponseEntity<Restaurant> getRestaurantByCityAndNeighborhood(@RequestParam String city, @RequestParam String neighborhood) {
+        Optional<Restaurant> restaurant = restaurantGateway.findByCityAndNeighborhood(city, neighborhood);
+        return restaurant.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 }
