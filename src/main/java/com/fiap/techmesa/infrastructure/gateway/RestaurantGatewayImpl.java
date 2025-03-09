@@ -78,16 +78,16 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
 		return Optional.ofNullable(restaurantRepository.findByEmail(email)).map(this::mapToDomain);
 	}
 
-//	@Override
-//	public Optional<Restaurant> findByCity(final String city) {
-//		return restaurantRepository.findByCity(city).flatMap(list -> list.stream().findFirst()).map(this::mapToDomain);
-//	}
-//
-//	@Override
-//	public Optional<Restaurant> findByCityAndNeighborhood(final String city, final String neighborhood) {
-//		return restaurantRepository.findByCityAndNeighborhood(city, neighborhood)
-//				.flatMap(list -> list.stream().findFirst()).map(this::mapToDomain);
-//	}
+	@Override
+	public Optional<Restaurant> findByCity(final String city) {
+		return restaurantRepository.findByCity(city).flatMap(list -> list.stream().findFirst()).map(this::mapToDomain);
+	}
+
+	@Override
+	public Optional<Restaurant> findByCityAndNeighborhood(final String city, final String neighborhood) {
+		return restaurantRepository.findByCityAndNeighborhood(city, neighborhood)
+				.flatMap(list -> list.stream().findFirst()).map(this::mapToDomain);
+	}
 
 	@Transactional
 	@Override
