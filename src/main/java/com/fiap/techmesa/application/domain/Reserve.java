@@ -24,25 +24,25 @@ public class Reserve {
 
 	private Integer id;
 	
-	@NotNull(message = "Client id cannot be null")
+//	@NotNull(message = "Client id cannot be null")
 	private Integer clientId;
 	
-	@NotNull(message = "Restaurant id cannot be null")
+//	@NotNull(message = "Restaurant id cannot be null")
     private Integer restaurantId;
     
     private List<TableRestaurant> tableRestaurants;
     
-    @NotNull(message = "Number people cannot be null")
+//    @NotNull(message = "Number people cannot be null")
     private Integer numberPeople;
     
-    @NotNull(message = "Date reserve cannot be null")
+//    @NotNull(message = "Date reserve cannot be null")
     private LocalDate dateReserve;
     
     @Future(message = "Date created must be in the future")
-    @NotNull(message = "Date created cannot be null")
+//    @NotNull(message = "Date created cannot be null")
     private LocalDate dateCreated;
     
-    @NotNull(message = "Start reserve cannot be null")
+//    @NotNull(message = "Start reserve cannot be null")
     private LocalDate startReserve;
     
     private Integer toleranceMinutes;

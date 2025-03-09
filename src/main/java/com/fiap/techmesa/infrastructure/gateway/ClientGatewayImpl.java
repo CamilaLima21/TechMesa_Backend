@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fiap.techmesa.application.domain.Address;
 import com.fiap.techmesa.application.domain.Client;
 import com.fiap.techmesa.application.domain.Reserve;
 import com.fiap.techmesa.application.domain.TableRestaurant;
@@ -65,7 +64,7 @@ public class ClientGatewayImpl implements ClientGateway {
                 .id(clientFound.getId())
                 .name(client.getName())
                 .email(client.getEmail())
-                .address(AddressEntity.builder().id(client.getAddress().getId()).build())
+                .address(AddressEntity.builder().id(client.getAddressId()).build())
                 .registrationDate(client.getRegistrationDate())
                 .reserve(client.getReserves().stream()
                         .map(this::mapToEntity)
@@ -88,7 +87,7 @@ public class ClientGatewayImpl implements ClientGateway {
                 .id(client.getId())
                 .name(client.getName())
                 .email(client.getEmail())
-                .address(AddressEntity.builder().id(client.getAddress().getId()).build())
+                .address(AddressEntity.builder().id(client.getAddressId()).build())
                 .registrationDate(client.getRegistrationDate())
                 .reserve(client.getReserves().stream()
                         .map(this::mapToEntity)
@@ -101,7 +100,7 @@ public class ClientGatewayImpl implements ClientGateway {
                 .id(entity.getId())
                 .name(entity.getName())
                 .email(entity.getEmail())
-                .address(Address.builder().id(entity.getAddress().getId()).build())
+                .addressId(entity.getAddress().getId())
                 .registrationDate(entity.getRegistrationDate())
                 .reserves(entity.getReserve().stream()
                         .map(this::mapToDomain)

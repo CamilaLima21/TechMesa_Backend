@@ -39,7 +39,7 @@ public class OpeningHoursEntity {
     @JoinColumn(name = "restaurant_id")
 	private RestaurantEntity restaurant;
 	
-	@Column(name = "nome", nullable = false)
+	@Column(name = "name", nullable = false)
 	private String name;
 	
 	@Enumerated(EnumType.STRING)

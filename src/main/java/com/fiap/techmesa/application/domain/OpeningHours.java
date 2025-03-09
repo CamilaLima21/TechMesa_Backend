@@ -27,7 +27,7 @@ public class OpeningHours {
 	
 	private Integer restaurantId;
 	
-	@NotBlank(message = "Name is required")
+//	@NotBlank(message = "Name is required")
 	@Size(max = 100, message = "Name length must be less than 100 characters")
 	@Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Name must contain only letters,numbers and spaces")
 	private String name;
@@ -37,11 +37,11 @@ public class OpeningHours {
     private DayWeekEnum dayWeek;
     
     @Future(message = "Date must be in the future")
-    @NotNull(message = "Date cannot be null")
+//    @NotNull(message = "Date cannot be null")
     private LocalDate startTime;
     
     @Future(message = "Date must be in the future")
-    @NotNull(message = "Date cannot be null")
+//    @NotNull(message = "Date cannot be null")
     private LocalDate endTime;
     
     public static OpeningHours createOpeningHours(

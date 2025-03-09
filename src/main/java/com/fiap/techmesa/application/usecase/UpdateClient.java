@@ -23,7 +23,7 @@ public class UpdateClient {
 		
 		clientFound.setName(updateClientRequest.getName());
 		clientFound.setEmail(updateClientRequest.getEmail());
-		clientFound.setAddress(updateClientRequest.getAddress());
+		clientFound.setAddressId(updateClientRequest.getAddress().getId());
 		clientFound.setReserves(updateClientRequest.getReserves());
 		
 		return gateway.update(clientFound);

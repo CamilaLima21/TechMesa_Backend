@@ -37,7 +37,7 @@ public class ClientEntity {
 	private int id;
 	
 	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	@JoinColumn(name = "endereco_id", referencedColumnName = "id")
+	@JoinColumn(name = "address_id", referencedColumnName = "id")
 	private AddressEntity address;
 	
 	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)

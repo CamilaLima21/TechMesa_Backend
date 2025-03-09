@@ -22,23 +22,23 @@ public class Rating {
 	
 	private Integer id;
 	
-	@NotNull(message = "Client id cannot be null")
+//	@NotNull(message = "Client id cannot be null")
 	private Integer clientId;
 
-	@NotBlank(message = "Title is required")
+//	@NotBlank(message = "Title is required")
 	@Size(max = 100, message = "Title length must be less than 100 characters")
 	@Pattern(regexp = "[a-zA-Z\\s]+", message = "Title must contain only letters and spaces")
 	private String title;
 	
-	@NotBlank(message = "Text is required")
+//	@NotBlank(message = "Text is required")
 	@Size(max = 500, message = "Text length must be less than 500 characters")
     private String text;
 	
-	@NotNull(message = "Note id cannot be null")
+//	@NotNull(message = "Note id cannot be null")
     private int note;
 	
 	@Future(message = "Date must be in the future")
-	@NotNull(message = "Date cannot be null")
+//	@NotNull(message = "Date cannot be null")
     private LocalDate dateRegistration;
     
     

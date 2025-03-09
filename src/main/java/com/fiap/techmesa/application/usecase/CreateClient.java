@@ -27,7 +27,7 @@ public class CreateClient {
 						request.getName(),
 						request.getEmail(),
 						request.getRegistrationDate(),
-						request.getAddress(),
+						request.getAddressId(),
 						request.getReserves());
 		
 		return gateway.save(buildDomain);
