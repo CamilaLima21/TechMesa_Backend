@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fiap.techmesa.application.domain.Address;
 import com.fiap.techmesa.application.gateway.AddressGateway;
-import com.fiap.techmesa.application.usecase.exception.AddressNotFoundException;
 import com.fiap.techmesa.infrastructure.persistence.entity.AddressEntity;
 import com.fiap.techmesa.infrastructure.persistence.repository.AddressRepository;
 
@@ -16,72 +15,73 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class AddressGatewayImpl implements AddressGateway {
-	
-	private final AddressRepository addressRepository;
 
-	@Override
-	public Address save(final Address request) {	
-		final var entity =
-			AddressEntity.builder()
-				.street(request.getStreet())
-				.number(request.getNumber())
-				.neighborhood(request.getNeighborhood())
-				.city(request.getCity())
-				.state(request.getState())
-				.country(request.getCountry())
-				.cep(request.getCep())
-				.build();
-		
-		final var saved = addressRepository.save(entity);
-		
-		return this.toResponse(saved);
-	}
+    private final AddressRepository addressRepository;
 
-	@Override
-	public Optional<Address> findById(final int id) {
-		return addressRepository.findById(id).map(this::toResponse);
-	}
+    @Override
+    public Address save(final Address address) {
+        AddressEntity addressEntity = mapToEntity(address);
+        AddressEntity savedAddressEntity = addressRepository.save(addressEntity);
+        return mapToDomain(savedAddressEntity);
+    }
 
-	@Override
-	public Address update(final Address request) {
-		final var addressFound =
-			addressRepository
-				.findById(request.getId())
-				.orElseThrow(() -> new AddressNotFoundException(request.getId()));
-		
-		final var newAddress =
-			AddressEntity.builder()
-				.id(addressFound.getId())
-				.street(addressFound.getStreet())
-				.number(addressFound.getNumber())
-				.neighborhood(addressFound.getNeighborhood())
-				.city(addressFound.getCity())
-				.state(addressFound.getState())
-				.country(addressFound.getCountry())
-				.cep(addressFound.getCep())
-				.build();
-		
-		final var updated = addressRepository.save(newAddress);
-		
-		return this.toResponse(updated);
-	}
+    @Override
+    public Optional<Address> findById(final int id) {
+        return addressRepository.findById(id).map(this::mapToDomain);
+    }
 
-	@Transactional
-	@Override
-	public void delete(int id) {
-		addressRepository.deleteById(id);
-	}
-	
-	private Address toResponse(final AddressEntity entity) {
-		return new Address(
-				entity.getId(),
-				entity.getStreet(),
-				entity.getNumber(),
-				entity.getNeighborhood(),
-				entity.getCity(),
-				entity.getState(),
-				entity.getCountry(),
-				entity.getCep());
-	}
+    @Override
+    public Address update(final Address address) {
+        final var addressFound =
+            addressRepository.findById(address.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Address not found"));
 
+        final var addressEntity =
+            AddressEntity.builder()
+                .id(addressFound.getId())
+                .street(address.getStreet())
+                .number(address.getNumber())
+                .neighborhood(address.getNeighborhood())
+                .city(address.getCity())
+                .state(address.getState())
+                .country(address.getCountry())
+                .cep(address.getCep())
+                .build();
+
+        final var updated = addressRepository.save(addressEntity);
+
+        return mapToDomain(updated);
+    }
+
+    @Transactional
+    @Override
+    public void delete(final int id) {
+        addressRepository.deleteById(id);
+    }
+
+    private AddressEntity mapToEntity(final Address address) {
+        return AddressEntity.builder()
+            .id(address.getId())
+            .street(address.getStreet())
+            .number(address.getNumber())
+            .neighborhood(address.getNeighborhood())
+            .city(address.getCity())
+            .state(address.getState())
+            .country(address.getCountry())
+            .cep(address.getCep())
+            .build();
+    }
+
+    private Address mapToDomain(final AddressEntity entity) {
+        return Address.builder()
+            .id(entity.getId())
+            .street(entity.getStreet())
+            .number(entity.getNumber())
+            .neighborhood(entity.getNeighborhood())
+            .city(entity.getCity())
+            .state(entity.getState())
+            .country(entity.getCountry())
+            .cep(entity.getCep())
+            .build();
+    }
 }

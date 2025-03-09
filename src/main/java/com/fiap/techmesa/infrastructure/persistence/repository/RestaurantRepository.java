@@ -19,10 +19,10 @@ public interface RestaurantRepository extends JpaRepository<RestaurantEntity, In
 	
 	Optional<List<RestaurantEntity>> findByNameContainsIgnoreCase(String partName);
 	
-	@Query("SELECT r FROM Restaurant r WHERE r.address.city = :city")
+	@Query("SELECT r FROM Restaurant r WHERE r.address_id.city = :city")
 	Optional<List<RestaurantEntity>> findByCity(String city);
 	
-	@Query("SELECT r FROM Restaurant r WHERE r.address.city = :city AND r.address.neighborhood = :neighborhood")
+	@Query("SELECT r FROM Restaurant r WHERE r.address_id.city = :city AND r.address_id.neighborhood = :neighborhood")
 	Optional<List<RestaurantEntity>> findByCityAndNeighborhood(String city, String neighborhood);
 	
 	Optional<List<RestaurantEntity>> findByTypeKitchen(TypeKitchenEnum typekitchen);

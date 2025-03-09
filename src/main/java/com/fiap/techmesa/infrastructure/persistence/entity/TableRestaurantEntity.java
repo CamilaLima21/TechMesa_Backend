@@ -54,4 +54,6 @@ public class TableRestaurantEntity {
 	
 	@Column
 	private TablePositionEnum tablePosition;
+
+	
 }

@@ -17,6 +17,7 @@ public class CreateOpeningHours {
 		
 		final var buildDomain =
 				OpeningHours.createOpeningHours(
+						request.getRestaurantId(), 
 						request.getName(),
 						request.getTurn(),
 						request.getDayWeek(),

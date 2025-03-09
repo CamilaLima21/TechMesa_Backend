@@ -2,6 +2,7 @@ package com.fiap.techmesa.application.domain;
 
 import com.fiap.techmesa.application.enums.StatusTableOccupationEnum;
 import com.fiap.techmesa.application.enums.TablePositionEnum;
+import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

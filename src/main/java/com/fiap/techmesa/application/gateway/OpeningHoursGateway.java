@@ -1,5 +1,6 @@
 package com.fiap.techmesa.application.gateway;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.fiap.techmesa.application.domain.OpeningHours;
@@ -13,4 +14,7 @@ public interface OpeningHoursGateway {
 	OpeningHours update(final OpeningHours openingHours);
 	
 	void delete(final int id);
+
+	List<OpeningHours> findAll();
+
 }

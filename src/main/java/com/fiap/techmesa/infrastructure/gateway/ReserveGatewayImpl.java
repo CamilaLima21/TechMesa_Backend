@@ -161,23 +161,23 @@ public class ReserveGatewayImpl implements ReserveGateway {
             .build();
     }
 
-//    private ReserveEntity mapToEntity(final Reserve reserve) {
-//        return ReserveEntity.builder()
-//            .id(reserve.getId())
-//            .client(clientRepository.findById(reserve.getClientId()).orElseThrow())
-//            .restaurant(restaurantRepository.findById(reserve.getRestaurantId()).orElseThrow())
-//            .tableRestaurant(reserve.getTableRestaurants().stream()
-//                    .map(this::mapToEntity)
-//                    .collect(Collectors.toList()))
-//            .numberPeople(reserve.getNumberPeople())
-//            .dateReserve(reserve.getDateReserve())
-//            .dateCreated(reserve.getDateCreated())
-//            .startReserve(reserve.getStartReserve())
-//            .toleranceMinutes(reserve.getToleranceMinutes())
-//            .timeLimit(reserve.getTimeLimit())
-//            .statusReserve(reserve.getStatusReserve())
-//            .build();
-//    }
+    private ReserveEntity mapToEntity(final Reserve reserve) {
+        return ReserveEntity.builder()
+            .id(reserve.getId())
+            .client(clientRepository.findById(reserve.getClientId()).orElseThrow())
+            .restaurant(restaurantRepository.findById(reserve.getRestaurantId()).orElseThrow())
+            .tableRestaurant(reserve.getTableRestaurants().stream()
+                    .map(this::mapToEntity)
+                    .collect(Collectors.toList()))
+            .numberPeople(reserve.getNumberPeople())
+            .dateReserve(reserve.getDateReserve())
+            .dateCreated(reserve.getDateCreated())
+            .startReserve(reserve.getStartReserve())
+            .toleranceMinutes(reserve.getToleranceMinutes())
+            .timeLimit(reserve.getTimeLimit())
+            .statusReserve(reserve.getStatusReserve())
+            .build();
+    }
 
     private Reserve toResponse(final ReserveEntity entity) {
         return new Reserve(

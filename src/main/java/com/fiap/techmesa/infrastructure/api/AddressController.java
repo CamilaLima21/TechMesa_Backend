@@ -1,68 +1,48 @@
 package com.fiap.techmesa.infrastructure.api;
 
-import java.net.URI;
+import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import com.fiap.techmesa.application.domain.Address;
-import com.fiap.techmesa.application.dto.UpdateAddressRequest;
-import com.fiap.techmesa.application.usecase.CreateAddress;
-import com.fiap.techmesa.application.usecase.DeleteAddress;
-import com.fiap.techmesa.application.usecase.GetAddress;
-import com.fiap.techmesa.application.usecase.UpdateAddress;
+import com.fiap.techmesa.application.gateway.AddressGateway;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequestMapping("/addresses")
 @RequiredArgsConstructor
-@RequestMapping("/techmesa/address")
 public class AddressController {
-	
-	private final CreateAddress createAddress;
-	private final GetAddress getAddress;
-	private final UpdateAddress updateAddress;
-	private final DeleteAddress deleteAddress;
-	
-	@PostMapping
-	public ResponseEntity<Address> createAddress(final @RequestBody @Valid Address address) {
-		 final var createdAddress = createAddress.execute(address);
-		 
-		 URI location = 
-			 ServletUriComponentsBuilder.fromCurrentRequest()
-			 	.path("/{id}")
-			 	.buildAndExpand(createdAddress.getId())
-			 	.toUri();
-		 
-		 return ResponseEntity.created(location).body(createdAddress);
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<Address> findById(final @PathVariable int id) {
-		return ResponseEntity.ok(getAddress.execute(id));
-	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<Address> update(
-			final @PathVariable int id, 
-			final @RequestBody @Valid UpdateAddressRequest updateAddressRequest) {
-		return ResponseEntity.ok(updateAddress.execute(id, updateAddressRequest));
-	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(final @PathVariable int id) {
-		deleteAddress.execute(id);
-		
-		return ResponseEntity.noContent().build();
-	}
+
+    private final AddressGateway addressGateway;
+
+    @PostMapping
+    public ResponseEntity<Address> createAddress(@Validated @RequestBody Address address) {
+        Address savedAddress = addressGateway.save(address);
+        return new ResponseEntity<>(savedAddress, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Address> getAddressById(@PathVariable int id) {
+        Optional<Address> address = addressGateway.findById(id);
+        return address.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Address> updateAddress(@PathVariable int id, @Validated @RequestBody Address address) {
+        address.setId(id);
+        Address updatedAddress = addressGateway.update(address);
+        return new ResponseEntity<>(updatedAddress, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAddress(@PathVariable int id) {
+        addressGateway.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 }
