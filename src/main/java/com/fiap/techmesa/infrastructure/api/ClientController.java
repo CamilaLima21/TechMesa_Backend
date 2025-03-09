@@ -13,7 +13,7 @@ import com.fiap.techmesa.application.gateway.ClientGateway;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/clients")
+@RequestMapping("techMesa/clients")
 @RequiredArgsConstructor
 public class ClientController {
 

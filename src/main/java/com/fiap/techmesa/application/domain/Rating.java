@@ -37,7 +37,7 @@ public class Rating {
 //	@NotNull(message = "Note id cannot be null")
     private int note;
 	
-	@Future(message = "Date must be in the future")
+//	@Future(message = "Date must be in the future")
 //	@NotNull(message = "Date cannot be null")
     private LocalDate dateRegistration;
     

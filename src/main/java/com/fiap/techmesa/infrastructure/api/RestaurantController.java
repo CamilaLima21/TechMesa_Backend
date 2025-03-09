@@ -17,7 +17,7 @@ import com.fiap.techmesa.application.gateway.RestaurantGateway;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/restaurants")
+@RequestMapping("techMesa/restaurants")
 @RequiredArgsConstructor
 public class RestaurantController {
 

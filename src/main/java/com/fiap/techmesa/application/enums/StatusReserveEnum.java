@@ -2,9 +2,7 @@ package com.fiap.techmesa.application.enums;
 
 public enum StatusReserveEnum {
 
-	ACTIVE("O"),
-	EXPIRED("1"),
-	DELETED("2");
+	PENDING("0"), CONFIRMED("1"), CANCELLED("2");
 	
 	private final String code;
 	

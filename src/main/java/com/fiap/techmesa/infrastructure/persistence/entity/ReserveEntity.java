@@ -35,7 +35,7 @@ public class ReserveEntity {
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     private RestaurantEntity restaurant;
 
-    @OneToMany(mappedBy = "reserve", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "reserve", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<TableRestaurantEntity> tableRestaurant;
 
     @Column(name = "number_people", nullable = false)
@@ -51,11 +51,12 @@ public class ReserveEntity {
     private LocalDate startReserve;
 
     @Column(name = "tolerance_minutes")
-    private int toleranceMinutes;
+    private Integer toleranceMinutes;
 
     @Column(name = "time_limit", nullable = false, columnDefinition = "DATE")
     private LocalDate timeLimit;
 
-    @Column(name = "status_reserve")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_reserve", nullable = false)
     private StatusReserveEnum statusReserve;
 }

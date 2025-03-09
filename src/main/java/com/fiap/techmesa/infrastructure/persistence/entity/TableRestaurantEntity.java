@@ -20,7 +20,6 @@ import lombok.Setter;
 @Builder
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class TableRestaurantEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)
@@ -40,9 +39,11 @@ public class TableRestaurantEntity {
     @Column(name = "number_seats", nullable = false)
     private int numberSeats;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status_table_occupation", nullable = false)
     private StatusTableOccupationEnum statusTableOccupation;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "table_position", nullable = false)
     private TablePositionEnum tablePosition;
 }

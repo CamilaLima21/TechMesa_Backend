@@ -1,5 +1,7 @@
 package com.fiap.techmesa.infrastructure.persistence.entity;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,13 +29,13 @@ public class AddressEntity {
 
     @Column(name = "number", nullable = false)
     private int number;
-    
+
     @Column(name = "neighborhood", nullable = false)
     private String neighborhood;
 
     @Column(name = "city", nullable = false)
     private String city;
-    
+
     @Column(name = "state", nullable = false)
     private String state;
 
@@ -42,4 +44,10 @@ public class AddressEntity {
 
     @Column(name = "cep", nullable = false)
     private String cep;
+
+    @OneToMany(mappedBy = "address")
+    private List<ClientEntity> clients;
+
+    @OneToMany(mappedBy = "address")
+    private List<RestaurantEntity> restaurants;
 }

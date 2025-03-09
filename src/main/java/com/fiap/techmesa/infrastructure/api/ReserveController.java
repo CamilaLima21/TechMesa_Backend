@@ -18,7 +18,7 @@ import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/reserves")
+@RequestMapping("techMesa/reserves")
 @RequiredArgsConstructor
 public class ReserveController {
 

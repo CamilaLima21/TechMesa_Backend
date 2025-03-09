@@ -36,11 +36,11 @@ public class OpeningHours {
     
     private DayWeekEnum dayWeek;
     
-    @Future(message = "Date must be in the future")
+//    @Future(message = "Date must be in the future")
 //    @NotNull(message = "Date cannot be null")
     private LocalDate startTime;
     
-    @Future(message = "Date must be in the future")
+//    @Future(message = "Date must be in the future")
 //    @NotNull(message = "Date cannot be null")
     private LocalDate endTime;
     
