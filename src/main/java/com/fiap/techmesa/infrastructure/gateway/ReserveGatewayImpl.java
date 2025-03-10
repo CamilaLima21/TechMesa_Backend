@@ -22,6 +22,7 @@ import com.fiap.techmesa.infrastructure.persistence.entity.TableRestaurantEntity
 import com.fiap.techmesa.infrastructure.persistence.repository.ClientRepository;
 import com.fiap.techmesa.infrastructure.persistence.repository.ReserveRepository;
 import com.fiap.techmesa.infrastructure.persistence.repository.RestaurantRepository;
+import com.fiap.techmesa.infrastructure.persistence.repository.TableRestaurantRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +33,7 @@ public class ReserveGatewayImpl implements ReserveGateway {
     private final ReserveRepository reserveRepository;
     private final ClientRepository clientRepository;
     private final RestaurantRepository restaurantRepository;
+    private final TableRestaurantRepository tableRestaurantRepository;
 
     @Override
     public Reserve save(final Reserve reserve) {
@@ -50,6 +52,14 @@ public class ReserveGatewayImpl implements ReserveGateway {
             throw new IllegalArgumentException(
                 String.format("Restaurant with id [%s] not found", reserve.getRestaurantId()));
         }
+        
+     // Salvando as mesas antes de salvar a reserva
+        List<TableRestaurantEntity> tableRestaurantEntities = reserve.getTableRestaurants().stream()
+                .map(table -> {
+                    TableRestaurantEntity tableEntity = tableRestaurantRepository.findById(table.getId())
+                            .orElseThrow(() -> new RuntimeException("Table not found"));
+                    return tableEntity;
+                }).collect(Collectors.toList());
         
         final var clientEntity = clientEntityFound.get();
         final var restaurantEntity = restaurantEntityFound.get();
