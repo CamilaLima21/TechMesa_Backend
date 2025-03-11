@@ -1,0 +1,322 @@
+{
+	"info": {
+		"_postman_id": "f4120d1a-8851-475e-a26b-b2d248333e0e",
+		"name": "TechMesa - FIAP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39491917",
+		"_collection_link": "https://warped-desert-475245.postman.co/workspace/New-Team-Workspace~11bf750f-292b-4232-8000-dd6a61eebffa/collection/39491917-f4120d1a-8851-475e-a26b-b2d248333e0e?action=share&source=collection_link&creator=39491917"
+	},
+	"item": [
+		{
+			"name": "Clients",
+			"item": [
+				{
+					"name": "Clients_Cadastro",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John Doe Teste\",\r\n  \"email\": \"john.doe.teste.teste@example.com\",\r\n  \"registrationDate\": \"2025-12-31\",\r\n  \"addressId\": 1,\r\n  \"reserves\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clients_Consulta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clients_Edita",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John Doe Teste Um\",\r\n  \"email\": \"john.doe.teste.teste.um@example.com\",\r\n  \"registrationDate\": \"2025-12-31\",\r\n  \"addressId\": 1,\r\n  \"reserves\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clients_Deleta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clients_Consulta_Eita",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clients_Consulta_Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clients_Consulta_Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "Address_Cadastro",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"street\": \"Rua TESTE 123\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/addresses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Address_Consulta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/addresses/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"addresses",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Address_Edita",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"street\": \"Rua 2 TESTE\",\r\n  \"number\": 3000,\r\n   \"neighborhood\": \"bairro\",\r\n    \"city\": \"cidade\",\r\n    \"state\": \"estado\",\r\n    \"country\": \"pais\",\r\n    \"cep\": \"03594-330\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/addresses/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"addresses",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Address_Deleta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/addresses/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"addresses",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
