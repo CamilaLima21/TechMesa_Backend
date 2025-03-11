@@ -15,6 +15,7 @@ import com.fiap.techmesa.infrastructure.persistence.entity.ClientEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.TableRestaurantEntity;
+import com.fiap.techmesa.infrastructure.persistence.repository.AddressRepository;
 import com.fiap.techmesa.infrastructure.persistence.repository.ClientRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class ClientGatewayImpl implements ClientGateway {
 
     private final ClientRepository clientRepository;
+    private final AddressRepository addressRepository;
 
     @Override
     public Client save(final Client client) {
@@ -60,11 +62,15 @@ public class ClientGatewayImpl implements ClientGateway {
                 .orElseThrow(() -> new IllegalArgumentException(
                         String.format("Client with id [%s] not found", client.getId())));
 
+        final var address = addressRepository.findById(client.getAddressId())
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("Address with id [%s] not found", client.getAddressId())));
+        
         final var clientEntity = ClientEntity.builder()
                 .id(clientFound.getId())
                 .name(client.getName())
                 .email(client.getEmail())
-                .address(AddressEntity.builder().id(client.getAddressId()).build())
+                .address(address)
                 .registrationDate(client.getRegistrationDate())
                 .reserves(client.getReserves().stream()
                         .map(this::mapToEntity)
@@ -84,7 +90,6 @@ public class ClientGatewayImpl implements ClientGateway {
 
     private ClientEntity mapToEntity(final Client client) {
         return ClientEntity.builder()
-                .id(client.getId())
                 .name(client.getName())
                 .email(client.getEmail())
                 .address(AddressEntity.builder().id(client.getAddressId()).build())
