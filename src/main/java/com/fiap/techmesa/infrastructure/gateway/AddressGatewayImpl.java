@@ -60,8 +60,8 @@ public class AddressGatewayImpl implements AddressGateway {
     }
 
     private AddressEntity mapToEntity(final Address address) {
+    	
         return AddressEntity.builder()
-            .id(address.getId())
             .street(address.getStreet())
             .number(address.getNumber())
             .neighborhood(address.getNeighborhood())
