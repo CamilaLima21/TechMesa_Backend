@@ -31,8 +31,8 @@ public class TableRestaurantController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TableRestaurant> getTableRestaurantById(@PathVariable String tableIdentification) {
-        Optional<TableRestaurant> tableRestaurant = tableRestaurantGateway.findById(tableIdentification);
+    public ResponseEntity<TableRestaurant> getTableRestaurantById(@PathVariable int id) {
+        Optional<TableRestaurant> tableRestaurant = tableRestaurantGateway.findById(id);
         return tableRestaurant.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -45,8 +45,8 @@ public class TableRestaurantController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTableRestaurant(@PathVariable String tableIdentification) {
-        tableRestaurantGateway.delete(tableIdentification);
+    public ResponseEntity<Void> deleteTableRestaurant(@PathVariable String id) {
+        tableRestaurantGateway.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

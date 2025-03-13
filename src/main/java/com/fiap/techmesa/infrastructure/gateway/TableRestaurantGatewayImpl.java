@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fiap.techmesa.application.domain.Client;
 import com.fiap.techmesa.application.domain.TableRestaurant;
 import com.fiap.techmesa.application.domain.pagination.Page;
 import com.fiap.techmesa.application.domain.pagination.Pagination;
@@ -17,6 +18,8 @@ import com.fiap.techmesa.application.gateway.TableRestaurantGateway;
 import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.TableRestaurantEntity;
+import com.fiap.techmesa.infrastructure.persistence.repository.AddressRepository;
+import com.fiap.techmesa.infrastructure.persistence.repository.RestaurantRepository;
 import com.fiap.techmesa.infrastructure.persistence.repository.TableRestaurantRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -26,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class TableRestaurantGatewayImpl implements TableRestaurantGateway {
 
     private final TableRestaurantRepository tableRestaurantRepository;
-
+    private final RestaurantRepository restaurantRepository;    
     @Override
     public TableRestaurant save(final TableRestaurant tableRestaurant) {
         TableRestaurantEntity tableRestaurantEntity = mapToEntity(tableRestaurant);
@@ -47,9 +50,8 @@ public class TableRestaurantGatewayImpl implements TableRestaurantGateway {
     }
 
     @Override
-    public Optional<TableRestaurant> findById(final String tableIdentification) {
-        return Optional.ofNullable(tableRestaurantRepository.findByTableIdentification(tableIdentification))
-                .map(this::mapToDomain);
+    public Optional<TableRestaurant> findById(final int id) {
+        return tableRestaurantRepository.findById(id).map(this::mapToDomain);
     }
 
     @Override
@@ -83,17 +85,21 @@ public class TableRestaurantGatewayImpl implements TableRestaurantGateway {
     @Override
     public TableRestaurant update(final TableRestaurant tableRestaurant) {
         final var tableRestaurantFound =
-                tableRestaurantRepository.findByTableIdentification(tableRestaurant.getTableIdentification());
+                tableRestaurantRepository.findById(tableRestaurant.getId());
 
         if (tableRestaurantFound == null) {
             throw new IllegalArgumentException(String.format("Table with identification [%s] not found", tableRestaurant.getTableIdentification()));
         }
-
+        
+        final var restaurant = restaurantRepository.findById(tableRestaurant.getRestaurantId())
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("Address with id [%s] not found", tableRestaurant.getRestaurantId())));
+                
         final var tableRestaurantEntity =
                 TableRestaurantEntity.builder()
-                        .id(tableRestaurantFound.getId())
+            		    .id(tableRestaurant.getId())
                         .tableIdentification(tableRestaurant.getTableIdentification())
-                        .restaurant(RestaurantEntity.builder().id(tableRestaurant.getRestaurantId()).build())
+                        .restaurant(restaurant)
                         .reserve(tableRestaurant.getReserveId() != null ? ReserveEntity.builder().id(tableRestaurant.getReserveId()).build() : null)
                         .numberSeats(tableRestaurant.getNumberSeats())
                         .statusTableOccupation(tableRestaurant.getStatusTableOccupation())
@@ -107,7 +113,6 @@ public class TableRestaurantGatewayImpl implements TableRestaurantGateway {
 
     private TableRestaurantEntity mapToEntity(final TableRestaurant tableRestaurant) {
         return TableRestaurantEntity.builder()
-                .id(tableRestaurant.getId())
                 .tableIdentification(tableRestaurant.getTableIdentification())
                 .restaurant(RestaurantEntity.builder().id(tableRestaurant.getRestaurantId()).build())
                 .reserve(tableRestaurant.getReserveId() != null ? ReserveEntity.builder().id(tableRestaurant.getReserveId()).build() : null)

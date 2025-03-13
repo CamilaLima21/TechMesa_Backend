@@ -16,11 +16,11 @@ public class UpdateTableRestaurant {
 	private final TableRestaurantGateway gateway;
 	
 	public TableRestaurant execute(
-			final String tableIdentification, final UpdateTableRestaurantRequest updateTableRestaurantRequest) {
+			final int id, final UpdateTableRestaurantRequest updateTableRestaurantRequest) {
 		final var tableRestaurantFound = 
 			gateway
-				.findById(tableIdentification)
-				.orElseThrow(() -> new TableRestaurantNotFoundException(tableIdentification));
+				.findById(id)
+				.orElseThrow(() -> new TableRestaurantNotFoundException(id));
 		
 		return gateway.update(tableRestaurantFound);
 		

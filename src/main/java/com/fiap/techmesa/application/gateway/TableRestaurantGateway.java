@@ -3,6 +3,7 @@ package com.fiap.techmesa.application.gateway;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import com.fiap.techmesa.application.domain.Client;
 import com.fiap.techmesa.application.domain.Reserve;
 import com.fiap.techmesa.application.domain.TableRestaurant;
 import com.fiap.techmesa.application.domain.pagination.Page;
@@ -15,7 +16,7 @@ public interface TableRestaurantGateway {
 	
 	Pagination<TableRestaurant> findAll(Page page);
 	
-	Optional<TableRestaurant> findById(final String tableIdentification);
+	Optional<TableRestaurant> findById(final int id);
 	
 	Optional<TableRestaurant> findByRestaurantAndDate(final String tableIdentification, final Integer reserveId);
 	

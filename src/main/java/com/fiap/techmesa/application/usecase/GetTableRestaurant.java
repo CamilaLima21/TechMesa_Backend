@@ -14,10 +14,10 @@ public class GetTableRestaurant {
 	
 	private final TableRestaurantGateway gateway;
 	
-	public TableRestaurant execute(final String tableIdentification) {
+	public TableRestaurant execute(final int id) {
 		return gateway
-				.findById(tableIdentification)
-				.orElseThrow(() -> new TableRestaurantNotFoundException(tableIdentification));
+				.findById(id)
+				.orElseThrow(() -> new TableRestaurantNotFoundException(id));
 	}
 
 }

@@ -13,11 +13,11 @@ public class DeleteTableRestaurant {
 	
 	private final TableRestaurantGateway gateway;
 	
-	public void execute(final String tableIdentification) {
+	public void execute(final int id) {
 		final var tableRestaurant =
 			gateway
-				.findById(tableIdentification)
-				.orElseThrow(() -> new TableRestaurantNotFoundException(tableIdentification));
+				.findById(id)
+				.orElseThrow(() -> new TableRestaurantNotFoundException(id));
 		
 		gateway.delete(tableRestaurant.getTableIdentification());
 	}

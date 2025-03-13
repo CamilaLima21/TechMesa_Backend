@@ -24,6 +24,7 @@ import com.fiap.techmesa.infrastructure.persistence.entity.OpeningHoursEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.TableRestaurantEntity;
+import com.fiap.techmesa.infrastructure.persistence.repository.AddressRepository;
 import com.fiap.techmesa.infrastructure.persistence.repository.RestaurantRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,8 @@ import lombok.RequiredArgsConstructor;
 public class RestaurantGatewayImpl implements RestaurantGateway {
 
 	private final RestaurantRepository restaurantRepository;
+	
+	private final AddressRepository addressRepository;
 
 	@Override
 	public Restaurant save(final Restaurant restaurant) {
@@ -100,10 +103,14 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
 	    final var restaurantFound = restaurantRepository.findById(restaurant.getId())
 	            .orElseThrow(() -> new RestaurantNotFoundException(restaurant.getId()));
 
+	    final var address = addressRepository.findById(restaurant.getAddressId())
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("Address with id [%s] not found", restaurant.getAddressId())));
+	    
 	    final var restaurantEntity = RestaurantEntity.builder()
 	            .id(restaurantFound.getId())
 	            .name(restaurant.getName())
-	            .address(AddressEntity.builder().id(restaurant.getAddressId()).build())
+	            .address(address)
 	            .email(restaurant.getEmail())
 	            .typeKitchen(restaurant.getTypeKitchen())
 	            .capacity(restaurant.getCapacity())
