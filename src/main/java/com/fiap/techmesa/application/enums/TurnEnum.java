@@ -2,7 +2,7 @@ package com.fiap.techmesa.application.enums;
 
 public enum TurnEnum {
 
-	COFEE("C"),
+	COFFEE("C"),
 	LUNCH("L"),
 	DINNER("D");
 	

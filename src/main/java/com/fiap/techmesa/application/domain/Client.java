@@ -30,10 +30,9 @@ public class Client {
     @Email(message = "Email should be valid")
     private String email;
     
-//    @Future(message = "Date must be in the future")
     private LocalDate registrationDate;
 
-    private Integer addressId; // Usando ID em vez da classe AddressEntity
+    private Integer addressId;
     
     private List<Reserve> reserves;
         

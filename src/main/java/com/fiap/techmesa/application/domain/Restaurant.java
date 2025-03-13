@@ -29,7 +29,7 @@ public class Restaurant {
     @Pattern(regexp = "[a-zA-Z\\s]+", message = "Name must contain only letters and spaces")
     private String name;
     
-    private Integer addressId; // Usando ID em vez da classe AddressEntity
+    private Integer addressId;
    
     @Size(max = 255, message = "Email length must be less than 255 characters")
     @Email(message = "Email should be valid")
@@ -47,7 +47,6 @@ public class Restaurant {
     
     private StatusRestaurantEnum statusRestaurant;
     
-//    @Future(message = "Date must be in the future")
     private LocalDate registrationDate;
     
     public static Restaurant createRestaurant(

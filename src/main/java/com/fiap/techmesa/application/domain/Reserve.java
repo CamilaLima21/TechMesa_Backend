@@ -21,9 +21,9 @@ public class Reserve {
 
     private Integer id;
 
-    private Integer clientId; // Usando ID em vez da classe ClientEntity
+    private Integer clientId;
     
-    private Integer restaurantId; // Usando ID em vez da classe RestaurantEntity
+    private Integer restaurantId;
     
     private List<TableRestaurant> tableRestaurants;
 
@@ -31,7 +31,6 @@ public class Reserve {
 
     private LocalDate dateReserve;
     
-//    @Future(message = "Date created must be in the future")
     private LocalDate dateCreated;
 
     private LocalDate startReserve;

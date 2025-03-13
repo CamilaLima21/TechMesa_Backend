@@ -12,7 +12,8 @@ public enum TypeKitchenEnum {
 	FRENCH("FR"),
 	ORIENTAL("ORI"),
 	MEDITERRANEAN("MED"),
-	INTERNATIONAL("INT");
+	INTERNATIONAL("INT"),
+	OTHERS("OTH");
 	
 	private final String acronym;
 	

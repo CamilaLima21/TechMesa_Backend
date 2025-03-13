@@ -20,10 +20,10 @@ public class TableRestaurant {
 	
 	private Integer id;
 	
-//	@NotNull(message = "Table identification is required")
+	@NotNull(message = "Table identification is required")
 	private String tableIdentification;
 	
-//	@NotNull(message = "Restaurant is required")
+	@NotNull(message = "Restaurant is required")
     private Integer restaurantId;
 	
     private Integer reserveId;

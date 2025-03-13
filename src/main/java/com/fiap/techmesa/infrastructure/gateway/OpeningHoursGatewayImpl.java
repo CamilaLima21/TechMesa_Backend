@@ -70,7 +70,6 @@ public class OpeningHoursGatewayImpl implements OpeningHoursGateway {
 
     private OpeningHoursEntity mapToEntity(final OpeningHours openingHours) {
         return OpeningHoursEntity.builder()
-            .id(openingHours.getId())
             .name(openingHours.getName())
             .turn(openingHours.getTurn())
             .dayWeek(openingHours.getDayWeek())

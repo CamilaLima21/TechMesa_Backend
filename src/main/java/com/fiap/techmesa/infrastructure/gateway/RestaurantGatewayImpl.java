@@ -109,15 +109,6 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
 	            .capacity(restaurant.getCapacity())
 	            .statusRestaurant(restaurant.getStatusRestaurant())
 	            .registrationDate(restaurant.getRegistrationDate())
-	            .openingHours(restaurant.getOpeningHours().stream()
-	                .map(this::mapToEntity)
-	                .collect(Collectors.toList()))
-	            .reserve(restaurant.getReserves().stream()
-	                .map(this::mapToEntity)
-	                .collect(Collectors.toList()))
-	            .tableRestaurant(restaurant.getTableRestaurants().stream()
-	                .map(this::mapToEntity)
-	                .collect(Collectors.toList()))
 	            .build();
 
 	    final var updated = restaurantRepository.save(restaurantEntity);
@@ -128,7 +119,6 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
 
 	private RestaurantEntity mapToEntity(final Restaurant restaurant) {
 	    return RestaurantEntity.builder()
-	        .id(restaurant.getId())
 	        .name(restaurant.getName())
 	        .address(AddressEntity.builder().id(restaurant.getAddressId()).build())
 	        .email(restaurant.getEmail())

@@ -3,7 +3,7 @@ package com.fiap.techmesa.application.enums;
 public enum StatusTableOccupationEnum {
 
 	AVAILABLE("AVAILABLE"),
-	BUSY("BUSY"), OCCUPIED("OCCUPIED");
+	BUSY("BUSY");
 	
 	private final String status;
 	

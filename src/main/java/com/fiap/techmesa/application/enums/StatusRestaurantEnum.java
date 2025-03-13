@@ -3,9 +3,7 @@ package com.fiap.techmesa.application.enums;
 public enum StatusRestaurantEnum {
 
 	ACTIVE("0"),
-	SUSPENDED("1"),
-	DELETED("2"), 
-	OPEN("3");
+	DEACTIVED("1");
 	
 	private final String code;
 	
