@@ -53,16 +53,17 @@ public class ReserveGatewayImpl implements ReserveGateway {
                 String.format("Restaurant with id [%s] not found", reserve.getRestaurantId()));
         }
         
-     // Salvando as mesas antes de salvar a reserva
-        List<TableRestaurantEntity> tableRestaurantEntities = reserve.getTableRestaurants().stream()
-                .map(table -> {
-                    TableRestaurantEntity tableEntity = tableRestaurantRepository.findById(table.getId())
-                            .orElseThrow(() -> new RuntimeException("Table not found"));
-                    return tableEntity;
-                }).collect(Collectors.toList());
+        final Optional<TableRestaurantEntity> tableEntityFound =
+        		tableRestaurantRepository.findById(reserve.getTableRestaurants());
         
+        if (tableEntityFound.isEmpty()) {
+            throw new IllegalArgumentException(
+                String.format("Table with id [%s] not found", reserve.getTableRestaurants()));
+        }
+                
         final var clientEntity = clientEntityFound.get();
         final var restaurantEntity = restaurantEntityFound.get();
+        final var tableEntity = tableEntityFound.get();
         
         final var reserveEntity =
             ReserveEntity.builder()
@@ -75,9 +76,7 @@ public class ReserveGatewayImpl implements ReserveGateway {
                 .toleranceMinutes(reserve.getToleranceMinutes())
                 .timeLimit(reserve.getTimeLimit())
                 .statusReserve(reserve.getStatusReserve())
-                .tableRestaurant(reserve.getTableRestaurants().stream()
-                        .map(this::mapToEntity)
-                        .collect(Collectors.toList()))
+                .tableRestaurant(tableEntity)
                 .build();
         
         final var saved = reserveRepository.save(reserveEntity);
@@ -158,9 +157,7 @@ public class ReserveGatewayImpl implements ReserveGateway {
                 .toleranceMinutes(reserve.getToleranceMinutes())
                 .timeLimit(reserve.getTimeLimit())
                 .statusReserve(reserve.getStatusReserve())
-                .tableRestaurant(reserve.getTableRestaurants().stream()
-                        .map(this::mapToEntity)
-                        .collect(Collectors.toList()))
+                .tableRestaurant(reserveFound.getTableRestaurant())
                 .build();
         
         final var updated = reserveRepository.save(reserveEntity);
@@ -185,9 +182,7 @@ public class ReserveGatewayImpl implements ReserveGateway {
             .id(entity.getId())
             .clientId(entity.getClient().getId())
             .restaurantId(entity.getRestaurant().getId())
-            .tableRestaurants(entity.getTableRestaurant().stream()
-                .map(this::mapToDomain)
-                .collect(Collectors.toList()))
+            .tableRestaurants(entity.getTableRestaurant().getId())
             .numberPeople(entity.getNumberPeople())
             .dateReserve(entity.getDateReserve())
             .dateCreated(entity.getDateCreated())

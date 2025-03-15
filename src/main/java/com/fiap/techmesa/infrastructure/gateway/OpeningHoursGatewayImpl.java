@@ -12,6 +12,7 @@ import com.fiap.techmesa.application.gateway.OpeningHoursGateway;
 import com.fiap.techmesa.infrastructure.persistence.entity.OpeningHoursEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
 import com.fiap.techmesa.infrastructure.persistence.repository.OpeningHoursRepository;
+import com.fiap.techmesa.infrastructure.persistence.repository.RestaurantRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class OpeningHoursGatewayImpl implements OpeningHoursGateway {
 
     private final OpeningHoursRepository openingHoursRepository;
+    private final RestaurantRepository restaurantRepository;
 
     @Override
     public OpeningHours save(final OpeningHours openingHours) {
@@ -45,7 +47,11 @@ public class OpeningHoursGatewayImpl implements OpeningHoursGateway {
         final var openingHoursFound =
             openingHoursRepository.findById(openingHours.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Opening hours not found"));
-
+        
+        final var restaurant = restaurantRepository.findById(openingHours.getRestaurantId())
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("Restaurant with id [%s] not found", openingHours.getRestaurantId())));
+        
         final var openingHoursEntity =
             OpeningHoursEntity.builder()
                 .id(openingHoursFound.getId())
@@ -54,7 +60,7 @@ public class OpeningHoursGatewayImpl implements OpeningHoursGateway {
                 .dayWeek(openingHours.getDayWeek())
                 .startTime(openingHours.getStartTime())
                 .endTime(openingHours.getEndTime())
-                .restaurant(RestaurantEntity.builder().id(openingHours.getRestaurantId()).build())
+                .restaurant(restaurant)
                 .build();
 
         final var updated = openingHoursRepository.save(openingHoursEntity);
@@ -68,14 +74,22 @@ public class OpeningHoursGatewayImpl implements OpeningHoursGateway {
         openingHoursRepository.deleteById(id);
     }
 
+    
+    
     private OpeningHoursEntity mapToEntity(final OpeningHours openingHours) {
+    	
+    	 final var restaurant = restaurantRepository.findById(openingHours.getRestaurantId())
+                 .orElseThrow(() -> new IllegalArgumentException(
+                         String.format("Restaurant with id [%s] not found", openingHours.getRestaurantId())));
+         
+    	
         return OpeningHoursEntity.builder()
             .name(openingHours.getName())
             .turn(openingHours.getTurn())
             .dayWeek(openingHours.getDayWeek())
             .startTime(openingHours.getStartTime())
             .endTime(openingHours.getEndTime())
-            .restaurant(RestaurantEntity.builder().id(openingHours.getRestaurantId()).build())
+            .restaurant(restaurant)
             .build();
     }
 

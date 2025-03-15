@@ -125,9 +125,7 @@ public class ClientGatewayImpl implements ClientGateway {
                 .toleranceMinutes(reserve.getToleranceMinutes())
                 .timeLimit(reserve.getTimeLimit())
                 .statusReserve(reserve.getStatusReserve())
-                .tableRestaurant(reserve.getTableRestaurants().stream()
-                        .map(this::mapToEntity)
-                        .collect(Collectors.toList()))
+                .tableRestaurant(TableRestaurantEntity.builder().id(reserve.getTableRestaurants()).build())
                 .build();
     }
 
@@ -143,9 +141,7 @@ public class ClientGatewayImpl implements ClientGateway {
                 .toleranceMinutes(entity.getToleranceMinutes())
                 .timeLimit(entity.getTimeLimit())
                 .statusReserve(entity.getStatusReserve())
-                .tableRestaurants(entity.getTableRestaurant().stream()
-                        .map(this::mapToDomain)
-                        .collect(Collectors.toList()))
+                .tableRestaurants(entity.getTableRestaurant().getId())
                 .build();
     }
 

@@ -211,8 +211,7 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
 				.id(reserve.getId())
 				.client(ClientEntity.builder().id(reserve.getClientId()).build())
 				.restaurant(RestaurantEntity.builder().id(reserve.getRestaurantId()).build())
-				.tableRestaurant(
-						reserve.getTableRestaurants().stream().map(this::mapToEntity).collect(Collectors.toList()))
+				.tableRestaurant(TableRestaurantEntity.builder().id(reserve.getTableRestaurants()).build())
 				.numberPeople(reserve.getNumberPeople())
 				.dateReserve(reserve.getDateReserve())
 				.dateCreated(reserve.getDateCreated())
@@ -228,8 +227,7 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
 				.id(entity.getId())
 				.clientId(entity.getClient().getId())
 				.restaurantId(entity.getRestaurant().getId())
-				.tableRestaurants(
-						entity.getTableRestaurant().stream().map(this::mapToDomain).collect(Collectors.toList()))
+				.tableRestaurants(entity.getTableRestaurant().getId())
 				.numberPeople(entity.getNumberPeople())
 				.dateReserve(entity.getDateReserve())
 				.dateCreated(entity.getDateCreated())

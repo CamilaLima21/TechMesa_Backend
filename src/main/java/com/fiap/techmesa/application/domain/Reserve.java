@@ -25,7 +25,7 @@ public class Reserve {
     
     private Integer restaurantId;
     
-    private List<TableRestaurant> tableRestaurants;
+    private Integer tableRestaurants;
 
     private Integer numberPeople;
 
@@ -44,7 +44,7 @@ public class Reserve {
     public static Reserve createReserve(
             final Integer clientId,
             final Integer restaurantId,
-            final List<TableRestaurant> tableRestaurants,
+            final Integer tableRestaurants,
             final Integer numberPeople,
             final LocalDate dateReserve,
             final LocalDate dateCreated,

@@ -31,8 +31,8 @@ public class TableRestaurantEntity {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     private RestaurantEntity restaurant;
-
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reserve_id", referencedColumnName = "id")
     private ReserveEntity reserve;
 
