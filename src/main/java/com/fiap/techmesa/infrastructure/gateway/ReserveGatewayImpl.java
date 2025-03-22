@@ -103,16 +103,15 @@ public class ReserveGatewayImpl implements ReserveGateway {
 
     @Override
     public Optional<List<ReserveEntity>> findByRestaurantIdAndDate(final Integer restaurantId, final LocalDate dateReserve) {
-        final Optional<RestaurantEntity> restaurantEntityFound =
-            restaurantRepository.findById(restaurantId);
+        final Optional<RestaurantEntity> restaurantEntityFound = restaurantRepository.findById(restaurantId);
 
         if (restaurantEntityFound.isEmpty()) {
             return Optional.empty();
         }
 
         final var restaurantEntity = restaurantEntityFound.get();
-
-        return reserveRepository.findByRestaurantAndDateReserve(restaurantEntity, dateReserve);
+        List<ReserveEntity> reserves = reserveRepository.findByRestaurantAndDateReserve(restaurantEntity, dateReserve);
+        return reserves.isEmpty() ? Optional.empty() : Optional.of(reserves);
     }
 
     @Override

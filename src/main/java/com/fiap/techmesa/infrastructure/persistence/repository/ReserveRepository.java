@@ -12,7 +12,7 @@ import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
 
 public interface ReserveRepository extends JpaRepository<ReserveEntity, Integer>{
 
-	Optional<List<ReserveEntity>> findByRestaurantAndDateReserve(RestaurantEntity restaurantEntity, LocalDate dateReserve);
+	List<ReserveEntity> findByRestaurantAndDateReserve(RestaurantEntity restaurantEntity, LocalDate dateReserve);
 	
 	Optional<List<ReserveEntity>> findByClientAndDateReserve(ClientEntity clientEntity, LocalDate dateReserve);
 	

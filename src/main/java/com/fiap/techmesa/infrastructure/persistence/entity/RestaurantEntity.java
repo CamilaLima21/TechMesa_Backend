@@ -3,6 +3,7 @@ package com.fiap.techmesa.infrastructure.persistence.entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fiap.techmesa.application.enums.StatusRestaurantEnum;
 import com.fiap.techmesa.application.enums.TypeKitchenEnum;
@@ -35,6 +36,7 @@ public class RestaurantEntity {
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     private List<OpeningHoursEntity> openingHours;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     private List<ReserveEntity> reserve;
 

@@ -61,8 +61,10 @@ public class ReserveController {
     public ResponseEntity<List<ReserveEntity>> getReservesByRestaurantAndDate(@RequestParam Integer restaurantId,
                                                                               @RequestParam LocalDate dateReserve) {
         Optional<List<ReserveEntity>> reserves = reserveGateway.findByRestaurantIdAndDate(restaurantId, dateReserve);
-        return reserves.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                       .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        if (reserves.isEmpty() || reserves.get().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(reserves.get(), HttpStatus.OK);
     }
 }
     
