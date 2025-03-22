@@ -8,190 +8,6 @@
 	},
 	"item": [
 		{
-			"name": "Clients",
-			"item": [
-				{
-					"name": "Clients_Cadastro",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"John Doe Teste\",\r\n  \"email\": \"john.doe.teste.teste@example.com\",\r\n  \"registrationDate\": \"2025-12-31\",\r\n  \"addressId\": 1,\r\n  \"reserves\": []\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/techMesa/clients",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"techMesa",
-								"clients"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Clients_Consulta",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/techMesa/clients/2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"techMesa",
-								"clients",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Clients_Edita",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"John Doe Teste Um\",\r\n  \"email\": \"john.doe.teste.teste.um@example.com\",\r\n  \"registrationDate\": \"2025-12-31\",\r\n  \"addressId\": 1,\r\n  \"reserves\": []\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/techMesa/clients/2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"techMesa",
-								"clients",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Clients_Deleta",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/techMesa/clients/2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"techMesa",
-								"clients",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Clients_Consulta_Eita",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/techMesa/clients/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"techMesa",
-								"clients",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Clients_Consulta_Name",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/techMesa/clients/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"techMesa",
-								"clients",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Clients_Consulta_Email",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/techMesa/clients/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"techMesa",
-								"clients",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Address",
 			"item": [
 				{
@@ -204,7 +20,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"street\": \"Rua TESTE 123\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"raw": "{\r\n  \"street\": \"Avenida Interlagos\",\r\n  \"number\": 501,\r\n  \"neighborhood\": \"Vila Ariete\",\r\n  \"city\": \"São Paulo\",\r\n  \"state\": \"São Paulo\",\r\n  \"country\": \"Brasil\",\r\n  \"cep\": \"04661-200\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -260,7 +76,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"street\": \"Rua 2 TESTE\",\r\n  \"number\": 3000,\r\n   \"neighborhood\": \"bairro\",\r\n    \"city\": \"cidade\",\r\n    \"state\": \"estado\",\r\n    \"country\": \"pais\",\r\n    \"cep\": \"03594-330\"\r\n}",
+							"raw": "{\r\n  \"street\": \"Avenida Interlagos\",\r\n  \"number\": 502,\r\n  \"neighborhood\": \"Vila Ariete\",\r\n  \"city\": \"São Paulo\",\r\n  \"state\": \"São Paulo\",\r\n  \"country\": \"Brasil\",\r\n  \"cep\": \"04661-200\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -268,7 +84,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/techMesa/addresses/2",
+							"raw": "http://localhost:8080/techMesa/addresses/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -277,7 +93,7 @@
 							"path": [
 								"techMesa",
 								"addresses",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -301,7 +117,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/techMesa/addresses/3",
+							"raw": "http://localhost:8080/techMesa/addresses/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -310,7 +126,1511 @@
 							"path": [
 								"techMesa",
 								"addresses",
-								"3"
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clients",
+			"item": [
+				{
+					"name": "Clients_Cadastro",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Camila Lima teste\",\r\n  \"email\": \"camila.lima22@gmail.com\",\r\n  \"registrationDate\": \"2025-03-09\",\r\n  \"addressId\": 1,\r\n  \"reserves\": []\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clients_Consulta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clients_Edita",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Camila Lima\",\r\n  \"email\": \"camila.lima.email@gmail.com\",\r\n  \"registrationDate\": \"2025-03-09\",\r\n  \"addressId\": 1,\r\n  \"reserves\": []\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clients_Deleta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clients_Consulta_Parte_Nome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients/by-part-name?partName=Lima",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients",
+								"by-part-name"
+							],
+							"query": [
+								{
+									"key": "partName",
+									"value": "Lima"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clients_Consulta_Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients/by-name?name=Camila%20Lima",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients",
+								"by-name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Camila%20Lima"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clients_Consulta_Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients/by-email?email=camila.lima@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients",
+								"by-email"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "camila.lima@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Restaurant",
+			"item": [
+				{
+					"name": "Restaurant_Cadastro",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n    \"name\": \"Geracao Digital\",\r\n    \"addressId\": 1,\r\n    \"email\": \"gd@santander.com\",\r\n    \"openingHours\": [],\r\n    \"reserves\": [],\r\n    \"tableRestaurants\": [],\r\n    \"typeKitchen\": \"CHINESE\",\r\n    \"capacity\": 3000,\r\n    \"statusRestaurant\": \"ACTIVE\",\r\n    \"registrationDate\": \"2023-11-01\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/restaurants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant_Consulta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/restaurants/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"restaurants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant_Edita",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n    \"name\": \"Radar\",\r\n    \"addressId\": 1,\r\n    \"email\": \"gd2@santander.com\",\r\n    \"openingHours\": [],\r\n    \"reserves\": [],\r\n    \"tableRestaurants\": [],\r\n    \"typeKitchen\": \"CHINESE\",\r\n    \"capacity\": 3000,\r\n    \"statusRestaurant\": \"ACTIVE\",\r\n    \"registrationDate\": \"2023-11-01\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/restaurants/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"restaurants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant_Deleta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/restaurants/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"restaurants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant_Consulta_Todos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/restaurants?page=0&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant_Consulta_Cozinha",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/restaurants/by-type-kitchen?typeKitchen=CHINESE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"restaurants",
+								"by-type-kitchen"
+							],
+							"query": [
+								{
+									"key": "typeKitchen",
+									"value": "CHINESE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant_Consulta_Parte_Nome",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/restaurants/by-city-and-neighborhood?city=São%20Paulo&neighborhood=Vila%20Ariete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"restaurants",
+								"by-city-and-neighborhood"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "São%20Paulo"
+								},
+								{
+									"key": "neighborhood",
+									"value": "Vila%20Ariete"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant_Consulta_Nome",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/restaurants/by-name?name=Geracao%20Digital",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"restaurants",
+								"by-name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Geracao%20Digital"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant_Consulta_Email",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/restaurants/by-email?email=gd1@santander.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"restaurants",
+								"by-email"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "gd1@santander.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant_Consulta_Cidade",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/restaurants/by-city?city=São%20Paulo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"restaurants",
+								"by-city"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "São%20Paulo"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant_Consulta_Bairro",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/restaurants/by-city-and-neighborhood?city=São%20Paulo&neighborhood=Vila%20Ariete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"restaurants",
+								"by-city-and-neighborhood"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "São%20Paulo"
+								},
+								{
+									"key": "neighborhood",
+									"value": "Vila%20Ariete"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Table",
+			"item": [
+				{
+					"name": "Mesa_Cadastro",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tableIdentification\": \"Limites\",\r\n    \"restaurantId\": 1,\r\n    \"tableNumber\": 1,\r\n    \"numberSeats\": 4,\r\n    \"statusTableOccupation\": \"AVAILABLE\",\r\n    \"tablePosition\": \"INTERNAL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/table-restaurants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"table-restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mesa_Consulta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/table-restaurants/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"table-restaurants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mesa_Edita",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tableIdentification\": \"Rolling\",\r\n    \"restaurantId\": 1,\r\n    \"tableNumber\": 1,\r\n    \"numberSeats\": 4,\r\n    \"statusTableOccupation\": \"AVAILABLE\",\r\n    \"tablePosition\": \"INTERNAL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/table-restaurants/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"table-restaurants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mesa_Deleta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/table-restaurants/Limites",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"table-restaurants",
+								"Limites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mesa_Consulta_All",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/table-restaurants?page=0&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"table-restaurants"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mesa_Consulta_RestaudanteDia",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/table-restaurants/by-restaurant-and-date?tableIdentification=Limites&reserveId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"table-restaurants",
+								"by-restaurant-and-date"
+							],
+							"query": [
+								{
+									"key": "tableIdentification",
+									"value": "Limites"
+								},
+								{
+									"key": "reserveId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mesa_Consulta_DiaReserva",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/table-restaurants/by-restaurant-not-reserved-and-date?id=1&statusTableOccupation=AVAILABLE&dateReserve=2025-03-22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"table-restaurants",
+								"by-restaurant-not-reserved-and-date"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								},
+								{
+									"key": "statusTableOccupation",
+									"value": "AVAILABLE"
+								},
+								{
+									"key": "dateReserve",
+									"value": "2025-03-22"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OpeningHours",
+			"item": [
+				{
+					"name": "Opening_Cadastro",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"restaurantId\": 1,\r\n  \"name\": \"LunchHours\",\r\n  \"turn\": \"LUNCH\",\r\n  \"dayWeek\": \"MONDAY\",\r\n  \"startTime\": \"2025-03-15\",\r\n  \"endTime\": \"2025-12-30\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/opening-hours",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"opening-hours"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Opening_Consulta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/opening-hours/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"opening-hours",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Opening_Edita",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"restaurantId\": 1,\r\n  \"name\": \"LunchHour\",\r\n  \"turn\": \"LUNCH\",\r\n  \"dayWeek\": \"MONDAY\",\r\n  \"startTime\": \"2025-03-15\",\r\n  \"endTime\": \"2025-12-30\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/opening-hours/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"opening-hours",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Opening_Deleta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/opening-hours/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"opening-hours",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Opening_Consulta_All",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/opening-hours",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"opening-hours"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rating",
+			"item": [
+				{
+					"name": "Rating_Cadastro",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"clientId\": 1,\r\n  \"title\": \"Muito Bom\",\r\n  \"text\": \"Achei muito bom.\",\r\n  \"note\": 5,\r\n  \"dateRegistration\": \"2023-10-15\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/ratings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rating_Consulta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/ratings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rating_Edita",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"clientId\": 1,\r\n  \"title\": \"Mudei de ideia\",\r\n  \"text\": \"Achei quase bom.\",\r\n  \"note\": 4,\r\n  \"dateRegistration\": \"2023-10-15\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/ratings/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"ratings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rating_Deleta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/ratings/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"ratings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rating_Consulta_All",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/ratings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reserve",
+			"item": [
+				{
+					"name": "Reserve_Cadastro",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"clientId\": 1,\r\n  \"restaurantId\": 1,\r\n  \"tableRestaurants\": 1,\r\n  \"numberPeople\": 4,\r\n  \"dateReserve\": \"2025-03-16\",\r\n  \"dateCreated\": \"2025-03-15\",\r\n  \"startReserve\": \"2025-03-16\",\r\n  \"toleranceMinutes\": 15,\r\n  \"timeLimit\": \"2025-03-16\",\r\n  \"statusReserve\": \"CONFIRMED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/reserves",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"reserves"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reserve_Consulta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/reserves/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"reserves",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reserve_Edita",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"clientId\": 1,\r\n  \"restaurantId\": 1,\r\n  \"tableRestaurants\": 1,\r\n  \"numberPeople\": 4,\r\n  \"dateReserve\": \"2025-03-17\",\r\n  \"dateCreated\": \"2025-03-16\",\r\n  \"startReserve\": \"2025-03-17\",\r\n  \"toleranceMinutes\": 15,\r\n  \"timeLimit\": \"2025-03-16\",\r\n  \"statusReserve\": \"CONFIRMED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/reserves/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"reserves",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reserve_Deleta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/reserves/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"reserves",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reserve_Consulta_All",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/reserves?page=0&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"reserves"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reserve_Consulta_RestaurantDate",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/techMesa/reserves/by-restaurant-date?restaurantId=1&dateReserve=2025-03-16",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"reserves",
+								"by-restaurant-date"
+							],
+							"query": [
+								{
+									"key": "restaurantId",
+									"value": "1"
+								},
+								{
+									"key": "dateReserve",
+									"value": "2025-03-16"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Runner all",
+			"item": [
+				{
+					"name": "Address_Cadastro_Runner",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"street\": \"Avenida Interlagos\",\r\n  \"number\": 501,\r\n  \"neighborhood\": \"Vila Ariete\",\r\n  \"city\": \"São Paulo\",\r\n  \"state\": \"São Paulo\",\r\n  \"country\": \"Brasil\",\r\n  \"cep\": \"04661-200\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/addresses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clients_Cadastro_Runner",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Camila Lima\",\r\n  \"email\": \"camila.lima@gmail.com\",\r\n  \"registrationDate\": \"2025-03-09\",\r\n  \"addressId\": 1,\r\n  \"reserves\": []\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant_Cadastro_Runner",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n    \"name\": \"Geracao Digital\",\r\n    \"addressId\": 1,\r\n    \"email\": \"gd@santander.com\",\r\n    \"openingHours\": [],\r\n    \"reserves\": [],\r\n    \"tableRestaurants\": [],\r\n    \"typeKitchen\": \"CHINESE\",\r\n    \"capacity\": 3000,\r\n    \"statusRestaurant\": \"ACTIVE\",\r\n    \"registrationDate\": \"2023-11-01\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/restaurants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Opening_Cadastro_Runner",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"restaurantId\": 1,\r\n  \"name\": \"LunchHours\",\r\n  \"turn\": \"LUNCH\",\r\n  \"dayWeek\": \"MONDAY\",\r\n  \"startTime\": \"2025-03-15\",\r\n  \"endTime\": \"2025-12-30\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/opening-hours",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"opening-hours"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mesa_Cadastro_Runner",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tableIdentification\": \"Limites\",\r\n    \"restaurantId\": 1,\r\n    \"tableNumber\": 1,\r\n    \"numberSeats\": 4,\r\n    \"statusTableOccupation\": \"AVAILABLE\",\r\n    \"tablePosition\": \"INTERNAL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/table-restaurants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"table-restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reserve_Cadastro_Runner",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"clientId\": 1,\r\n  \"restaurantId\": 1,\r\n  \"tableRestaurants\": 1,\r\n  \"numberPeople\": 4,\r\n  \"dateReserve\": \"2025-03-22\",\r\n  \"dateCreated\": \"2025-03-22\",\r\n  \"startReserve\": \"2025-03-22\",\r\n  \"toleranceMinutes\": 15,\r\n  \"timeLimit\": \"2025-03-22\",\r\n  \"statusReserve\": \"CONFIRMED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/reserves",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"reserves"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mesa_Reserva_Runner",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tableIdentification\": \"Limites\",\r\n    \"restaurantId\": 1,\r\n    \"reserveId\": 1,\r\n    \"tableNumber\": 1,\r\n    \"numberSeats\": 4,\r\n    \"statusTableOccupation\": \"AVAILABLE\",\r\n    \"tablePosition\": \"INTERNAL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/techMesa/table-restaurants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"techMesa",
+								"table-restaurants"
 							]
 						}
 					},
