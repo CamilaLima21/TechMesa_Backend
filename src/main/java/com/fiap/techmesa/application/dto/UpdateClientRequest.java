@@ -22,7 +22,7 @@ public class UpdateClientRequest {
 	private String name;
 	
 	@NotBlank(message = "Email is required")
-	@Size(max = 255, message = "Email length must be less than 255 characters")
+	@Size(max = 100, message = "Email length must be less than 100 characters")
 	@Email(message = "Email should be valid")
     private String email;
 	

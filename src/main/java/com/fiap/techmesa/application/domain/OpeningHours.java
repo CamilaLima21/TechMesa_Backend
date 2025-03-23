@@ -27,7 +27,7 @@ public class OpeningHours {
 	
 	@NotBlank(message = "Name is required")
 	@Size(max = 100, message = "Name length must be less than 100 characters")
-	@Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Name must contain only letters,numbers and spaces")
+	@Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Name must contain only letters, numbers and spaces")
 	private String name;
 	
     private TurnEnum turn;  

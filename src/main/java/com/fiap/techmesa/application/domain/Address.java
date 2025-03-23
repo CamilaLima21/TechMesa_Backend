@@ -41,7 +41,7 @@ public class Address {
     private String country;
     
     @NotBlank(message = "ZipCode is required")
-	@Size(max = 100, message = "ZipCode length must be less than 100 characters")
+	@Size(max = 12, message = "ZipCode length must be less than 12 characters")
     private String zipCode;
     
     public static Address createAddress(

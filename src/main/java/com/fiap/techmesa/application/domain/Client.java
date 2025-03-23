@@ -25,7 +25,7 @@ public class Client {
     @Pattern(regexp = "[a-zA-Z\\s]+", message = "Name must contain only letters and spaces")
     private String name;
     
-    @Size(max = 255, message = "Email length must be less than 255 characters")
+    @Size(max = 100, message = "Email length must be less than 100 characters")
     @Email(message = "Email should be valid")
     private String email;
     
