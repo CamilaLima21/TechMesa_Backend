@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TableRestaurantController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">techmesa</a> &gt; <a href="index.source.html" class="el_package">com.fiap.techmesa.infrastructure.api</a> &gt; <span class="el_source">TableRestaurantController.java</span></div><h1>TableRestaurantController.java</h1><pre class="source lang-java linenums">package com.fiap.techmesa.infrastructure.api;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import com.fiap.techmesa.application.domain.TableRestaurant;
+import com.fiap.techmesa.application.domain.pagination.Page;
+import com.fiap.techmesa.application.domain.pagination.Pagination;
+import com.fiap.techmesa.application.enums.StatusTableOccupationEnum;
+import com.fiap.techmesa.application.gateway.TableRestaurantGateway;
+
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping(&quot;techMesa/table-restaurants&quot;)
+@RequiredArgsConstructor
+public class TableRestaurantController {
+
+    private final TableRestaurantGateway tableRestaurantGateway;
+
+    @PostMapping
+    public ResponseEntity&lt;TableRestaurant&gt; createTableRestaurant(@Validated @RequestBody TableRestaurant tableRestaurant) {
+<span class="nc" id="L29">        TableRestaurant savedTableRestaurant = tableRestaurantGateway.save(tableRestaurant);</span>
+<span class="nc" id="L30">        return new ResponseEntity&lt;&gt;(savedTableRestaurant, HttpStatus.CREATED);</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;TableRestaurant&gt; getTableRestaurantById(@PathVariable int id) {
+<span class="nc" id="L35">        Optional&lt;TableRestaurant&gt; tableRestaurant = tableRestaurantGateway.findById(id);</span>
+<span class="nc" id="L36">        return tableRestaurant.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="nc" id="L37">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;TableRestaurant&gt; updateTableRestaurant(@PathVariable int id, @Validated @RequestBody TableRestaurant tableRestaurant) {
+<span class="nc" id="L42">        tableRestaurant.setId(id);</span>
+<span class="nc" id="L43">        TableRestaurant updatedTableRestaurant = tableRestaurantGateway.update(tableRestaurant);</span>
+<span class="nc" id="L44">        return new ResponseEntity&lt;&gt;(updatedTableRestaurant, HttpStatus.OK);</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deleteTableRestaurant(@PathVariable String id) {
+<span class="nc" id="L49">        tableRestaurantGateway.delete(id);</span>
+<span class="nc" id="L50">        return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
+    }
+
+    @GetMapping
+    public ResponseEntity&lt;Pagination&lt;TableRestaurant&gt;&gt; getAllTableRestaurants(@RequestParam int page, @RequestParam int size) {
+<span class="nc" id="L55">        Page pageRequest = new Page(page, size);</span>
+<span class="nc" id="L56">        Pagination&lt;TableRestaurant&gt; tableRestaurants = tableRestaurantGateway.findAll(pageRequest);</span>
+<span class="nc" id="L57">        return new ResponseEntity&lt;&gt;(tableRestaurants, HttpStatus.OK);</span>
+    }
+
+    @GetMapping(&quot;/by-restaurant-and-date&quot;)
+    public ResponseEntity&lt;List&lt;TableRestaurant&gt;&gt; getTableRestaurantsByRestaurantAndDate(@RequestParam String tableIdentification, @RequestParam Integer reserveId) {
+<span class="fc" id="L62">        Optional&lt;TableRestaurant&gt; tableRestaurant = tableRestaurantGateway.findByRestaurantAndDate(tableIdentification, reserveId);</span>
+<span class="pc" id="L63">        return tableRestaurant.map(value -&gt; new ResponseEntity&lt;&gt;(List.of(value), HttpStatus.OK))</span>
+<span class="fc" id="L64">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+
+    @GetMapping(&quot;/by-restaurant-not-reserved-and-date&quot;)
+    public ResponseEntity&lt;List&lt;TableRestaurant&gt;&gt; getTableRestaurantsByRestaurantNotReservedAndDate(@RequestParam int id, @RequestParam StatusTableOccupationEnum statusTableOccupation, @RequestParam LocalDate dateReserve) {
+<span class="fc" id="L69">        Optional&lt;TableRestaurant&gt; tableRestaurant = tableRestaurantGateway.findByRestaurantNotReservedAndDate(id, statusTableOccupation, dateReserve);</span>
+<span class="pc" id="L70">        return tableRestaurant.map(value -&gt; new ResponseEntity&lt;&gt;(List.of(value), HttpStatus.OK))</span>
+<span class="fc" id="L71">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

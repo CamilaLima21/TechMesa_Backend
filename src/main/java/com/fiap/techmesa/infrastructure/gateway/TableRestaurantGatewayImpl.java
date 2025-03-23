@@ -122,7 +122,7 @@ public class TableRestaurantGatewayImpl implements TableRestaurantGateway {
                 .build();
     }
 
-    private TableRestaurant mapToDomain(final TableRestaurantEntity entity) {
+    public TableRestaurant mapToDomain(final TableRestaurantEntity entity) {
         return TableRestaurant.builder()
                 .id(entity.getId())
                 .tableIdentification(entity.getTableIdentification())

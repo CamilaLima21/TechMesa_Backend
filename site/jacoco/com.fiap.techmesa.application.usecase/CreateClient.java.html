@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CreateClient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">techmesa</a> &gt; <a href="index.source.html" class="el_package">com.fiap.techmesa.application.usecase</a> &gt; <span class="el_source">CreateClient.java</span></div><h1>CreateClient.java</h1><pre class="source lang-java linenums">package com.fiap.techmesa.application.usecase;
+
+import org.springframework.stereotype.Component;
+
+import com.fiap.techmesa.application.domain.Client;
+import com.fiap.techmesa.application.gateway.ClientGateway;
+import com.fiap.techmesa.application.usecase.exception.ClientAlreadyExistsException;
+
+import lombok.RequiredArgsConstructor;
+
+@Component
+@RequiredArgsConstructor
+public class CreateClient {
+	
+	private final ClientGateway gateway;
+	
+	public Client execute(final Client request) {
+		
+<span class="nc" id="L19">		final var client = gateway.findById(request.getId());</span>
+		
+<span class="nc bnc" id="L21" title="All 2 branches missed.">		if(client.isPresent()) {</span>
+<span class="nc" id="L22">			throw new ClientAlreadyExistsException(request.getId(), request.getName());</span>
+		}
+		
+<span class="nc" id="L25">		final var buildDomain =</span>
+<span class="nc" id="L26">				Client.createClient(</span>
+<span class="nc" id="L27">						request.getName(),</span>
+<span class="nc" id="L28">						request.getEmail(),</span>
+<span class="nc" id="L29">						request.getRegistrationDate(),</span>
+<span class="nc" id="L30">						request.getAddressId(),</span>
+<span class="nc" id="L31">						request.getReserves());</span>
+		
+<span class="nc" id="L33">		return gateway.save(buildDomain);</span>
+		
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

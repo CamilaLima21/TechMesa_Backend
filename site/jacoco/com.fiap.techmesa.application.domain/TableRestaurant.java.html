@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TableRestaurant.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">techmesa</a> &gt; <a href="index.source.html" class="el_package">com.fiap.techmesa.application.domain</a> &gt; <span class="el_source">TableRestaurant.java</span></div><h1>TableRestaurant.java</h1><pre class="source lang-java linenums">package com.fiap.techmesa.application.domain;
+
+import com.fiap.techmesa.application.enums.StatusTableOccupationEnum;
+import com.fiap.techmesa.application.enums.TablePositionEnum;
+import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
+public class TableRestaurant {
+	
+	private Integer id;
+	
+	@NotNull(message = &quot;Table identification is required&quot;)
+	private String tableIdentification;
+	
+	@NotNull(message = &quot;Restaurant is required&quot;)
+    private Integer restaurantId;
+	
+    private Integer reserveId;
+    
+    private int numberSeats;
+    
+    private StatusTableOccupationEnum statusTableOccupation;
+    
+    private TablePositionEnum tablePosition;
+    
+    public static TableRestaurant createTableRestaurant(
+    		final String tableIdentification,
+    		final Integer restaurantId,
+    		final Integer reserveId,
+    		final int numberSeats,
+    		final StatusTableOccupationEnum statusTableOccupation,
+    		final TablePositionEnum tablePosition) {
+    	
+<span class="fc" id="L45">    	return new TableRestaurant(null, tableIdentification, restaurantId, reserveId, numberSeats, statusTableOccupation, tablePosition);</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

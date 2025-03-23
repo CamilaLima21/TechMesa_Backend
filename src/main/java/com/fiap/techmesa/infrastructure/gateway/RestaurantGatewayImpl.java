@@ -145,7 +145,7 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
 	        .build();
 	}
 
-	private Restaurant mapToDomain(final RestaurantEntity entity) {
+	public Restaurant mapToDomain(final RestaurantEntity entity) {
 	    return Restaurant.builder()
 	        .id(entity.getId())
 	        .name(entity.getName())

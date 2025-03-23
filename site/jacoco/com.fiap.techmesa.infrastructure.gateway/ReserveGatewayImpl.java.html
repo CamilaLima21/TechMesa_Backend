@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReserveGatewayImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">techmesa</a> &gt; <a href="index.source.html" class="el_package">com.fiap.techmesa.infrastructure.gateway</a> &gt; <span class="el_source">ReserveGatewayImpl.java</span></div><h1>ReserveGatewayImpl.java</h1><pre class="source lang-java linenums">package com.fiap.techmesa.infrastructure.gateway;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fiap.techmesa.application.domain.Reserve;
+import com.fiap.techmesa.application.domain.TableRestaurant;
+import com.fiap.techmesa.application.domain.pagination.Page;
+import com.fiap.techmesa.application.domain.pagination.Pagination;
+import com.fiap.techmesa.application.gateway.ReserveGateway;
+import com.fiap.techmesa.application.usecase.exception.ReserveNotFoundException;
+import com.fiap.techmesa.infrastructure.persistence.entity.ClientEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.TableRestaurantEntity;
+import com.fiap.techmesa.infrastructure.persistence.repository.ClientRepository;
+import com.fiap.techmesa.infrastructure.persistence.repository.ReserveRepository;
+import com.fiap.techmesa.infrastructure.persistence.repository.RestaurantRepository;
+import com.fiap.techmesa.infrastructure.persistence.repository.TableRestaurantRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Component
+@RequiredArgsConstructor
+public class ReserveGatewayImpl implements ReserveGateway {
+
+    private final ReserveRepository reserveRepository;
+    private final ClientRepository clientRepository;
+    private final RestaurantRepository restaurantRepository;
+    private final TableRestaurantRepository tableRestaurantRepository;
+
+    @Override
+    public Reserve save(final Reserve reserve) {
+<span class="fc" id="L40">        final Optional&lt;ClientEntity&gt; clientEntityFound =</span>
+<span class="fc" id="L41">            clientRepository.findById(reserve.getClientId());</span>
+        
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        if (clientEntityFound.isEmpty()) {</span>
+<span class="nc" id="L44">            throw new IllegalArgumentException(</span>
+<span class="nc" id="L45">                String.format(&quot;Client with id [%s] not found&quot;, reserve.getRestaurantId()));</span>
+        }
+        
+<span class="fc" id="L48">        final Optional&lt;RestaurantEntity&gt; restaurantEntityFound =</span>
+<span class="fc" id="L49">            restaurantRepository.findById(reserve.getRestaurantId());</span>
+        
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if (restaurantEntityFound.isEmpty()) {</span>
+<span class="nc" id="L52">            throw new IllegalArgumentException(</span>
+<span class="nc" id="L53">                String.format(&quot;Restaurant with id [%s] not found&quot;, reserve.getRestaurantId()));</span>
+        }
+        
+<span class="fc" id="L56">        final Optional&lt;TableRestaurantEntity&gt; tableEntityFound =</span>
+<span class="fc" id="L57">        		tableRestaurantRepository.findById(reserve.getTableRestaurants());</span>
+        
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (tableEntityFound.isEmpty()) {</span>
+<span class="nc" id="L60">            throw new IllegalArgumentException(</span>
+<span class="nc" id="L61">                String.format(&quot;Table with id [%s] not found&quot;, reserve.getTableRestaurants()));</span>
+        }
+                
+<span class="fc" id="L64">        final var clientEntity = clientEntityFound.get();</span>
+<span class="fc" id="L65">        final var restaurantEntity = restaurantEntityFound.get();</span>
+<span class="fc" id="L66">        final var tableEntity = tableEntityFound.get();</span>
+        
+        final var reserveEntity =
+<span class="fc" id="L69">            ReserveEntity.builder()</span>
+<span class="fc" id="L70">                .client(clientEntity)</span>
+<span class="fc" id="L71">                .restaurant(restaurantEntity)</span>
+<span class="fc" id="L72">                .numberPeople(reserve.getNumberPeople())</span>
+<span class="fc" id="L73">                .dateReserve(reserve.getDateReserve())</span>
+<span class="fc" id="L74">                .dateCreated(reserve.getDateCreated())</span>
+<span class="fc" id="L75">                .startReserve(reserve.getStartReserve())</span>
+<span class="fc" id="L76">                .toleranceMinutes(reserve.getToleranceMinutes())</span>
+<span class="fc" id="L77">                .timeLimit(reserve.getTimeLimit())</span>
+<span class="fc" id="L78">                .statusReserve(reserve.getStatusReserve())</span>
+<span class="fc" id="L79">                .tableRestaurant(tableEntity)</span>
+<span class="fc" id="L80">                .build();</span>
+        
+<span class="fc" id="L82">        final var saved = reserveRepository.save(reserveEntity);</span>
+        
+<span class="fc" id="L84">        return mapToDomain(saved);</span>
+    }
+
+    @Override
+    public Pagination&lt;Reserve&gt; findAll(Page page) {
+<span class="nc" id="L89">        var pageRequest = PageRequest.of(page.page(), page.size());</span>
+<span class="nc" id="L90">        var reservePage = reserveRepository.findAll(pageRequest);</span>
+<span class="nc" id="L91">        var reserves = reservePage.getContent().stream()</span>
+<span class="nc" id="L92">                .map(this::mapToDomain)</span>
+<span class="nc" id="L93">                .collect(Collectors.toList());</span>
+
+<span class="nc" id="L95">        return new Pagination&lt;&gt;(reservePage.getNumber(), reservePage.getSize(), reservePage.getTotalPages(),</span>
+<span class="nc" id="L96">                reservePage.getTotalElements(), reservePage.getNumberOfElements(), reserves);</span>
+    }
+
+    @Override
+    public Optional&lt;Reserve&gt; findById(final int id) {
+<span class="fc" id="L101">        return reserveRepository.findById(id).map(this::mapToDomain);</span>
+    }
+
+    @Override
+    public Optional&lt;List&lt;ReserveEntity&gt;&gt; findByRestaurantIdAndDate(final Integer restaurantId, final LocalDate dateReserve) {
+<span class="nc" id="L106">        final Optional&lt;RestaurantEntity&gt; restaurantEntityFound = restaurantRepository.findById(restaurantId);</span>
+
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (restaurantEntityFound.isEmpty()) {</span>
+<span class="nc" id="L109">            return Optional.empty();</span>
+        }
+
+<span class="nc" id="L112">        final var restaurantEntity = restaurantEntityFound.get();</span>
+<span class="nc" id="L113">        List&lt;ReserveEntity&gt; reserves = reserveRepository.findByRestaurantAndDateReserve(restaurantEntity, dateReserve);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        return reserves.isEmpty() ? Optional.empty() : Optional.of(reserves);</span>
+    }
+
+    @Override
+    public Optional&lt;List&lt;ReserveEntity&gt;&gt; findByRestaurantIdAndClientIdAndData(final Integer restaurantId, final Integer clientId, final LocalDate dateReserve) {
+<span class="nc" id="L119">        final Optional&lt;RestaurantEntity&gt; restaurantEntityFound =</span>
+<span class="nc" id="L120">            restaurantRepository.findById(restaurantId);</span>
+
+<span class="nc" id="L122">        final Optional&lt;ClientEntity&gt; clientEntityFound =</span>
+<span class="nc" id="L123">            clientRepository.findById(clientId);</span>
+
+<span class="nc bnc" id="L125" title="All 4 branches missed.">        if (restaurantEntityFound.isEmpty() || clientEntityFound.isEmpty()) {</span>
+<span class="nc" id="L126">            return Optional.empty();</span>
+        }
+
+<span class="nc" id="L129">        final var restaurantEntity = restaurantEntityFound.get();</span>
+<span class="nc" id="L130">        final var clientEntity = clientEntityFound.get();</span>
+
+<span class="nc" id="L132">        return reserveRepository.findByRestaurantAndClientAndDateReserve(restaurantEntity, clientEntity, dateReserve);</span>
+    }
+
+    @Transactional
+    @Override
+    public void delete(final int id) {
+<span class="fc" id="L138">        reserveRepository.deleteById(id);</span>
+<span class="fc" id="L139">    }</span>
+
+    @Override
+    public Reserve update(final Reserve reserve) {
+<span class="fc" id="L143">        final var reserveFound =</span>
+<span class="fc" id="L144">            reserveRepository.findById(reserve.getId())</span>
+<span class="pc" id="L145">                .orElseThrow(() -&gt; new ReserveNotFoundException(reserve.getId()));</span>
+
+        final var reserveEntity =
+<span class="fc" id="L148">            ReserveEntity.builder()</span>
+<span class="fc" id="L149">                .id(reserveFound.getId())</span>
+<span class="fc" id="L150">                .client(reserveFound.getClient())</span>
+<span class="fc" id="L151">                .restaurant(reserveFound.getRestaurant())</span>
+<span class="fc" id="L152">                .numberPeople(reserve.getNumberPeople())</span>
+<span class="fc" id="L153">                .dateReserve(reserve.getDateReserve())</span>
+<span class="fc" id="L154">                .dateCreated(reserve.getDateCreated())</span>
+<span class="fc" id="L155">                .startReserve(reserve.getStartReserve())</span>
+<span class="fc" id="L156">                .toleranceMinutes(reserve.getToleranceMinutes())</span>
+<span class="fc" id="L157">                .timeLimit(reserve.getTimeLimit())</span>
+<span class="fc" id="L158">                .statusReserve(reserve.getStatusReserve())</span>
+<span class="fc" id="L159">                .tableRestaurant(reserveFound.getTableRestaurant())</span>
+<span class="fc" id="L160">                .build();</span>
+        
+<span class="fc" id="L162">        final var updated = reserveRepository.save(reserveEntity);</span>
+        
+<span class="fc" id="L164">        return mapToDomain(updated);</span>
+    }
+
+    public TableRestaurantEntity mapToEntity(final TableRestaurant tableRestaurant) {
+<span class="fc" id="L168">        return TableRestaurantEntity.builder()</span>
+<span class="fc" id="L169">            .id(tableRestaurant.getId())</span>
+<span class="fc" id="L170">            .tableIdentification(tableRestaurant.getTableIdentification())</span>
+<span class="fc" id="L171">            .restaurant(RestaurantEntity.builder().id(tableRestaurant.getRestaurantId()).build())</span>
+<span class="fc" id="L172">            .reserve(ReserveEntity.builder().id(tableRestaurant.getReserveId()).build())</span>
+<span class="fc" id="L173">            .numberSeats(tableRestaurant.getNumberSeats())</span>
+<span class="fc" id="L174">            .statusTableOccupation(tableRestaurant.getStatusTableOccupation())</span>
+<span class="fc" id="L175">            .tablePosition(tableRestaurant.getTablePosition())</span>
+<span class="fc" id="L176">            .build();</span>
+    }
+
+    public Reserve mapToDomain(final ReserveEntity entity) {
+<span class="fc" id="L180">        return Reserve.builder()</span>
+<span class="fc" id="L181">            .id(entity.getId())</span>
+<span class="fc" id="L182">            .clientId(entity.getClient().getId())</span>
+<span class="fc" id="L183">            .restaurantId(entity.getRestaurant().getId())</span>
+<span class="fc" id="L184">            .tableRestaurants(Optional.ofNullable(entity.getTableRestaurant())</span>
+<span class="fc" id="L185">                    .map(TableRestaurantEntity::getId)</span>
+<span class="fc" id="L186">                    .orElse(null))</span>
+<span class="fc" id="L187">            .numberPeople(entity.getNumberPeople())</span>
+<span class="fc" id="L188">            .dateReserve(entity.getDateReserve())</span>
+<span class="fc" id="L189">            .dateCreated(entity.getDateCreated())</span>
+<span class="fc" id="L190">            .startReserve(entity.getStartReserve())</span>
+<span class="fc" id="L191">            .toleranceMinutes(entity.getToleranceMinutes())</span>
+<span class="fc" id="L192">            .timeLimit(entity.getTimeLimit())</span>
+<span class="fc" id="L193">            .statusReserve(entity.getStatusReserve())</span>
+<span class="fc" id="L194">            .build();</span>
+    }
+
+    public TableRestaurant mapToDomain(final TableRestaurantEntity entity) {
+<span class="fc" id="L198">        return TableRestaurant.builder()</span>
+<span class="fc" id="L199">            .id(entity.getId())</span>
+<span class="fc" id="L200">            .tableIdentification(entity.getTableIdentification())</span>
+<span class="fc" id="L201">            .restaurantId(entity.getRestaurant().getId())</span>
+<span class="fc" id="L202">            .reserveId(entity.getReserve().getId())</span>
+<span class="fc" id="L203">            .numberSeats(entity.getNumberSeats())</span>
+<span class="fc" id="L204">            .statusTableOccupation(entity.getStatusTableOccupation())</span>
+<span class="fc" id="L205">            .tablePosition(entity.getTablePosition())</span>
+<span class="fc" id="L206">            .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

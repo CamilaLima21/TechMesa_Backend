@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CreateReserve.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">techmesa</a> &gt; <a href="index.source.html" class="el_package">com.fiap.techmesa.application.usecase</a> &gt; <span class="el_source">CreateReserve.java</span></div><h1>CreateReserve.java</h1><pre class="source lang-java linenums">package com.fiap.techmesa.application.usecase;
+
+import org.springframework.stereotype.Component;
+
+import com.fiap.techmesa.application.domain.Reserve;
+import com.fiap.techmesa.application.gateway.ReserveGateway;
+import com.fiap.techmesa.application.usecase.exception.ReserveAlreadyExistsException;
+
+import lombok.RequiredArgsConstructor;
+
+@Component
+@RequiredArgsConstructor
+public class CreateReserve {
+	
+	private final ReserveGateway gateway;
+	
+	public Reserve execute(final Reserve request, final Integer id) {
+		
+<span class="fc" id="L19">		final var reserve = gateway.findByRestaurantIdAndClientIdAndData(request.getRestaurantId(), request.getClientId(), request.getDateReserve());</span>
+		
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">		if(reserve.isPresent()) {</span>
+<span class="nc" id="L22">			throw new ReserveAlreadyExistsException(request.getRestaurantId(), request.getClientId(), request.getDateReserve());</span>
+		}
+		
+<span class="fc" id="L25">		final var buildDomain =</span>
+<span class="fc" id="L26">				Reserve.createReserve(</span>
+<span class="fc" id="L27">						request.getClientId(),</span>
+<span class="fc" id="L28">						request.getRestaurantId(),</span>
+<span class="fc" id="L29">						request.getTableRestaurants(),</span>
+<span class="fc" id="L30">						request.getNumberPeople(),</span>
+<span class="fc" id="L31">						request.getDateReserve(),</span>
+<span class="fc" id="L32">						request.getDateCreated(),</span>
+<span class="fc" id="L33">						request.getStartReserve(),</span>
+<span class="fc" id="L34">						request.getToleranceMinutes(),</span>
+<span class="fc" id="L35">						request.getTimeLimit(),</span>
+<span class="fc" id="L36">						request.getStatusReserve());</span>
+		
+<span class="fc" id="L38">		return gateway.save(buildDomain);</span>
+		
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

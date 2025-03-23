@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReserveEntitySerializer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">techmesa</a> &gt; <a href="index.source.html" class="el_package">com.fiap.techmesa.infrastructure.persistence.entity</a> &gt; <span class="el_source">ReserveEntitySerializer.java</span></div><h1>ReserveEntitySerializer.java</h1><pre class="source lang-java linenums">package com.fiap.techmesa.infrastructure.persistence.entity;
+
+import java.io.IOException;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
+
+public class ReserveEntitySerializer extends StdSerializer&lt;ReserveEntity&gt; {
+
+    public ReserveEntitySerializer() {
+<span class="nc" id="L13">        this(null);</span>
+<span class="nc" id="L14">    }</span>
+
+    public ReserveEntitySerializer(Class&lt;ReserveEntity&gt; t) {
+<span class="nc" id="L17">        super(t);</span>
+<span class="nc" id="L18">    }</span>
+
+    @Override
+    public void serialize(ReserveEntity reserve, JsonGenerator gen, SerializerProvider provider) throws IOException {
+<span class="nc" id="L22">        gen.writeStartObject();</span>
+<span class="nc" id="L23">        gen.writeNumberField(&quot;id&quot;, reserve.getId());</span>
+<span class="nc" id="L24">        gen.writeNumberField(&quot;clientId&quot;, reserve.getClient().getId());</span>
+<span class="nc" id="L25">        gen.writeNumberField(&quot;restaurantId&quot;, reserve.getRestaurant().getId());</span>
+<span class="nc" id="L26">        gen.writeNumberField(&quot;tableRestaurants&quot;, reserve.getTableRestaurant().getId());</span>
+<span class="nc" id="L27">        gen.writeNumberField(&quot;numberPeople&quot;, reserve.getNumberPeople());</span>
+<span class="nc" id="L28">        gen.writeStringField(&quot;dateReserve&quot;, reserve.getDateReserve().toString());</span>
+<span class="nc" id="L29">        gen.writeStringField(&quot;dateCreated&quot;, reserve.getDateCreated().toString());</span>
+<span class="nc" id="L30">        gen.writeStringField(&quot;startReserve&quot;, reserve.getStartReserve().toString());</span>
+<span class="nc" id="L31">        gen.writeNumberField(&quot;toleranceMinutes&quot;, reserve.getToleranceMinutes());</span>
+<span class="nc" id="L32">        gen.writeStringField(&quot;timeLimit&quot;, reserve.getTimeLimit().toString());</span>
+<span class="nc" id="L33">        gen.writeStringField(&quot;statusReserve&quot;, reserve.getStatusReserve().toString());</span>
+<span class="nc" id="L34">        gen.writeEndObject();</span>
+<span class="nc" id="L35">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

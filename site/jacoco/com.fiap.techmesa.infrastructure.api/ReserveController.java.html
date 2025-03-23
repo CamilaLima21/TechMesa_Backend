@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReserveController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">techmesa</a> &gt; <a href="index.source.html" class="el_package">com.fiap.techmesa.infrastructure.api</a> &gt; <span class="el_source">ReserveController.java</span></div><h1>ReserveController.java</h1><pre class="source lang-java linenums">package com.fiap.techmesa.infrastructure.api;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import com.fiap.techmesa.application.domain.Reserve;
+import com.fiap.techmesa.application.domain.pagination.Page;
+import com.fiap.techmesa.application.domain.pagination.Pagination;
+import com.fiap.techmesa.application.gateway.ReserveGateway;
+import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
+
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping(&quot;techMesa/reserves&quot;)
+@RequiredArgsConstructor
+public class ReserveController {
+
+    private final ReserveGateway reserveGateway;
+
+    @PostMapping
+    public ResponseEntity&lt;Reserve&gt; createReserve(@Validated @RequestBody Reserve reserve) {
+<span class="fc" id="L29">        Reserve savedReserve = reserveGateway.save(reserve);</span>
+<span class="fc" id="L30">        return new ResponseEntity&lt;&gt;(savedReserve, HttpStatus.CREATED);</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Reserve&gt; getReserveById(@PathVariable int id) {
+<span class="fc" id="L35">        Optional&lt;Reserve&gt; reserve = reserveGateway.findById(id);</span>
+<span class="pc" id="L36">        return reserve.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="fc" id="L37">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Reserve&gt; updateReserve(@PathVariable int id, @Validated @RequestBody Reserve reserve) {
+<span class="fc" id="L42">        reserve.setId(id);</span>
+<span class="fc" id="L43">        Reserve updatedReserve = reserveGateway.update(reserve);</span>
+<span class="fc" id="L44">        return new ResponseEntity&lt;&gt;(updatedReserve, HttpStatus.OK);</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deleteReserve(@PathVariable int id) {
+<span class="fc" id="L49">        reserveGateway.delete(id);</span>
+<span class="fc" id="L50">        return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
+    }
+
+    @GetMapping
+    public ResponseEntity&lt;Pagination&lt;Reserve&gt;&gt; getAllReserves(@RequestParam int page, @RequestParam int size) {
+<span class="nc" id="L55">        Page pageRequest = new Page(page, size);</span>
+<span class="nc" id="L56">        Pagination&lt;Reserve&gt; reserves = reserveGateway.findAll(pageRequest);</span>
+<span class="nc" id="L57">        return new ResponseEntity&lt;&gt;(reserves, HttpStatus.OK);</span>
+    }
+
+    @GetMapping(&quot;/by-restaurant-date&quot;)
+    public ResponseEntity&lt;List&lt;ReserveEntity&gt;&gt; getReservesByRestaurantAndDate(@RequestParam Integer restaurantId,
+                                                                              @RequestParam LocalDate dateReserve) {
+<span class="nc" id="L63">        Optional&lt;List&lt;ReserveEntity&gt;&gt; reserves = reserveGateway.findByRestaurantIdAndDate(restaurantId, dateReserve);</span>
+<span class="nc bnc" id="L64" title="All 4 branches missed.">        if (reserves.isEmpty() || reserves.get().isEmpty()) {</span>
+<span class="nc" id="L65">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+<span class="nc" id="L67">        return new ResponseEntity&lt;&gt;(reserves.get(), HttpStatus.OK);</span>
+    }
+}
+    
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

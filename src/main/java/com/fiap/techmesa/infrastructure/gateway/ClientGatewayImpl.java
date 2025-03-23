@@ -88,7 +88,7 @@ public class ClientGatewayImpl implements ClientGateway {
         clientRepository.deleteById(id);
     }
 
-    private ClientEntity mapToEntity(final Client client) {
+    public ClientEntity mapToEntity(final Client client) {
         return ClientEntity.builder()
                 .name(client.getName())
                 .email(client.getEmail())
@@ -100,7 +100,7 @@ public class ClientGatewayImpl implements ClientGateway {
                 .build();
     }
 
-    private Client mapToDomain(final ClientEntity entity) {
+    public Client mapToDomain(final ClientEntity entity) {
         return Client.builder()
                 .id(entity.getId())
                 .name(entity.getName())
@@ -113,7 +113,7 @@ public class ClientGatewayImpl implements ClientGateway {
                 .build();
     }
 
-    private ReserveEntity mapToEntity(final Reserve reserve) {
+    public ReserveEntity mapToEntity(final Reserve reserve) {
         return ReserveEntity.builder()
                 .id(reserve.getId())
                 .client(ClientEntity.builder().id(reserve.getClientId()).build())
@@ -129,7 +129,7 @@ public class ClientGatewayImpl implements ClientGateway {
                 .build();
     }
 
-    private Reserve mapToDomain(final ReserveEntity entity) {
+    public Reserve mapToDomain(final ReserveEntity entity) {
         return Reserve.builder()
                 .id(entity.getId())
                 .clientId(entity.getClient().getId())
@@ -145,7 +145,7 @@ public class ClientGatewayImpl implements ClientGateway {
                 .build();
     }
 
-    private TableRestaurantEntity mapToEntity(final TableRestaurant tableRestaurant) {
+    public TableRestaurantEntity mapToEntity(final TableRestaurant tableRestaurant) {
         return TableRestaurantEntity.builder()
                 .id(tableRestaurant.getId())
                 .tableIdentification(tableRestaurant.getTableIdentification())
@@ -157,7 +157,7 @@ public class ClientGatewayImpl implements ClientGateway {
                 .build();
     }
 
-    private TableRestaurant mapToDomain(final TableRestaurantEntity entity) {
+    public TableRestaurant mapToDomain(final TableRestaurantEntity entity) {
         return TableRestaurant.builder()
                 .id(entity.getId())
                 .tableIdentification(entity.getTableIdentification())

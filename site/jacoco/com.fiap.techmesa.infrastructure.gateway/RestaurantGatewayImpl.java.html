@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RestaurantGatewayImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">techmesa</a> &gt; <a href="index.source.html" class="el_package">com.fiap.techmesa.infrastructure.gateway</a> &gt; <span class="el_source">RestaurantGatewayImpl.java</span></div><h1>RestaurantGatewayImpl.java</h1><pre class="source lang-java linenums">package com.fiap.techmesa.infrastructure.gateway;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fiap.techmesa.application.domain.Address;
+import com.fiap.techmesa.application.domain.OpeningHours;
+import com.fiap.techmesa.application.domain.Reserve;
+import com.fiap.techmesa.application.domain.Restaurant;
+import com.fiap.techmesa.application.domain.TableRestaurant;
+import com.fiap.techmesa.application.domain.pagination.Page;
+import com.fiap.techmesa.application.domain.pagination.Pagination;
+import com.fiap.techmesa.application.enums.TypeKitchenEnum;
+import com.fiap.techmesa.application.gateway.RestaurantGateway;
+import com.fiap.techmesa.application.usecase.exception.RestaurantNotFoundException;
+import com.fiap.techmesa.infrastructure.persistence.entity.AddressEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.ClientEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.OpeningHoursEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.TableRestaurantEntity;
+import com.fiap.techmesa.infrastructure.persistence.repository.AddressRepository;
+import com.fiap.techmesa.infrastructure.persistence.repository.RestaurantRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Component
+@RequiredArgsConstructor
+public class RestaurantGatewayImpl implements RestaurantGateway {
+
+	private final RestaurantRepository restaurantRepository;
+	
+	private final AddressRepository addressRepository;
+
+	@Override
+	public Restaurant save(final Restaurant restaurant) {
+<span class="fc" id="L42">		RestaurantEntity restaurantEntity = mapToEntity(restaurant);</span>
+<span class="fc" id="L43">		RestaurantEntity savedRestaurantEntity = restaurantRepository.save(restaurantEntity);</span>
+<span class="fc" id="L44">		return mapToDomain(savedRestaurantEntity);</span>
+	}
+
+	@Override
+	public Pagination&lt;Restaurant&gt; findAll(Page page) {
+<span class="fc" id="L49">		var pageRequest = PageRequest.of(page.page(), page.size());</span>
+<span class="fc" id="L50">		var restaurantPage = restaurantRepository.findAll(pageRequest);</span>
+<span class="fc" id="L51">		var restaurants = restaurantPage.getContent().stream().map(this::mapToDomain).collect(Collectors.toList());</span>
+
+<span class="fc" id="L53">		return new Pagination&lt;&gt;(restaurantPage.getNumber(), restaurantPage.getSize(), restaurantPage.getTotalPages(),</span>
+<span class="fc" id="L54">				restaurantPage.getTotalElements(), restaurantPage.getNumberOfElements(), restaurants);</span>
+	}
+
+	@Override
+	public Optional&lt;Restaurant&gt; findById(final int id) {
+<span class="nc" id="L59">		return restaurantRepository.findById(id).map(this::mapToDomain);</span>
+	}
+
+	@Override
+	public Optional&lt;Restaurant&gt; findByTypeKitchen(final TypeKitchenEnum typeKitchen) {
+<span class="nc" id="L64">		return restaurantRepository.findByTypeKitchen(typeKitchen).flatMap(list -&gt; list.stream().findFirst())</span>
+<span class="nc" id="L65">				.map(this::mapToDomain);</span>
+	}
+
+	@Override
+	public Optional&lt;Restaurant&gt; findByPartName(final String partName) {
+<span class="nc" id="L70">		return restaurantRepository.findByNameContainsIgnoreCase(partName).flatMap(list -&gt; list.stream().findFirst())</span>
+<span class="nc" id="L71">				.map(this::mapToDomain);</span>
+	}
+
+	@Override
+	public Optional&lt;Restaurant&gt; findByName(final String name) {
+<span class="nc" id="L76">		return Optional.ofNullable(restaurantRepository.findByName(name)).map(this::mapToDomain);</span>
+	}
+
+	@Override
+	public Optional&lt;Restaurant&gt; findByEmail(final String email) {
+<span class="nc" id="L81">		return Optional.ofNullable(restaurantRepository.findByEmail(email)).map(this::mapToDomain);</span>
+	}
+
+	@Override
+	public Optional&lt;Restaurant&gt; findByCity(final String city) {
+<span class="nc" id="L86">		return restaurantRepository.findByCity(city).flatMap(list -&gt; list.stream().findFirst()).map(this::mapToDomain);</span>
+	}
+
+	@Override
+	public Optional&lt;Restaurant&gt; findByCityAndNeighborhood(final String city, final String neighborhood) {
+<span class="fc" id="L91">		return restaurantRepository.findByCityAndNeighborhood(city, neighborhood)</span>
+<span class="fc" id="L92">				.flatMap(list -&gt; list.stream().findFirst()).map(this::mapToDomain);</span>
+	}
+
+	@Transactional
+	@Override
+	public void delete(final int id) {
+<span class="fc" id="L98">		restaurantRepository.deleteById(id);</span>
+<span class="fc" id="L99">	}</span>
+
+	@Override
+	public Restaurant update(final Restaurant restaurant) {
+<span class="fc" id="L103">	    final var restaurantFound = restaurantRepository.findById(restaurant.getId())</span>
+<span class="pc" id="L104">	            .orElseThrow(() -&gt; new RestaurantNotFoundException(restaurant.getId()));</span>
+
+<span class="fc" id="L106">	    final var address = addressRepository.findById(restaurant.getAddressId())</span>
+<span class="pc" id="L107">                .orElseThrow(() -&gt; new IllegalArgumentException(</span>
+<span class="nc" id="L108">                        String.format(&quot;Address with id [%s] not found&quot;, restaurant.getAddressId())));</span>
+	    
+<span class="fc" id="L110">	    final var restaurantEntity = RestaurantEntity.builder()</span>
+<span class="fc" id="L111">	            .id(restaurantFound.getId())</span>
+<span class="fc" id="L112">	            .name(restaurant.getName())</span>
+<span class="fc" id="L113">	            .address(address)</span>
+<span class="fc" id="L114">	            .email(restaurant.getEmail())</span>
+<span class="fc" id="L115">	            .typeKitchen(restaurant.getTypeKitchen())</span>
+<span class="fc" id="L116">	            .capacity(restaurant.getCapacity())</span>
+<span class="fc" id="L117">	            .statusRestaurant(restaurant.getStatusRestaurant())</span>
+<span class="fc" id="L118">	            .registrationDate(restaurant.getRegistrationDate())</span>
+<span class="fc" id="L119">	            .build();</span>
+
+<span class="fc" id="L121">	    final var updated = restaurantRepository.save(restaurantEntity);</span>
+
+<span class="fc" id="L123">	    return mapToDomain(updated);</span>
+	}
+
+
+	private RestaurantEntity mapToEntity(final Restaurant restaurant) {
+<span class="fc" id="L128">	    return RestaurantEntity.builder()</span>
+<span class="fc" id="L129">	        .name(restaurant.getName())</span>
+<span class="fc" id="L130">	        .address(AddressEntity.builder().id(restaurant.getAddressId()).build())</span>
+<span class="fc" id="L131">	        .email(restaurant.getEmail())</span>
+<span class="fc" id="L132">	        .typeKitchen(restaurant.getTypeKitchen())</span>
+<span class="fc" id="L133">	        .capacity(restaurant.getCapacity())</span>
+<span class="fc" id="L134">	        .statusRestaurant(restaurant.getStatusRestaurant())</span>
+<span class="fc" id="L135">	        .registrationDate(restaurant.getRegistrationDate())</span>
+<span class="fc" id="L136">	        .openingHours(restaurant.getOpeningHours().stream()</span>
+<span class="fc" id="L137">	            .map(this::mapToEntity)</span>
+<span class="fc" id="L138">	            .collect(Collectors.toList()))</span>
+<span class="fc" id="L139">	        .reserve(restaurant.getReserves().stream()</span>
+<span class="fc" id="L140">	            .map(this::mapToEntity)</span>
+<span class="fc" id="L141">	            .collect(Collectors.toList()))</span>
+<span class="fc" id="L142">	        .tableRestaurant(restaurant.getTableRestaurants().stream()</span>
+<span class="fc" id="L143">	            .map(this::mapToEntity)</span>
+<span class="fc" id="L144">	            .collect(Collectors.toList()))</span>
+<span class="fc" id="L145">	        .build();</span>
+	}
+
+	public Restaurant mapToDomain(final RestaurantEntity entity) {
+<span class="fc" id="L149">	    return Restaurant.builder()</span>
+<span class="fc" id="L150">	        .id(entity.getId())</span>
+<span class="fc" id="L151">	        .name(entity.getName())</span>
+<span class="fc" id="L152">	        .addressId(entity.getAddress().getId())</span>
+<span class="fc" id="L153">	        .email(entity.getEmail())</span>
+<span class="fc" id="L154">	        .openingHours(entity.getOpeningHours().stream()</span>
+<span class="fc" id="L155">	            .map(this::mapToDomain)</span>
+<span class="fc" id="L156">	            .collect(Collectors.toList()))</span>
+<span class="fc" id="L157">	        .reserves(entity.getReserve().stream()</span>
+<span class="fc" id="L158">	            .map(this::mapToDomain)</span>
+<span class="fc" id="L159">	            .collect(Collectors.toList()))</span>
+<span class="fc" id="L160">	        .tableRestaurants(entity.getTableRestaurant().stream()</span>
+<span class="fc" id="L161">	            .map(this::mapToDomain)</span>
+<span class="fc" id="L162">	            .collect(Collectors.toList()))</span>
+<span class="fc" id="L163">	        .typeKitchen(entity.getTypeKitchen())</span>
+<span class="fc" id="L164">	        .capacity(entity.getCapacity())</span>
+<span class="fc" id="L165">	        .statusRestaurant(entity.getStatusRestaurant())</span>
+<span class="fc" id="L166">	        .registrationDate(entity.getRegistrationDate())</span>
+<span class="fc" id="L167">	        .build();</span>
+	}
+
+
+	private AddressEntity mapToEntity(final Address address) {
+<span class="nc" id="L172">		return AddressEntity.builder().id(address.getId()).street(address.getStreet()).number(address.getNumber())</span>
+<span class="nc" id="L173">				.neighborhood(address.getNeighborhood()).city(address.getCity()).state(address.getState())</span>
+<span class="nc" id="L174">				.country(address.getCountry()).cep(address.getCep()).build();</span>
+	}
+
+	private Address mapToDomain(final AddressEntity entity) {
+<span class="nc" id="L178">		return Address.builder().id(entity.getId()).street(entity.getStreet()).number(entity.getNumber())</span>
+<span class="nc" id="L179">				.neighborhood(entity.getNeighborhood()).city(entity.getCity()).state(entity.getState())</span>
+<span class="nc" id="L180">				.country(entity.getCountry()).cep(entity.getCep()).build();</span>
+	}
+
+	private OpeningHoursEntity mapToEntity(final OpeningHours openingHours) {
+<span class="fc" id="L184">	    return OpeningHoursEntity.builder()</span>
+<span class="fc" id="L185">	        .id(openingHours.getId())</span>
+<span class="fc" id="L186">	        .restaurant(RestaurantEntity.builder().id(openingHours.getRestaurantId()).build())</span>
+<span class="fc" id="L187">	        .name(openingHours.getName())</span>
+<span class="fc" id="L188">	        .turn(openingHours.getTurn())</span>
+<span class="fc" id="L189">	        .dayWeek(openingHours.getDayWeek())</span>
+<span class="fc" id="L190">	        .startTime(openingHours.getStartTime())</span>
+<span class="fc" id="L191">	        .endTime(openingHours.getEndTime())</span>
+<span class="fc" id="L192">	        .build();</span>
+	}
+
+
+	private OpeningHours mapToDomain(final OpeningHoursEntity entity) {
+<span class="fc" id="L197">	    return OpeningHours.builder()</span>
+<span class="fc" id="L198">	        .id(entity.getId())</span>
+<span class="fc" id="L199">	        .restaurantId(entity.getRestaurant().getId())</span>
+<span class="fc" id="L200">	        .name(entity.getName())</span>
+<span class="fc" id="L201">	        .turn(entity.getTurn())</span>
+<span class="fc" id="L202">	        .dayWeek(entity.getDayWeek())</span>
+<span class="fc" id="L203">	        .startTime(entity.getStartTime())</span>
+<span class="fc" id="L204">	        .endTime(entity.getEndTime())</span>
+<span class="fc" id="L205">	        .build();</span>
+	}
+
+
+	private ReserveEntity mapToEntity(final Reserve reserve) {
+<span class="fc" id="L210">		return ReserveEntity.builder()</span>
+<span class="fc" id="L211">				.id(reserve.getId())</span>
+<span class="fc" id="L212">				.client(ClientEntity.builder().id(reserve.getClientId()).build())</span>
+<span class="fc" id="L213">				.restaurant(RestaurantEntity.builder().id(reserve.getRestaurantId()).build())</span>
+<span class="fc" id="L214">				.tableRestaurant(TableRestaurantEntity.builder().id(reserve.getTableRestaurants()).build())</span>
+<span class="fc" id="L215">				.numberPeople(reserve.getNumberPeople())</span>
+<span class="fc" id="L216">				.dateReserve(reserve.getDateReserve())</span>
+<span class="fc" id="L217">				.dateCreated(reserve.getDateCreated())</span>
+<span class="fc" id="L218">				.startReserve(reserve.getStartReserve())</span>
+<span class="fc" id="L219">				.toleranceMinutes(reserve.getToleranceMinutes())</span>
+<span class="fc" id="L220">				.timeLimit(reserve.getTimeLimit())</span>
+<span class="fc" id="L221">				.statusReserve(reserve.getStatusReserve())</span>
+<span class="fc" id="L222">				.build();</span>
+	}
+
+	private Reserve mapToDomain(final ReserveEntity entity) {
+<span class="fc" id="L226">		return Reserve.builder()</span>
+<span class="fc" id="L227">				.id(entity.getId())</span>
+<span class="fc" id="L228">				.clientId(entity.getClient().getId())</span>
+<span class="fc" id="L229">				.restaurantId(entity.getRestaurant().getId())</span>
+<span class="fc" id="L230">				.tableRestaurants(entity.getTableRestaurant().getId())</span>
+<span class="fc" id="L231">				.numberPeople(entity.getNumberPeople())</span>
+<span class="fc" id="L232">				.dateReserve(entity.getDateReserve())</span>
+<span class="fc" id="L233">				.dateCreated(entity.getDateCreated())</span>
+<span class="fc" id="L234">				.startReserve(entity.getStartReserve())</span>
+<span class="fc" id="L235">				.toleranceMinutes(entity.getToleranceMinutes())</span>
+<span class="fc" id="L236">				.timeLimit(entity.getTimeLimit())</span>
+<span class="fc" id="L237">				.statusReserve(entity.getStatusReserve())</span>
+<span class="fc" id="L238">				.build();</span>
+	}
+
+	private TableRestaurantEntity mapToEntity(final TableRestaurant tableRestaurant) {
+<span class="fc" id="L242">		return TableRestaurantEntity.builder()</span>
+<span class="fc" id="L243">				.id(tableRestaurant.getId())</span>
+<span class="fc" id="L244">				.tableIdentification(tableRestaurant.getTableIdentification())</span>
+<span class="fc" id="L245">				.restaurant(RestaurantEntity.builder().id(tableRestaurant.getRestaurantId()).build())</span>
+<span class="fc" id="L246">				.reserve(ReserveEntity.builder().id(tableRestaurant.getReserveId()).build())</span>
+<span class="fc" id="L247">				.numberSeats(tableRestaurant.getNumberSeats())</span>
+<span class="fc" id="L248">				.statusTableOccupation(tableRestaurant.getStatusTableOccupation())</span>
+<span class="fc" id="L249">				.tablePosition(tableRestaurant.getTablePosition()).build();</span>
+	}
+
+	private TableRestaurant mapToDomain(final TableRestaurantEntity tableRestaurantEntity) {
+<span class="fc" id="L253">	    return TableRestaurant.builder()</span>
+<span class="fc" id="L254">	        .id(tableRestaurantEntity.getId())</span>
+<span class="fc" id="L255">	        .tableIdentification(tableRestaurantEntity.getTableIdentification())</span>
+<span class="fc" id="L256">	        .restaurantId(tableRestaurantEntity.getRestaurant().getId())</span>
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">	        .reserveId(tableRestaurantEntity.getReserve() != null ? tableRestaurantEntity.getReserve().getId() : null)</span>
+<span class="fc" id="L258">	        .numberSeats(tableRestaurantEntity.getNumberSeats())</span>
+<span class="fc" id="L259">	        .statusTableOccupation(tableRestaurantEntity.getStatusTableOccupation())</span>
+<span class="fc" id="L260">	        .tablePosition(tableRestaurantEntity.getTablePosition())</span>
+<span class="fc" id="L261">	        .build();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

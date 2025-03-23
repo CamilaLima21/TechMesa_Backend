@@ -164,7 +164,7 @@ public class ReserveGatewayImpl implements ReserveGateway {
         return mapToDomain(updated);
     }
 
-    private TableRestaurantEntity mapToEntity(final TableRestaurant tableRestaurant) {
+    public TableRestaurantEntity mapToEntity(final TableRestaurant tableRestaurant) {
         return TableRestaurantEntity.builder()
             .id(tableRestaurant.getId())
             .tableIdentification(tableRestaurant.getTableIdentification())
@@ -176,7 +176,7 @@ public class ReserveGatewayImpl implements ReserveGateway {
             .build();
     }
 
-    private Reserve mapToDomain(final ReserveEntity entity) {
+    public Reserve mapToDomain(final ReserveEntity entity) {
         return Reserve.builder()
             .id(entity.getId())
             .clientId(entity.getClient().getId())
@@ -194,7 +194,7 @@ public class ReserveGatewayImpl implements ReserveGateway {
             .build();
     }
 
-    private TableRestaurant mapToDomain(final TableRestaurantEntity entity) {
+    public TableRestaurant mapToDomain(final TableRestaurantEntity entity) {
         return TableRestaurant.builder()
             .id(entity.getId())
             .tableIdentification(entity.getTableIdentification())

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TableRestaurantGatewayImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">techmesa</a> &gt; <a href="index.source.html" class="el_package">com.fiap.techmesa.infrastructure.gateway</a> &gt; <span class="el_source">TableRestaurantGatewayImpl.java</span></div><h1>TableRestaurantGatewayImpl.java</h1><pre class="source lang-java linenums">package com.fiap.techmesa.infrastructure.gateway;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fiap.techmesa.application.domain.Client;
+import com.fiap.techmesa.application.domain.TableRestaurant;
+import com.fiap.techmesa.application.domain.pagination.Page;
+import com.fiap.techmesa.application.domain.pagination.Pagination;
+import com.fiap.techmesa.application.enums.StatusTableOccupationEnum;
+import com.fiap.techmesa.application.gateway.TableRestaurantGateway;
+import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.TableRestaurantEntity;
+import com.fiap.techmesa.infrastructure.persistence.repository.AddressRepository;
+import com.fiap.techmesa.infrastructure.persistence.repository.RestaurantRepository;
+import com.fiap.techmesa.infrastructure.persistence.repository.TableRestaurantRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Component
+@RequiredArgsConstructor
+public class TableRestaurantGatewayImpl implements TableRestaurantGateway {
+
+    private final TableRestaurantRepository tableRestaurantRepository;
+    private final RestaurantRepository restaurantRepository;    
+    @Override
+    public TableRestaurant save(final TableRestaurant tableRestaurant) {
+<span class="fc" id="L35">        TableRestaurantEntity tableRestaurantEntity = mapToEntity(tableRestaurant);</span>
+<span class="fc" id="L36">        TableRestaurantEntity savedTableRestaurantEntity = tableRestaurantRepository.save(tableRestaurantEntity);</span>
+<span class="fc" id="L37">        return mapToDomain(savedTableRestaurantEntity);</span>
+    }
+
+    @Override
+    public Pagination&lt;TableRestaurant&gt; findAll(Page page) {
+<span class="fc" id="L42">        var pageRequest = PageRequest.of(page.page(), page.size());</span>
+<span class="fc" id="L43">        var tableRestaurantPage = tableRestaurantRepository.findAll(pageRequest);</span>
+<span class="fc" id="L44">        var tableRestaurants = tableRestaurantPage.getContent().stream()</span>
+<span class="fc" id="L45">                .map(this::mapToDomain)</span>
+<span class="fc" id="L46">                .collect(Collectors.toList());</span>
+
+<span class="fc" id="L48">        return new Pagination&lt;&gt;(tableRestaurantPage.getNumber(), tableRestaurantPage.getSize(), tableRestaurantPage.getTotalPages(),</span>
+<span class="fc" id="L49">                tableRestaurantPage.getTotalElements(), tableRestaurantPage.getNumberOfElements(), tableRestaurants);</span>
+    }
+
+    @Override
+    public Optional&lt;TableRestaurant&gt; findById(final int id) {
+<span class="fc" id="L54">        return tableRestaurantRepository.findById(id).map(this::mapToDomain);</span>
+    }
+
+    @Override
+    public Optional&lt;TableRestaurant&gt; findByRestaurantAndDate(final String tableIdentification, final Integer reserveId) {
+<span class="fc" id="L59">        return tableRestaurantRepository.findByRestaurantAndReserveDateReserve(</span>
+<span class="fc" id="L60">                RestaurantEntity.builder().id(reserveId).build(), LocalDate.now())</span>
+<span class="fc" id="L61">                .flatMap(list -&gt; list.stream().findFirst())</span>
+<span class="fc" id="L62">                .map(this::mapToDomain);</span>
+    }
+
+    @Override
+    public Optional&lt;TableRestaurant&gt; findByRestaurantNotReservedAndDate(final int id, final StatusTableOccupationEnum statusTableOccupation, final LocalDate dateReserve) {
+<span class="nc" id="L67">        return tableRestaurantRepository.findByRestaurantAndReserveDateReserve(</span>
+<span class="nc" id="L68">                RestaurantEntity.builder().id(id).build(), dateReserve)</span>
+<span class="nc" id="L69">                .flatMap(list -&gt; list.stream()</span>
+<span class="nc" id="L70">                        .filter(table -&gt; table.getStatusTableOccupation().equals(statusTableOccupation))</span>
+<span class="nc" id="L71">                        .findFirst())</span>
+<span class="nc" id="L72">                .map(this::mapToDomain);</span>
+    }
+
+    @Transactional
+    @Override
+    public void delete(final String tableIdentification) {
+<span class="fc" id="L78">        TableRestaurantEntity tableRestaurantEntity = tableRestaurantRepository.findByTableIdentification(tableIdentification);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        if (tableRestaurantEntity == null) {</span>
+<span class="nc" id="L80">            throw new IllegalArgumentException(String.format(&quot;Table with identification [%s] not found&quot;, tableIdentification));</span>
+        }
+<span class="fc" id="L82">        tableRestaurantRepository.delete(tableRestaurantEntity);</span>
+<span class="fc" id="L83">    }</span>
+
+    @Override
+    public TableRestaurant update(final TableRestaurant tableRestaurant) {
+<span class="fc" id="L87">        final var tableRestaurantFound =</span>
+<span class="fc" id="L88">                tableRestaurantRepository.findById(tableRestaurant.getId());</span>
+
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (tableRestaurantFound == null) {</span>
+<span class="nc" id="L91">            throw new IllegalArgumentException(String.format(&quot;Table with identification [%s] not found&quot;, tableRestaurant.getTableIdentification()));</span>
+        }
+        
+<span class="fc" id="L94">        final var restaurant = restaurantRepository.findById(tableRestaurant.getRestaurantId())</span>
+<span class="pc" id="L95">                .orElseThrow(() -&gt; new IllegalArgumentException(</span>
+<span class="nc" id="L96">                        String.format(&quot;Address with id [%s] not found&quot;, tableRestaurant.getRestaurantId())));</span>
+                
+        final var tableRestaurantEntity =
+<span class="fc" id="L99">                TableRestaurantEntity.builder()</span>
+<span class="fc" id="L100">            		    .id(tableRestaurant.getId())</span>
+<span class="fc" id="L101">                        .tableIdentification(tableRestaurant.getTableIdentification())</span>
+<span class="fc" id="L102">                        .restaurant(restaurant)</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">                        .reserve(tableRestaurant.getReserveId() != null ? ReserveEntity.builder().id(tableRestaurant.getReserveId()).build() : null)</span>
+<span class="fc" id="L104">                        .numberSeats(tableRestaurant.getNumberSeats())</span>
+<span class="fc" id="L105">                        .statusTableOccupation(tableRestaurant.getStatusTableOccupation())</span>
+<span class="fc" id="L106">                        .tablePosition(tableRestaurant.getTablePosition())</span>
+<span class="fc" id="L107">                        .build();</span>
+
+<span class="fc" id="L109">        final var updated = tableRestaurantRepository.save(tableRestaurantEntity);</span>
+
+<span class="fc" id="L111">        return mapToDomain(updated);</span>
+    }
+
+    private TableRestaurantEntity mapToEntity(final TableRestaurant tableRestaurant) {
+<span class="fc" id="L115">        return TableRestaurantEntity.builder()</span>
+<span class="fc" id="L116">                .tableIdentification(tableRestaurant.getTableIdentification())</span>
+<span class="fc" id="L117">                .restaurant(RestaurantEntity.builder().id(tableRestaurant.getRestaurantId()).build())</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">                .reserve(tableRestaurant.getReserveId() != null ? ReserveEntity.builder().id(tableRestaurant.getReserveId()).build() : null)</span>
+<span class="fc" id="L119">                .numberSeats(tableRestaurant.getNumberSeats())</span>
+<span class="fc" id="L120">                .statusTableOccupation(tableRestaurant.getStatusTableOccupation())</span>
+<span class="fc" id="L121">                .tablePosition(tableRestaurant.getTablePosition())</span>
+<span class="fc" id="L122">                .build();</span>
+    }
+
+    public TableRestaurant mapToDomain(final TableRestaurantEntity entity) {
+<span class="nc" id="L126">        return TableRestaurant.builder()</span>
+<span class="nc" id="L127">                .id(entity.getId())</span>
+<span class="nc" id="L128">                .tableIdentification(entity.getTableIdentification())</span>
+<span class="nc" id="L129">                .restaurantId(entity.getRestaurant().getId())</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">                .reserveId(entity.getReserve() != null ? entity.getReserve().getId() : null)</span>
+<span class="nc" id="L131">                .numberSeats(entity.getNumberSeats())</span>
+<span class="nc" id="L132">                .statusTableOccupation(entity.getStatusTableOccupation())</span>
+<span class="nc" id="L133">                .tablePosition(entity.getTablePosition())</span>
+<span class="nc" id="L134">                .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClientController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">techmesa</a> &gt; <a href="index.source.html" class="el_package">com.fiap.techmesa.infrastructure.api</a> &gt; <span class="el_source">ClientController.java</span></div><h1>ClientController.java</h1><pre class="source lang-java linenums">package com.fiap.techmesa.infrastructure.api;
+
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import com.fiap.techmesa.application.domain.Client;
+import com.fiap.techmesa.application.gateway.ClientGateway;
+
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping(&quot;techMesa/clients&quot;)
+@RequiredArgsConstructor
+public class ClientController {
+
+    private final ClientGateway clientGateway;
+
+    @PostMapping
+    public ResponseEntity&lt;Client&gt; createClient(@Validated @RequestBody Client client) {
+<span class="fc" id="L24">        Client savedClient = clientGateway.save(client);</span>
+<span class="fc" id="L25">        return new ResponseEntity&lt;&gt;(savedClient, HttpStatus.CREATED);</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Client&gt; getClientById(@PathVariable int id) {
+<span class="fc" id="L30">        Optional&lt;Client&gt; client = clientGateway.findById(id);</span>
+<span class="pc" id="L31">        return client.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="fc" id="L32">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Client&gt; updateClient(@PathVariable int id, @Validated @RequestBody Client client) {
+<span class="fc" id="L37">        client.setId(id);</span>
+<span class="fc" id="L38">        Client updatedClient = clientGateway.update(client);</span>
+<span class="fc" id="L39">        return new ResponseEntity&lt;&gt;(updatedClient, HttpStatus.OK);</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deleteClient(@PathVariable int id) {
+<span class="fc" id="L44">        clientGateway.delete(id);</span>
+<span class="fc" id="L45">        return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
+    }
+
+    @GetMapping(&quot;/by-part-name&quot;)
+    public ResponseEntity&lt;Client&gt; getClientByPartName(@RequestParam String partName) {
+<span class="fc" id="L50">        Optional&lt;Client&gt; client = clientGateway.findByPartName(partName);</span>
+<span class="pc" id="L51">        return client.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="fc" id="L52">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+
+    @GetMapping(&quot;/by-name&quot;)
+    public ResponseEntity&lt;Client&gt; getClientByName(@RequestParam String name) {
+<span class="fc" id="L57">        Optional&lt;Client&gt; client = clientGateway.findByName(name);</span>
+<span class="pc" id="L58">        return client.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="fc" id="L59">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+
+    @GetMapping(&quot;/by-email&quot;)
+    public ResponseEntity&lt;Client&gt; getClientByEmail(@RequestParam String email) {
+<span class="fc" id="L64">        Optional&lt;Client&gt; client = clientGateway.findByEmail(email);</span>
+<span class="pc" id="L65">        return client.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="fc" id="L66">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

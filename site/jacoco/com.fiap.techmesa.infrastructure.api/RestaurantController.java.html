@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RestaurantController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">techmesa</a> &gt; <a href="index.source.html" class="el_package">com.fiap.techmesa.infrastructure.api</a> &gt; <span class="el_source">RestaurantController.java</span></div><h1>RestaurantController.java</h1><pre class="source lang-java linenums">package com.fiap.techmesa.infrastructure.api;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import com.fiap.techmesa.application.domain.Restaurant;
+import com.fiap.techmesa.application.domain.pagination.Page;
+import com.fiap.techmesa.application.domain.pagination.Pagination;
+import com.fiap.techmesa.application.enums.TypeKitchenEnum;
+import com.fiap.techmesa.application.gateway.RestaurantGateway;
+
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping(&quot;techMesa/restaurants&quot;)
+@RequiredArgsConstructor
+public class RestaurantController {
+
+    private final RestaurantGateway restaurantGateway;
+
+    @PostMapping
+    public ResponseEntity&lt;Restaurant&gt; createRestaurant(@Validated @RequestBody Restaurant restaurant) {
+<span class="fc" id="L28">        Restaurant savedRestaurant = restaurantGateway.save(restaurant);</span>
+<span class="fc" id="L29">        return new ResponseEntity&lt;&gt;(savedRestaurant, HttpStatus.CREATED);</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Restaurant&gt; getRestaurantById(@PathVariable int id) {
+<span class="fc" id="L34">        Optional&lt;Restaurant&gt; restaurant = restaurantGateway.findById(id);</span>
+<span class="pc" id="L35">        return restaurant.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="fc" id="L36">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Restaurant&gt; updateRestaurant(@PathVariable int id, @Validated @RequestBody Restaurant restaurant) {
+<span class="fc" id="L41">        restaurant.setId(id);</span>
+<span class="fc" id="L42">        Restaurant updatedRestaurant = restaurantGateway.update(restaurant);</span>
+<span class="fc" id="L43">        return new ResponseEntity&lt;&gt;(updatedRestaurant, HttpStatus.OK);</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deleteRestaurant(@PathVariable int id) {
+<span class="fc" id="L48">        restaurantGateway.delete(id);</span>
+<span class="fc" id="L49">        return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
+    }
+
+    @GetMapping
+    public ResponseEntity&lt;Pagination&lt;Restaurant&gt;&gt; getAllRestaurants(@RequestParam int page, @RequestParam int size) {
+<span class="nc" id="L54">        Page pageRequest = new Page(page, size);</span>
+<span class="nc" id="L55">        Pagination&lt;Restaurant&gt; restaurants = restaurantGateway.findAll(pageRequest);</span>
+<span class="nc" id="L56">        return new ResponseEntity&lt;&gt;(restaurants, HttpStatus.OK);</span>
+    }
+
+    @GetMapping(&quot;/by-type-kitchen&quot;)
+    public ResponseEntity&lt;Restaurant&gt; getRestaurantByTypeKitchen(@RequestParam String typeKitchen) {
+<span class="fc" id="L61">        Optional&lt;Restaurant&gt; restaurant = restaurantGateway.findByTypeKitchen(TypeKitchenEnum.valueOf(typeKitchen));</span>
+<span class="pc" id="L62">        return restaurant.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="fc" id="L63">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+
+    @GetMapping(&quot;/by-part-name&quot;)
+    public ResponseEntity&lt;Restaurant&gt; getRestaurantByPartName(@RequestParam String partName) {
+<span class="fc" id="L68">        Optional&lt;Restaurant&gt; restaurant = restaurantGateway.findByPartName(partName);</span>
+<span class="pc" id="L69">        return restaurant.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="fc" id="L70">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+
+    @GetMapping(&quot;/by-name&quot;)
+    public ResponseEntity&lt;Restaurant&gt; getRestaurantByName(@RequestParam String name) {
+<span class="fc" id="L75">        Optional&lt;Restaurant&gt; restaurant = restaurantGateway.findByName(name);</span>
+<span class="pc" id="L76">        return restaurant.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="fc" id="L77">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+
+    @GetMapping(&quot;/by-email&quot;)
+    public ResponseEntity&lt;Restaurant&gt; getRestaurantByEmail(@RequestParam String email) {
+<span class="fc" id="L82">        Optional&lt;Restaurant&gt; restaurant = restaurantGateway.findByEmail(email);</span>
+<span class="pc" id="L83">        return restaurant.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="fc" id="L84">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+
+    @GetMapping(&quot;/by-city&quot;)
+    public ResponseEntity&lt;Restaurant&gt; getRestaurantByCity(@RequestParam String city) {
+<span class="fc" id="L89">        Optional&lt;Restaurant&gt; restaurant = restaurantGateway.findByCity(city);</span>
+<span class="pc" id="L90">        return restaurant.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="fc" id="L91">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+
+    @GetMapping(&quot;/by-city-and-neighborhood&quot;)
+    public ResponseEntity&lt;Restaurant&gt; getRestaurantByCityAndNeighborhood(@RequestParam String city, @RequestParam String neighborhood) {
+<span class="fc" id="L96">        Optional&lt;Restaurant&gt; restaurant = restaurantGateway.findByCityAndNeighborhood(city, neighborhood);</span>
+<span class="pc" id="L97">        return restaurant.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="fc" id="L98">            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
