@@ -7,7 +7,6 @@ import com.fiap.techmesa.application.enums.StatusRestaurantEnum;
 import com.fiap.techmesa.application.enums.TypeKitchenEnum;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,6 @@
 package com.fiap.techmesa.infrastructure.gateway;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -9,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fiap.techmesa.application.domain.Client;
 import com.fiap.techmesa.application.domain.TableRestaurant;
 import com.fiap.techmesa.application.domain.pagination.Page;
 import com.fiap.techmesa.application.domain.pagination.Pagination;
@@ -18,7 +16,6 @@ import com.fiap.techmesa.application.gateway.TableRestaurantGateway;
 import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.TableRestaurantEntity;
-import com.fiap.techmesa.infrastructure.persistence.repository.AddressRepository;
 import com.fiap.techmesa.infrastructure.persistence.repository.RestaurantRepository;
 import com.fiap.techmesa.infrastructure.persistence.repository.TableRestaurantRepository;
 

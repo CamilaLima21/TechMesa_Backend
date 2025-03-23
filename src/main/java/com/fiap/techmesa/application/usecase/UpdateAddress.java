@@ -28,7 +28,7 @@ public class UpdateAddress {
 		addressFound.setCity(updateAddressRequest.getCity());
 		addressFound.setState(updateAddressRequest.getState());
 		addressFound.setCountry(updateAddressRequest.getCountry());
-		addressFound.setCep(updateAddressRequest.getCep());
+		addressFound.setZipCode(updateAddressRequest.getZipCode());
 		
 		return gateway.update(addressFound);
 	}

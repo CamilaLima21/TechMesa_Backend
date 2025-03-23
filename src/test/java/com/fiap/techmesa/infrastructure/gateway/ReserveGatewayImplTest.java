@@ -1,7 +1,13 @@
 package com.fiap.techmesa.infrastructure.gateway;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,7 +25,6 @@ import com.fiap.techmesa.application.domain.TableRestaurant;
 import com.fiap.techmesa.application.enums.StatusReserveEnum;
 import com.fiap.techmesa.application.enums.StatusTableOccupationEnum;
 import com.fiap.techmesa.application.enums.TablePositionEnum;
-import com.fiap.techmesa.application.usecase.exception.ReserveNotFoundException;
 import com.fiap.techmesa.infrastructure.persistence.entity.ClientEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;

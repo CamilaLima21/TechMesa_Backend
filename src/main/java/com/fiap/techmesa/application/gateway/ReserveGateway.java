@@ -4,9 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import com.fiap.techmesa.application.domain.Client;
 import com.fiap.techmesa.application.domain.Reserve;
-import com.fiap.techmesa.application.domain.Restaurant;
 import com.fiap.techmesa.application.domain.pagination.Page;
 import com.fiap.techmesa.application.domain.pagination.Pagination;
 import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;

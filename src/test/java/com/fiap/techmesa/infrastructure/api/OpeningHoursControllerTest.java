@@ -1,20 +1,18 @@
 package com.fiap.techmesa.infrastructure.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,16 +23,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-
 import com.fiap.techmesa.TechmesaApplication;
 import com.fiap.techmesa.application.domain.OpeningHours;
 import com.fiap.techmesa.application.enums.DayWeekEnum;
 import com.fiap.techmesa.application.enums.TurnEnum;
 import com.fiap.techmesa.application.gateway.OpeningHoursGateway;
 import com.fiap.techmesa.application.usecase.CreateOpeningHours;
-import com.fiap.techmesa.infrastructure.api.OpeningHoursController;
 
 @SpringBootTest(classes = TechmesaApplication.class)
 @AutoConfigureMockMvc

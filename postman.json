@@ -20,7 +20,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"street\": \"Avenida Interlagos\",\r\n  \"number\": 501,\r\n  \"neighborhood\": \"Vila Ariete\",\r\n  \"city\": \"São Paulo\",\r\n  \"state\": \"São Paulo\",\r\n  \"country\": \"Brasil\",\r\n  \"cep\": \"04661-200\"\r\n}\r\n",
+							"raw": "{\r\n  \"street\": \"Avenida Interlagos\",\r\n  \"number\": 501,\r\n  \"neighborhood\": \"Vila Ariete\",\r\n  \"city\": \"São Paulo\",\r\n  \"state\": \"São Paulo\",\r\n  \"country\": \"Brasil\",\r\n  \"zipCode\": \"04661-200\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -76,7 +76,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"street\": \"Avenida Interlagos\",\r\n  \"number\": 502,\r\n  \"neighborhood\": \"Vila Ariete\",\r\n  \"city\": \"São Paulo\",\r\n  \"state\": \"São Paulo\",\r\n  \"country\": \"Brasil\",\r\n  \"cep\": \"04661-200\"\r\n}",
+							"raw": "{\r\n  \"street\": \"Avenida Interlagos\",\r\n  \"number\": 502,\r\n  \"neighborhood\": \"Vila Ariete\",\r\n  \"city\": \"São Paulo\",\r\n  \"state\": \"São Paulo\",\r\n  \"country\": \"Brasil\",\r\n  \"zipCode\": \"04661-200\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -109,7 +109,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"zipCode\": \"05894-440\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -230,7 +230,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"zipCode\": \"05894-440\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -438,7 +438,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"zipCode\": \"05894-440\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -786,7 +786,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"zipCode\": \"05894-440\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1018,7 +1018,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"zipCode\": \"05894-440\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1167,7 +1167,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"zipCode\": \"05894-440\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1317,7 +1317,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"cep\": \"05894-440\"\r\n}",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"street\": \"Rua 1\",\r\n  \"number\": 500,\r\n  \"neighborhood\": \"bairro\",\r\n  \"city\": \"cidade\",\r\n  \"state\": \"estado\",\r\n  \"country\": \"pais\",\r\n  \"zipCode\": \"05894-440\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1422,7 +1422,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"street\": \"Avenida Interlagos\",\r\n  \"number\": 501,\r\n  \"neighborhood\": \"Vila Ariete\",\r\n  \"city\": \"São Paulo\",\r\n  \"state\": \"São Paulo\",\r\n  \"country\": \"Brasil\",\r\n  \"cep\": \"04661-200\"\r\n}\r\n",
+							"raw": "{\r\n  \"street\": \"Avenida Interlagos\",\r\n  \"number\": 501,\r\n  \"neighborhood\": \"Vila Ariete\",\r\n  \"city\": \"São Paulo\",\r\n  \"state\": \"São Paulo\",\r\n  \"country\": \"Brasil\",\r\n  \"zipCode\": \"04661-200\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"

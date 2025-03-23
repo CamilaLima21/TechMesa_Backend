@@ -1,7 +1,12 @@
 package com.fiap.techmesa.infrastructure.gateway;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
@@ -39,7 +44,7 @@ public class AddressGatewayImplTest {
         address.setCity("city");
         address.setState("state");
         address.setCountry("Brasil");
-        address.setCep("0123456");
+        address.setZipCode("0123456");
      
         AddressEntity addressEntity = new AddressEntity();
         addressEntity.setId(1);
@@ -49,7 +54,7 @@ public class AddressGatewayImplTest {
         addressEntity.setCity("city");
         addressEntity.setState("state");
         addressEntity.setCountry("Brasil");
-        addressEntity.setCep("0123456");
+        addressEntity.setZipCode("0123456");
 
         when(addressRepository.save(any(AddressEntity.class))).thenReturn(addressEntity);
 

@@ -45,7 +45,7 @@ public class AddressGatewayImpl implements AddressGateway {
                 .city(address.getCity())
                 .state(address.getState())
                 .country(address.getCountry())
-                .cep(address.getCep())
+                .zipCode(address.getZipCode())
                 .build();
 
         final var updated = addressRepository.save(addressEntity);
@@ -68,7 +68,7 @@ public class AddressGatewayImpl implements AddressGateway {
             .city(address.getCity())
             .state(address.getState())
             .country(address.getCountry())
-            .cep(address.getCep())
+            .zipCode(address.getZipCode())
             .build();
     }
 
@@ -81,7 +81,7 @@ public class AddressGatewayImpl implements AddressGateway {
             .city(entity.getCity())
             .state(entity.getState())
             .country(entity.getCountry())
-            .cep(entity.getCep())
+            .zipCode(entity.getZipCode())
             .build();
     }
 }

@@ -1,13 +1,13 @@
 package com.fiap.techmesa.application.usecase;
 
 
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.fiap.techmesa.application.domain.Address;
-import com.fiap.techmesa.application.domain.OpeningHours;
 import com.fiap.techmesa.application.domain.Reserve;
 import com.fiap.techmesa.application.domain.Restaurant;
 import com.fiap.techmesa.application.domain.TableRestaurant;
@@ -80,7 +79,7 @@ public class UseCasesTest {
         address.setCity("Test City");
         address.setState("Test State");
         address.setCountry("Test Country");
-        address.setCep("123456");
+        address.setZipCode("123456");
 
         Address savedAddress = new Address();
         savedAddress.setId(1);
@@ -90,7 +89,7 @@ public class UseCasesTest {
         savedAddress.setCity("Test City");
         savedAddress.setState("Test State");
         savedAddress.setCountry("Test Country");
-        savedAddress.setCep("123456");
+        savedAddress.setZipCode("123456");
 
         when(addressGateway.save(any(Address.class))).thenReturn(savedAddress);
 
@@ -134,7 +133,7 @@ public class UseCasesTest {
         	    .city("New City")
         	    .state("New State")
         	    .country("New Country")
-        	    .cep("12345-678")
+        	    .zipCode("12345-678")
         	    .build();
 
         when(addressGateway.findById(1)).thenReturn(Optional.of(address));
@@ -149,7 +148,7 @@ public class UseCasesTest {
         assertEquals("New City", result.getCity());
         assertEquals("New State", result.getState());
         assertEquals("New Country", result.getCountry());
-        assertEquals("12345-678", result.getCep());
+        assertEquals("12345-678", result.getZipCode());
     }
     
     @Test

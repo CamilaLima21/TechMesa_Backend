@@ -2,7 +2,14 @@ package com.fiap.techmesa.infrastructure.gateway;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,12 +38,12 @@ import com.fiap.techmesa.application.enums.TurnEnum;
 import com.fiap.techmesa.application.enums.TypeKitchenEnum;
 import com.fiap.techmesa.infrastructure.persistence.entity.AddressEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.ClientEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.OpeningHoursEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.TableRestaurantEntity;
 import com.fiap.techmesa.infrastructure.persistence.repository.AddressRepository;
 import com.fiap.techmesa.infrastructure.persistence.repository.RestaurantRepository;
-import com.fiap.techmesa.infrastructure.persistence.entity.OpeningHoursEntity;
-import com.fiap.techmesa.infrastructure.persistence.entity.ReserveEntity;
 
 public class RestaurantGatewayImplTest {
 

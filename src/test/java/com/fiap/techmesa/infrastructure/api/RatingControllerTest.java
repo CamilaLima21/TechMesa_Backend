@@ -13,8 +13,6 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,10 +24,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fiap.techmesa.TechmesaApplication;
 import com.fiap.techmesa.application.domain.Rating;
 import com.fiap.techmesa.application.gateway.RatingGateway;
-import com.fiap.techmesa.infrastructure.api.RatingController;
 
 @SpringBootTest(classes = TechmesaApplication.class)
 @AutoConfigureMockMvc

@@ -40,9 +40,9 @@ public class Address {
 	@Size(max = 100, message = "Country length must be less than 100 characters")
     private String country;
     
-    @NotBlank(message = "Cep is required")
-	@Size(max = 100, message = "Cep length must be less than 100 characters")
-    private String cep;
+    @NotBlank(message = "ZipCode is required")
+	@Size(max = 100, message = "ZipCode length must be less than 100 characters")
+    private String zipCode;
     
     public static Address createAddress(
     		final String street,
@@ -51,9 +51,9 @@ public class Address {
     		final String city,
     		final String state,
     		final String country,
-    		final String cep) {
+    		final String zipCode) {
     	
-    	return new Address(null, street, number, neighborhood, city, state, country, cep);
+    	return new Address(null, street, number, neighborhood, city, state, country, zipCode);
     }
 
 }

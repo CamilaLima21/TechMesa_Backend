@@ -23,7 +23,7 @@ public class CreateAddress {
 						request.getCity(),
 						request.getState(),
 						request.getCountry(),
-						request.getCep());
+						request.getZipCode());
 		
 		return gateway.save(buildDomain);
 		

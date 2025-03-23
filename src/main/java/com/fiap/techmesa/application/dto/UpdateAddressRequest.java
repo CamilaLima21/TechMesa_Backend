@@ -32,8 +32,8 @@ public class UpdateAddressRequest {
 	@Size(max = 100, message = "Country length must be less than 100 characters")
     private String country;
     
-    @NotBlank(message = "Cep is required")
-	@Size(max = 100, message = "Cep length must be less than 100 characters")
-    private String cep;
+    @NotBlank(message = "ZipCode is required")
+	@Size(max = 100, message = "ZipCode length must be less than 100 characters")
+    private String zipCode;
 
 }

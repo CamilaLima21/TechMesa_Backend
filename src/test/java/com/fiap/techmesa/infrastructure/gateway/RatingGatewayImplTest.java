@@ -1,7 +1,12 @@
 package com.fiap.techmesa.infrastructure.gateway;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,11 +19,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.fiap.techmesa.application.domain.Rating;
-import com.fiap.techmesa.application.usecase.exception.RatingNotFoundException;
-import com.fiap.techmesa.infrastructure.persistence.entity.RatingEntity;
 import com.fiap.techmesa.infrastructure.persistence.entity.ClientEntity;
-import com.fiap.techmesa.infrastructure.persistence.repository.RatingRepository;
+import com.fiap.techmesa.infrastructure.persistence.entity.RatingEntity;
 import com.fiap.techmesa.infrastructure.persistence.repository.ClientRepository;
+import com.fiap.techmesa.infrastructure.persistence.repository.RatingRepository;
 
 public class RatingGatewayImplTest {
 

@@ -1,11 +1,9 @@
 package com.fiap.techmesa.application.domain;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import com.fiap.techmesa.application.enums.StatusReserveEnum;
 
-import jakarta.validation.constraints.Future;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

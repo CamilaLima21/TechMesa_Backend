@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fiap.techmesa.application.domain.Rating;
 import com.fiap.techmesa.application.gateway.RatingGateway;
 import com.fiap.techmesa.application.usecase.exception.RatingNotFoundException;
-import com.fiap.techmesa.infrastructure.persistence.entity.RatingEntity;
-import com.fiap.techmesa.infrastructure.persistence.repository.RatingRepository;
 import com.fiap.techmesa.infrastructure.persistence.entity.ClientEntity;
+import com.fiap.techmesa.infrastructure.persistence.entity.RatingEntity;
 import com.fiap.techmesa.infrastructure.persistence.repository.ClientRepository;
+import com.fiap.techmesa.infrastructure.persistence.repository.RatingRepository;
 
 import lombok.RequiredArgsConstructor;
 

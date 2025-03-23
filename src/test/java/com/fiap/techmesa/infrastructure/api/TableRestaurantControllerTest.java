@@ -10,10 +10,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,14 +23,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fiap.techmesa.TechmesaApplication;
 import com.fiap.techmesa.application.domain.TableRestaurant;
-import com.fiap.techmesa.application.domain.pagination.Page;
-import com.fiap.techmesa.application.domain.pagination.Pagination;
 import com.fiap.techmesa.application.enums.StatusTableOccupationEnum;
 import com.fiap.techmesa.application.enums.TablePositionEnum;
 import com.fiap.techmesa.application.gateway.TableRestaurantGateway;
-import com.fiap.techmesa.infrastructure.api.TableRestaurantController;
 
 @SpringBootTest(classes = TechmesaApplication.class)
 @AutoConfigureMockMvc

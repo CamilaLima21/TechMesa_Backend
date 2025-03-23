@@ -12,8 +12,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import java.time.LocalDate;
 import java.util.Optional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,11 +23,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fiap.techmesa.TechmesaApplication;
 import com.fiap.techmesa.application.domain.Reserve;
 import com.fiap.techmesa.application.enums.StatusReserveEnum;
 import com.fiap.techmesa.application.gateway.ReserveGateway;
-import com.fiap.techmesa.infrastructure.api.ReserveController;
 
 @SpringBootTest(classes = TechmesaApplication.class)
 @AutoConfigureMockMvc

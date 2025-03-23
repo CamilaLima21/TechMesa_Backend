@@ -1,6 +1,5 @@
 package com.fiap.techmesa.infrastructure.gateway;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -171,13 +170,13 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
 	private AddressEntity mapToEntity(final Address address) {
 		return AddressEntity.builder().id(address.getId()).street(address.getStreet()).number(address.getNumber())
 				.neighborhood(address.getNeighborhood()).city(address.getCity()).state(address.getState())
-				.country(address.getCountry()).cep(address.getCep()).build();
+				.country(address.getCountry()).zipCode(address.getZipCode()).build();
 	}
 
 	private Address mapToDomain(final AddressEntity entity) {
 		return Address.builder().id(entity.getId()).street(entity.getStreet()).number(entity.getNumber())
 				.neighborhood(entity.getNeighborhood()).city(entity.getCity()).state(entity.getState())
-				.country(entity.getCountry()).cep(entity.getCep()).build();
+				.country(entity.getCountry()).zipCode(entity.getZipCode()).build();
 	}
 
 	private OpeningHoursEntity mapToEntity(final OpeningHours openingHours) {

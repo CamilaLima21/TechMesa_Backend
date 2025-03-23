@@ -13,9 +13,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -27,12 +24,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fiap.techmesa.TechmesaApplication;
 import com.fiap.techmesa.application.domain.Restaurant;
 import com.fiap.techmesa.application.enums.StatusRestaurantEnum;
 import com.fiap.techmesa.application.enums.TypeKitchenEnum;
 import com.fiap.techmesa.application.gateway.RestaurantGateway;
-import com.fiap.techmesa.infrastructure.api.RestaurantController;
 
 @SpringBootTest(classes = TechmesaApplication.class)
 @AutoConfigureMockMvc

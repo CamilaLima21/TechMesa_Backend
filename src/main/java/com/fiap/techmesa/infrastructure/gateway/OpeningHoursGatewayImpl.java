@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fiap.techmesa.application.domain.OpeningHours;
 import com.fiap.techmesa.application.gateway.OpeningHoursGateway;
 import com.fiap.techmesa.infrastructure.persistence.entity.OpeningHoursEntity;
-import com.fiap.techmesa.infrastructure.persistence.entity.RestaurantEntity;
 import com.fiap.techmesa.infrastructure.persistence.repository.OpeningHoursRepository;
 import com.fiap.techmesa.infrastructure.persistence.repository.RestaurantRepository;
 
