@@ -1,14 +1,9 @@
-# Use uma imagem do JDK como base
-FROM openjdk:17-jdk-slim
-
-# Defina o diretório de trabalho dentro do container
+FROM maven:3.9.7-amazoncorretto-17 as build
 WORKDIR /app
+COPY . .
+RUN mvn clean package -X -DskipTests
 
-# Copie os arquivos do projeto para o container
-COPY target/TechMesa-0.0.1-SNAPSHOT.jar /app/TechMesa-0.0.1-SNAPSHOT.jar
-
-# Exponha a porta usada pelo aplicativo
-EXPOSE 8080
-
-# Comando para executar o aplicativo
-ENTRYPOINT ["java", "-jar", "TechMesa-0.0.1-SNAPSHOT.jar"]
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=build ./app/target/*.jar ./techmesa.jar
+ENTRYPOINT java -jar techmesa.jar
