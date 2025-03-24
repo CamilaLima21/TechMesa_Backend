@@ -100,12 +100,12 @@ O projeto está organizado nas seguintes camadas:
 
 ### TableRestaurants - Mesas Restaurantes
 - Cadastrar uma Mesa Restaurante: POST /table-restaurants
-- Consultar uma Mesa Restaurante: GET /table-restaurants/{???}---> REVER ENDPOINT(deveria esperar por id)
-- Consultar todas as Mesas Restaurantes: GET /table-restaurants/{page}/{size}---> REVER ENDPOINT(retirar required da paginação)
+- Consultar uma Mesa Restaurante: GET /table-restaurants/{id}
+- Consultar todas as Mesas Restaurantes: GET /table-restaurants/{page}/{size}
 - Consultar uma Mesa Restaurante por id, status da ocupação e data da reserva: GET /table-restaurants/{id}/{statusTableOccupation}/{dateReserve}
-- Consultar uma Mesa Restaurante por Nome da Mesa e id da reserva: GET /table-restaurants/{tableIdentification}/{reserveid}---> REVER SUB-ENTIDADE DO ENDPOINT(ByRestaurantAndDate - NÃO FAZ SENTIDO COM A FUNCIONALIDADE CONSTRUÍDA)
+- Consultar uma Mesa Restaurante por Nome da Mesa e id da reserva: GET /table-restaurants/{tableIdentification}/{reserveid}
 - Editar uma Mesa Restaurante: POST /table-restaurants/{table-restaurant-id}
-- Deletar uma Mesa Restaurante: POST /table-restaurants/{???}---> REVER ENDPOINT(deveria esperar por id)
+- Deletar uma Mesa Restaurante: POST /table-restaurants/{id}
 
 ## Documentação Swagger
 
