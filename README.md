@@ -120,7 +120,7 @@ Com a aplicação rodando: http://localhost:8080/swagger-ui/index.html#/
 ## Console H2
 Com a aplicação rodando: http://localhost:8080/h2-console
 
-JDBC URL: 
+JDBC URL: jdbc:h2:mem:techmesa
 
 USERNAME=sa
 
