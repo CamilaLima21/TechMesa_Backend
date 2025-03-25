@@ -72,6 +72,31 @@ O projeto está organizado nas seguintes camadas:
 
 ## Como Executar
 
+Para configurar a API, basta clonar o projeto: 
+
+https://github.com/CamilaLima21/TechMesa_Backend.git
+
+Criar e Executar uma Imagem Docker: 
+
+•	No terminal, na raiz do projeto, execute o seguinte comando para construir a imagem Docker: 
+docker build --tag techmesa .
+
+•	Após a construção da imagem, execute um contêiner Docker com o seguinte comando: 
+docker run --name techmesadocker -p 8080:8080 techmesa
+ 
+•	É possível visualizar o Swagger da aplicação neste endereço: 
+http://localhost:8080/swagger-ui/index.html#/ 
+ 
+Utilizar uma imagem Docker pública, no Registry do Docker: 
+
+É possível acessar a imagem pública através deste endereço: 
+	[docker.io/camiladck23/techmesa] 
+ 
+Utilizar um Deploy Publicado em uma Plataforma Gratuita: 
+
+Acessar a API pública atráves da URL abaixo: 
+	• 	https://techmesa-backend.onrender.com/swagger-ui/index.html#/
+
 ## Recursos
 
 ### Address - Endereços
@@ -153,6 +178,8 @@ USERNAME=sa
 PASSWORD=
 
 ## Collection POSTMAN
+
+A collection postman está disponível na raiz do projeto através do arquivo postman.json
 
 ## Licença
 Este projeto é licenciado sob a Licença MIT.
