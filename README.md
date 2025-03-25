@@ -34,6 +34,32 @@ https://miro.com/app/board/uXjVIPDJL4I=/
 
 ## Modelo de Dados
 
+A modelagem de dados proposta estrutura a relação entre várias entidades essenciais no contexto de um sistema para gestão de restaurantes. Estas entidades incluem **endereços**, **clientes**, **restaurantes**, **horários de funcionamento**, **avaliações**, **reservas** e **mesas de restaurante**. 
+
+1. **Endereços**: Esta entidade centraliza informações geográficas e é compartilhada entre os clientes e os restaurantes. Cada cliente e restaurante está associado a um endereço único, contendo atributos como rua, cidade, estado e código postal.
+
+2. **Clientes**: Representa as pessoas que utilizam a plataforma para fazer reservas ou avaliar os restaurantes. A entidade de clientes mantém informações como nome, e-mail, telefone e, possivelmente, preferências pessoais.
+
+3. **Restaurantes**: Agrupa dados relativos aos estabelecimentos, como nome, tipo de cozinha, contato, e possui uma relação direta com a entidade **endereços** para localizar cada restaurante.
+
+4. **Horário de Funcionamento**: Relacionado aos **restaurantes**, essa entidade define os dias da semana e horários em que o restaurante está aberto. Inclui atributos como hora de abertura, hora de fechamento e especificações para feriados.
+
+5. **Avaliações**: Esta entidade conecta **clientes** e **restaurantes** para registrar feedback. Cada avaliação contém informações como classificação (em estrelas), comentários e data da avaliação, permitindo monitorar a experiência dos clientes.
+
+6. **Reservas**: Representa as interações entre **clientes** e **mesas de restaurante** em um restaurante específico. Inclui informações como data, hora, número de pessoas e status da reserva (confirmada, cancelada, etc.).
+
+7. **Mesas de Restaurante**: Modela os recursos físicos disponíveis em um restaurante. Cada mesa tem atributos como capacidade de assentos e número da mesa, e está associada a um restaurante. Essa entidade se conecta às **reservas** para gerenciar disponibilidade.
+
+A integração destas entidades garante um fluxo lógico e organizado de informações, permitindo consultar facilmente quais clientes fizeram reservas, como avaliaram os restaurantes, e verificar horários e disponibilidade. Essa abordagem também favorece a escalabilidade e consistência do sistema ao expandir o número de restaurantes ou clientes.
+
+Abaixo segue a diagrama da modelagem de dados relacional do sistema:
+
+![image](https://github.com/user-attachments/assets/109de175-413e-4abf-90ad-e98555290ad9)
+
+![image](https://github.com/user-attachments/assets/f56e36e8-4c2f-4904-b035-e62dcc080be3)
+
+
+
 ## Estrutura do Projeto
 O projeto está organizado nas seguintes camadas:
 
